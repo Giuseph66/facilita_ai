@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/styles.css">
+<script src="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/_ds_bundle.js"></script>
+</helmet>
+<div style="display:flex;justify-content:space-around;align-items:flex-start;padding:8px 8px 22px;background:var(--color-neutral-100);border-top:1px solid var(--color-divider);box-sizing:border-box;width:100%">
+  <sc-for list="{{ items }}" as="it" hint-placeholder-count="5">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:3px;min-width:56px;min-height:44px;padding-top:4px;font-size:11px;font-weight:{{ it.weight }};color:{{ it.fg }}">
+      <div style="padding:4px 14px;border-radius:999px;background:{{ it.bg }}"><dc-import name="Icon" icon="{{ it.icon }}" size="20" hint-size="20px,20px"></dc-import></div>
+      <span>{{ it.label }}</span>
+    </div>
+  </sc-for>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:374,&quot;height&quot;:80},&quot;role&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;prof&quot;,&quot;aluno&quot;],&quot;default&quot;:&quot;prof&quot;,&quot;tsType&quot;:&quot;'prof'|'aluno'&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;inicio&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const role = this.props.role ?? 'prof';
+    const active = this.props.active ?? 'inicio';
+    const list = role === 'prof'
+      ? [['inicio','Início','home'],['disciplinas','Disciplinas','book'],['turmas','Turmas','users'],['avaliacoes','Avaliações','clipboard'],['mais','Mais','menu']]
+      : [['inicio','Início','home'],['disciplinas','Disciplinas','book'],['estudar','Estudar','layers'],['tutor','Tutor','chat'],['mais','Mais','menu']];
+    return { items: list.map(([k, label, icon]) => ({
+      label, icon,
+      bg: k === active ? 'var(--color-accent-100)' : 'transparent',
+      fg: k === active ? 'var(--color-accent-800)' : 'var(--color-neutral-700)',
+      weight: k === active ? 700 : 400
+    })) };
+  }
+}
+</script>
+</body>
+</html>

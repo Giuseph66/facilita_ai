@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/styles.css">
+<script src="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/_ds_bundle.js"></script>
+<style>html,body{margin:0;background:var(--color-neutral-300)} a{color:var(--color-accent-700)} a:hover{color:var(--color-accent-800)}</style>
+</helmet>
+<div style="padding:72px;display:flex;flex-direction:column;gap:64px">
+  <header style="display:flex;flex-direction:column;gap:8px;max-width:860px">
+    <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-800);font-weight:700">Facilita Estudo · 03</div>
+    <h1 style="font-size:48px;margin:0">Professor</h1>
+    <p style="font-size:16px;color:var(--color-neutral-800);margin:0">Turmas → participantes → liberação de materiais. Avaliações → configurar geração → gerar → editar → revisar e finalizar → exportar. Roteiro de estudo é a única peça da avaliação que chega ao aluno, e só com tópicos e competências.</p>
+  </header>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P1</b> · Turmas — lista com criação em painel lateral</div>
+      <div data-screen-label="P1 Turmas" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex;position:relative">
+        <dc-import name="Sidebar" role="prof" active="turmas" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:32px 40px;display:flex;flex-direction:column;gap:24px;overflow:hidden">
+          <div style="display:flex;align-items:flex-end;gap:16px"><div style="flex:1"><h1 style="font-size:32px;margin:0">Turmas</h1><div style="font-size:14px;color:var(--color-neutral-700)">3 ativas · 74 alunos</div></div><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)"><dc-import name="Icon" icon="plus" size="15" hint-size="15px,15px"></dc-import>Nova turma</button></div>
+          <div style="display:flex;flex-direction:column;border-radius:28px;background:var(--color-neutral-100);padding:6px 24px;max-width:560px">
+            <div style="display:flex;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--color-divider)"><span style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-600)"></span><div style="flex:1"><b>Bioquímica — Noturno</b><div style="font-size:13px;color:var(--color-neutral-700)">Bioquímica Metabólica · 38 alunos · 9 materiais liberados</div></div><dc-import name="Icon" icon="right" size="18" hint-size="18px,18px"></dc-import></div>
+            <div style="display:flex;gap:14px;align-items:center;padding:16px 0;border-bottom:1px solid var(--color-divider)"><span style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-600)"></span><div style="flex:1"><b>Bioquímica — Diurno</b><div style="font-size:13px;color:var(--color-neutral-700)">Bioquímica Metabólica · 12 alunos · 6 liberados</div></div><dc-import name="Icon" icon="right" size="18" hint-size="18px,18px"></dc-import></div>
+            <div style="display:flex;gap:14px;align-items:center;padding:16px 0"><span style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-2-600)"></span><div style="flex:1"><b>Biologia — 3º ano B</b><div style="font-size:13px;color:var(--color-neutral-700)">Biologia — 3º ano · 24 alunos · 4 convites pendentes</div></div><dc-import name="Icon" icon="right" size="18" hint-size="18px,18px"></dc-import></div>
+          </div>
+        </main>
+        <aside style="position:absolute;right:0;top:0;bottom:0;width:420px;background:var(--color-neutral-100);box-shadow:var(--shadow-lg);border-radius:28px 0 0 28px;padding:28px;display:flex;flex-direction:column;gap:18px">
+          <div style="display:flex;justify-content:space-between;align-items:center"><div style="font-family:var(--font-heading);font-size:24px">Nova turma</div><button class="btn btn-icon btn-ghost" style="color:var(--color-text)"><dc-import name="Icon" icon="x" size="18" hint-size="18px,18px"></dc-import></button></div>
+          <div class="field"><label>Nome da turma</label><input class="input" value="Química — 2º ano A"></div>
+          <div class="field"><label style="color:var(--color-accent-800)">Disciplina</label><div class="input" style="display:flex;align-items:center;justify-content:space-between;border-color:var(--color-accent-700);color:var(--color-neutral-600)">Selecione uma disciplina<dc-import name="Icon" icon="down" size="16" hint-size="16px,16px"></dc-import></div><div style="display:flex;gap:6px;align-items:center;margin-top:6px;font-size:12px;color:var(--color-accent-800)"><dc-import name="Icon" icon="alert" size="14" hint-size="14px,14px"></dc-import>Escolha a disciplina da turma.</div></div>
+          <div class="field"><label>Período</label><input class="input" value="2026 · 2º semestre"></div>
+          <div style="display:flex;flex-direction:column;gap:10px"><span style="font-size:12px;color:var(--color-neutral-800)">Entrada de alunos</span><label class="radio"><input type="radio" name="p1" defaultChecked="{{ true }}"><span class="dot"></span>Por link ou código, com minha aprovação</label><label class="radio"><input type="radio" name="p1"><span class="dot"></span>Por link ou código, direto</label><label class="radio"><input type="radio" name="p1"><span class="dot"></span>Somente por convite por e-mail</label></div>
+          <div style="flex:1"></div>
+          <div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn btn-secondary">Cancelar</button><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)">Criar turma</button></div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P2</b> · Turma — participantes e convite</div>
+      <div data-screen-label="P2 Turma participantes" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="prof" active="turmas" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:28px 40px;display:flex;flex-direction:column;gap:20px;overflow:hidden">
+          <div style="display:flex;gap:6px;align-items:center;font-size:13px;color:var(--color-neutral-700)">Turmas<dc-import name="Icon" icon="right" size="13" hint-size="13px,13px"></dc-import>Bioquímica — Noturno</div>
+          <div style="display:flex;align-items:flex-end;gap:12px"><div style="flex:1"><h1 style="font-size:32px;margin:0">Bioquímica — Noturno</h1><div style="font-size:14px;color:var(--color-neutral-700)">Bioquímica Metabólica · 2026.2 · 38 alunos</div></div><button class="btn btn-secondary"><dc-import name="Icon" icon="list" size="15" hint-size="15px,15px"></dc-import>Publicar roteiro</button></div>
+          <div style="display:flex;gap:4px;border-bottom:1px solid var(--color-divider)"><span style="padding:10px 14px;font-size:14px;font-weight:700;color:var(--color-accent-700);border-bottom:3px solid var(--color-accent-700)">Participantes · 38</span><span style="padding:10px 14px;font-size:14px">Materiais · 9 liberados</span><span style="padding:10px 14px;font-size:14px">Roteiros · 1</span><span style="padding:10px 14px;font-size:14px">Configurações</span></div>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:20px;flex:1;min-height:0">
+            <div style="display:flex;flex-direction:column;border-radius:28px;background:var(--color-neutral-100);padding:8px 24px;overflow:hidden">
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 0"><div style="display:flex;align-items:center;gap:8px;flex:1;padding:0 14px;height:36px;border-radius:999px;background:var(--color-neutral-200);color:var(--color-neutral-700);font-size:14px"><dc-import name="Icon" icon="search" size="15" hint-size="15px,15px"></dc-import>Buscar participante</div><div class="seg"><label class="seg-opt"><input type="radio" name="p2" defaultChecked="{{ true }}">Todos</label><label class="seg-opt"><input type="radio" name="p2">Pendentes · 3</label></div></div>
+              <table class="table">
+                <thead><tr><th>Nome</th><th>Situação</th><th>Último acesso</th><th></th></tr></thead>
+                <tbody>
+                  <tr style="background:var(--color-accent-100)"><td><b>Rafaela Nunes</b><div style="font-size:12px;color:var(--color-neutral-700)">rafaela.n@aluno.edu.br</div></td><td><span class="tag tag-accent" style="font-weight:600">Pediu para entrar</span></td><td style="color:var(--color-neutral-700)">—</td><td><div style="display:flex;gap:6px;justify-content:flex-end"><button class="btn btn-secondary" style="padding:6px 12px">Recusar</button><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:6px 12px">Aprovar</button></div></td></tr>
+                  <tr><td><b>Lucas Andrade</b><div style="font-size:12px;color:var(--color-neutral-700)">lucas.andrade@email.com</div></td><td><span class="tag tag-accent-2" style="font-weight:600">Ativo</span></td><td style="color:var(--color-neutral-700)">Hoje, 14:10</td><td style="text-align:right"><dc-import name="Icon" icon="more" size="18" hint-size="18px,18px" style="display:inline-block"></dc-import></td></tr>
+                  <tr><td><b>Beatriz Lima</b><div style="font-size:12px;color:var(--color-neutral-700)">bia.lima@aluno.edu.br</div></td><td><span class="tag tag-accent-2" style="font-weight:600">Ativo</span></td><td style="color:var(--color-neutral-700)">Ontem</td><td style="text-align:right"><dc-import name="Icon" icon="more" size="18" hint-size="18px,18px" style="display:inline-block"></dc-import></td></tr>
+                  <tr><td><b>joao.p@aluno.edu.br</b><div style="font-size:12px;color:var(--color-neutral-700)">Convidado em 28 set</div></td><td><span class="tag tag-neutral" style="font-weight:600">Convite enviado</span></td><td style="color:var(--color-neutral-700)">—</td><td style="text-align:right"><button class="btn btn-ghost" style="color:var(--color-accent-700)">Reenviar</button></td></tr>
+                  <tr><td><b>Caio Ferreira</b><div style="font-size:12px;color:var(--color-neutral-700)">caio.f@aluno.edu.br</div></td><td><span class="tag tag-accent-2" style="font-weight:600">Ativo</span></td><td style="color:var(--color-neutral-700)">22 set</td><td style="text-align:right"><dc-import name="Icon" icon="more" size="18" hint-size="18px,18px" style="display:inline-block"></dc-import></td></tr>
+                  <tr><td><b>Ana Clara Souza</b><div style="font-size:12px;color:var(--color-neutral-700)">anaclara@aluno.edu.br</div></td><td><span class="tag tag-accent-2" style="font-weight:600">Ativo</span></td><td style="color:var(--color-neutral-700)">20 set</td><td style="text-align:right"><dc-import name="Icon" icon="more" size="18" hint-size="18px,18px" style="display:inline-block"></dc-import></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <aside style="display:flex;flex-direction:column;gap:16px;padding:22px;border-radius:28px;background:var(--color-neutral-100);align-self:start">
+              <b style="font-size:16px">Convidar alunos</b>
+              <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--color-neutral-800)">Código da turma</span><div style="display:flex;align-items:center;gap:10px"><span style="font-family:var(--font-heading);font-size:28px;letter-spacing:.08em">BQN-4827</span><button class="btn btn-icon btn-secondary"><dc-import name="Icon" icon="copy" size="15" hint-size="15px,15px"></dc-import></button></div></div>
+              <div style="display:flex;align-items:center;gap:8px;padding:8px 8px 8px 14px;border-radius:999px;background:var(--color-neutral-200);font-size:13px"><dc-import name="Icon" icon="link" size="14" hint-size="14px,14px"></dc-import><span style="flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis">facilita.app/t/BQN-4827</span><button class="btn btn-secondary" style="padding:5px 12px;background:var(--color-neutral-100)">Copiar</button></div>
+              <div class="field"><label>Ou envie por e-mail</label><textarea class="input" style="border-radius:20px;min-height:72px">joao.p@aluno.edu.br, marcos@aluno.edu.br</textarea></div>
+              <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);align-self:flex-start"><dc-import name="Icon" icon="mail" size="15" hint-size="15px,15px"></dc-import>Enviar 2 convites</button>
+              <div style="font-size:12px;color:var(--color-neutral-700)">Entrada com sua aprovação. <a href="#">Alterar</a> · <a href="#">Gerar novo código</a></div>
+            </aside>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P2m</b> · Turma — celular</div>
+      <div data-screen-label="P2m Turma mobile" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;gap:8px;padding:48px 12px 4px"><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="back" size="18" hint-size="18px,18px"></dc-import></button><div style="flex:1"></div><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="more" size="18" hint-size="18px,18px"></dc-import></button></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding:0 20px 16px;overflow:hidden">
+          <div><div style="font-family:var(--font-heading);font-size:26px;line-height:1.15">Bioquímica — Noturno</div><div style="font-size:13px;color:var(--color-neutral-700)">38 alunos · código BQN-4827</div></div>
+          <div style="display:flex;gap:4px;border-bottom:1px solid var(--color-divider);font-size:14px"><span style="padding:10px 10px;font-weight:700;color:var(--color-accent-700);border-bottom:3px solid var(--color-accent-700)">Pessoas</span><span style="padding:10px 10px">Materiais</span><span style="padding:10px 10px">Roteiros</span></div>
+          <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);min-height:48px"><dc-import name="Icon" icon="plus" size="15" hint-size="15px,15px"></dc-import>Convidar alunos</button>
+          <div style="display:flex;flex-direction:column;padding:4px 16px;border-radius:24px;background:var(--color-neutral-100)">
+            <div style="display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--color-divider)"><div style="flex:1"><b style="font-size:14px">Rafaela Nunes</b><div style="font-size:12px;color:var(--color-accent-800)">Pediu para entrar</div></div><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);min-height:44px">Aprovar</button></div>
+            <div style="display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--color-divider);min-height:44px"><div style="flex:1"><b style="font-size:14px">Lucas Andrade</b><div style="font-size:12px;color:var(--color-neutral-700)">Ativo · hoje</div></div><dc-import name="Icon" icon="more" size="18" hint-size="18px,18px"></dc-import></div>
+            <div style="display:flex;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--color-divider);min-height:44px"><div style="flex:1"><b style="font-size:14px">Beatriz Lima</b><div style="font-size:12px;color:var(--color-neutral-700)">Ativo · ontem</div></div><dc-import name="Icon" icon="more" size="18" hint-size="18px,18px"></dc-import></div>
+            <div style="display:flex;gap:12px;align-items:center;padding:12px 0;min-height:44px"><div style="flex:1"><b style="font-size:14px">joao.p@aluno.edu.br</b><div style="font-size:12px;color:var(--color-neutral-700)">Convite enviado</div></div><button class="btn btn-ghost" style="color:var(--color-accent-700);min-height:44px">Reenviar</button></div>
+          </div>
+        </div>
+        <dc-import name="TabBar" role="prof" active="turmas" hint-size="100%,78px"></dc-import>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P3</b> · Turma — organização e liberação de materiais</div>
+      <div data-screen-label="P3 Liberação de materiais" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="prof" active="turmas" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:28px 40px;display:flex;flex-direction:column;gap:20px;overflow:hidden">
+          <div style="display:flex;align-items:flex-end;gap:12px"><div style="flex:1"><h1 style="font-size:32px;margin:0">Bioquímica — Noturno</h1><div style="font-size:14px;color:var(--color-neutral-700)">Escolha o que os alunos desta turma podem ver. Novos envios começam privados.</div></div></div>
+          <div style="display:flex;gap:4px;border-bottom:1px solid var(--color-divider)"><span style="padding:10px 14px;font-size:14px">Participantes · 38</span><span style="padding:10px 14px;font-size:14px;font-weight:700;color:var(--color-accent-700);border-bottom:3px solid var(--color-accent-700)">Materiais · 9 liberados</span><span style="padding:10px 14px;font-size:14px">Roteiros · 1</span><span style="padding:10px 14px;font-size:14px">Configurações</span></div>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px;flex:1;min-height:0">
+            <section style="display:flex;flex-direction:column;gap:6px;padding:20px 22px;border-radius:28px;background:var(--color-accent-2-100);border:1px solid var(--color-accent-2-200)">
+              <div style="display:flex;gap:8px;align-items:center;color:var(--color-accent-2-900)"><dc-import name="Icon" icon="eye" size="18" hint-size="18px,18px"></dc-import><b style="flex:1">Liberados para a turma · 9</b></div>
+              <div style="font-size:12px;color:var(--color-accent-2-900);margin-bottom:6px">Agrupe por unidade arrastando. Os alunos veem nesta ordem.</div>
+              <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-2-800);font-weight:700;margin-top:4px">Unidade 1 · Fundamentos</div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;background:var(--color-neutral-100)"><dc-import name="Icon" icon="grip" size="16" hint-size="16px,16px" style="color:var(--color-neutral-500)"></dc-import><span style="flex:1;font-size:14px">Cap. 1 — Água e pH.pdf</span><button class="btn btn-ghost" style="color:var(--color-accent-700);font-size:13px">Tornar privado</button></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;background:var(--color-neutral-100)"><dc-import name="Icon" icon="grip" size="16" hint-size="16px,16px" style="color:var(--color-neutral-500)"></dc-import><span style="flex:1;font-size:14px">Cap. 2 — Enzimas.pdf</span><button class="btn btn-ghost" style="color:var(--color-accent-700);font-size:13px">Tornar privado</button></div>
+              <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-accent-2-800);font-weight:700;margin-top:8px">Unidade 2 · Carboidratos</div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;background:var(--color-neutral-100)"><dc-import name="Icon" icon="grip" size="16" hint-size="16px,16px" style="color:var(--color-neutral-500)"></dc-import><span style="flex:1;font-size:14px">Cap. 3 — Glicólise.pdf</span><button class="btn btn-ghost" style="color:var(--color-accent-700);font-size:13px">Tornar privado</button></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;background:var(--color-neutral-100);border:1.5px dashed var(--color-accent-2-500)"><dc-import name="Icon" icon="clock" size="16" hint-size="16px,16px" style="color:var(--color-accent-2-700)"></dc-import><span style="flex:1;font-size:14px">Aula 5 — Gliconeogênese.pptx<div style="font-size:12px;color:var(--color-accent-2-800)">Libera em 9 out, 19:00</div></span><button class="btn btn-ghost" style="color:var(--color-accent-700);font-size:13px">Editar</button></div>
+            </section>
+            <section style="display:flex;flex-direction:column;gap:6px;padding:20px 22px;border-radius:28px;background:var(--color-neutral-100)">
+              <div style="display:flex;gap:8px;align-items:center"><dc-import name="Icon" icon="lock" size="18" hint-size="18px,18px"></dc-import><b style="flex:1">Privados da disciplina · 5</b></div>
+              <div style="font-size:12px;color:var(--color-neutral-700);margin-bottom:6px">Só você vê. Use em avaliações e conversas sem expor à turma.</div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;border:1px solid var(--color-divider)"><span style="width:20px;height:20px;border-radius:7px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1;font-size:14px">Aula 6 — Ciclo de Krebs.pptx</span></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;border:1px solid var(--color-divider)"><span style="width:20px;height:20px;border-radius:7px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1;font-size:14px">Cap. 4 — Lipídios.pdf</span></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;border:1px solid var(--color-divider)"><span style="width:20px;height:20px;border-radius:7px;border:1.5px solid var(--color-neutral-500)"></span><span style="flex:1;font-size:14px">Anotações P1.pdf</span><span class="tag tag-neutral">Pessoal</span></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;border:1px solid var(--color-divider)"><span style="width:20px;height:20px;border-radius:7px;border:1.5px solid var(--color-neutral-500)"></span><span style="flex:1;font-size:14px">Banco de questões antigo.pdf</span></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 12px;border-radius:16px;border:1px solid var(--color-divider);opacity:.6"><dc-import name="Icon" icon="loader" size="16" hint-size="16px,16px"></dc-import><span style="flex:1;font-size:14px">Aula 7 — Fosforilação.pptx<div style="font-size:12px">Processando — libere depois de pronto</div></span></div>
+              <div style="flex:1"></div>
+              <div style="display:flex;gap:8px;align-items:center;padding-top:10px"><span style="flex:1;font-size:13px;color:var(--color-neutral-700)">2 selecionados</span><button class="btn btn-secondary"><dc-import name="Icon" icon="clock" size="14" hint-size="14px,14px"></dc-import>Agendar</button><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)"><dc-import name="Icon" icon="eye" size="14" hint-size="14px,14px"></dc-import>Liberar agora</button></div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P4</b> · Avaliações — lista</div>
+      <div data-screen-label="P4 Avaliações" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="prof" active="avaliacoes" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:32px 40px;display:flex;flex-direction:column;gap:22px;overflow:hidden">
+          <div style="display:flex;align-items:flex-end;gap:16px"><div style="flex:1"><h1 style="font-size:32px;margin:0">Avaliações</h1><div style="font-size:14px;color:var(--color-neutral-700);display:flex;gap:6px;align-items:center"><dc-import name="Icon" icon="lock" size="13" hint-size="13px,13px"></dc-import>Sempre privadas. Alunos nunca acessam avaliações nem gabaritos.</div></div><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)"><dc-import name="Icon" icon="sparkles" size="15" hint-size="15px,15px"></dc-import>Nova avaliação</button></div>
+          <div style="display:flex;gap:10px;align-items:center"><div class="seg"><label class="seg-opt"><input type="radio" name="p4" defaultChecked="{{ true }}">Todas · 5</label><label class="seg-opt"><input type="radio" name="p4">Provas</label><label class="seg-opt"><input type="radio" name="p4">Trabalhos</label><label class="seg-opt"><input type="radio" name="p4">Exercícios</label></div><div style="flex:1"></div><div class="input" style="width:220px;display:flex;align-items:center;justify-content:space-between;background:var(--color-neutral-100)">Todas as disciplinas<dc-import name="Icon" icon="down" size="15" hint-size="15px,15px"></dc-import></div></div>
+          <div style="border-radius:28px;background:var(--color-neutral-100);padding:8px 24px">
+            <table class="table">
+              <thead><tr><th>Avaliação</th><th>Tipo</th><th>Questões</th><th>Situação</th><th>Versão</th><th>Atualizada</th><th></th></tr></thead>
+              <tbody>
+                <tr><td style="padding:14px 8px"><b>P2 — Metabolismo de carboidratos</b><div style="font-size:12px;color:var(--color-neutral-700)">Bioquímica Metabólica</div></td><td><span class="tag tag-neutral">Prova</span></td><td>12 · 10 pts</td><td><span class="tag tag-accent" style="font-weight:600">Em revisão · 9/12</span></td><td>v3</td><td style="color:var(--color-neutral-700)">Hoje</td><td><button class="btn btn-secondary" style="padding:6px 12px">Abrir</button></td></tr>
+                <tr><td style="padding:14px 8px"><b>Lista 4 — Enzimas</b><div style="font-size:12px;color:var(--color-neutral-700)">Bioquímica Metabólica</div></td><td><span class="tag tag-neutral">Exercícios</span></td><td>8 · —</td><td><span class="tag tag-accent-2" style="font-weight:600">Finalizada</span></td><td>v1</td><td style="color:var(--color-neutral-700)">26 set</td><td><button class="btn btn-secondary" style="padding:6px 12px">Abrir</button></td></tr>
+                <tr><td style="padding:14px 8px"><b>P1 — Bioquímica estrutural</b><div style="font-size:12px;color:var(--color-neutral-700)">Bioquímica Metabólica</div></td><td><span class="tag tag-neutral">Prova</span></td><td>15 · 10 pts</td><td><span class="tag tag-accent-2" style="font-weight:600">Finalizada</span></td><td>v2</td><td style="color:var(--color-neutral-700)">10 set</td><td><button class="btn btn-secondary" style="padding:6px 12px">Abrir</button></td></tr>
+                <tr><td style="padding:14px 8px"><b>Trabalho — Genética e hereditariedade</b><div style="font-size:12px;color:var(--color-neutral-700)">Biologia — 3º ano</div></td><td><span class="tag tag-neutral">Trabalho</span></td><td>4 · 5 pts</td><td><span class="tag tag-neutral" style="font-weight:600">Rascunho</span></td><td>v1</td><td style="color:var(--color-neutral-700)">Ontem</td><td><button class="btn btn-secondary" style="padding:6px 12px">Abrir</button></td></tr>
+                <tr style="background:var(--color-accent-100)"><td style="padding:14px 8px"><b>P3 — Lipídios</b><div style="font-size:12px;color:var(--color-accent-900)">Geração falhou: IA indisponível</div></td><td><span class="tag tag-neutral">Prova</span></td><td>—</td><td><span class="tag" style="font-weight:600;background:var(--color-accent-200);color:var(--color-accent-900)">Falhou</span></td><td>—</td><td style="color:var(--color-neutral-700)">Agora</td><td><button class="btn btn-secondary" style="padding:6px 12px;color:var(--color-accent-800);border-color:var(--color-accent-300)">Tentar de novo</button></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P5</b> · Configuração da geração</div>
+      <div data-screen-label="P5 Configurar geração" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="prof" active="avaliacoes" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:28px 40px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;overflow:hidden">
+          <div style="display:flex;flex-direction:column;gap:20px;min-width:0">
+            <div><div style="font-size:13px;color:var(--color-neutral-700)">Nova avaliação · Bioquímica Metabólica</div><h1 style="font-size:32px;margin:2px 0 0">Configurar geração</h1></div>
+            <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px"><div class="field"><label>Título</label><input class="input" value="P3 — Lipídios e membranas" style="background:var(--color-neutral-100)"></div><div style="display:flex;flex-direction:column;gap:5px"><span style="font-size:12px;color:var(--color-neutral-800)">Tipo</span><div class="seg" style="background:var(--color-neutral-100)"><label class="seg-opt"><input type="radio" name="p5t" defaultChecked="{{ true }}">Prova</label><label class="seg-opt"><input type="radio" name="p5t">Trabalho</label><label class="seg-opt"><input type="radio" name="p5t">Exercícios</label></div></div></div>
+            <section style="display:flex;flex-direction:column;gap:8px;padding:18px 20px;border-radius:24px;background:var(--color-neutral-100)">
+              <div style="display:flex;justify-content:space-between"><b style="font-size:14px">Materiais de base · 2</b><span style="font-size:12px;color:var(--color-neutral-700)">Privados e liberados podem ser usados</span></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--color-divider)"><span style="width:20px;height:20px;border-radius:7px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1;font-size:14px">Cap. 4 — Lipídios.pdf</span><span style="font-size:13px;color:var(--color-neutral-700)">Páginas</span><span style="padding:4px 12px;border-radius:999px;border:1px solid var(--color-divider);font-size:13px">1–40</span></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:8px 0;border-bottom:1px solid var(--color-divider)"><span style="width:20px;height:20px;border-radius:7px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1;font-size:14px">Aula 8 — Membranas.pptx</span><span style="font-size:13px;color:var(--color-neutral-700)">Slides</span><span style="padding:4px 12px;border-radius:999px;border:1px solid var(--color-divider);font-size:13px">4–22</span></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:8px 0"><span style="width:20px;height:20px;border-radius:7px;border:1.5px solid var(--color-neutral-500)"></span><span style="flex:1;font-size:14px">Cap. 3 — Glicólise.pdf</span></div>
+            </section>
+            <section style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px">
+              <div style="display:flex;flex-direction:column;gap:8px;padding:18px 20px;border-radius:24px;background:var(--color-neutral-100)">
+                <b style="font-size:14px">Tipos de questão</b>
+                <div style="display:flex;align-items:center;gap:10px;font-size:14px"><span style="flex:1">Múltipla escolha</span><div style="display:flex;align-items:center;border:1px solid var(--color-divider);border-radius:999px"><button class="btn btn-icon" style="width:30px;height:30px">−</button><b style="min-width:24px;text-align:center">8</b><button class="btn btn-icon" style="width:30px;height:30px">+</button></div></div>
+                <div style="display:flex;align-items:center;gap:10px;font-size:14px"><span style="flex:1">Verdadeiro ou falso</span><div style="display:flex;align-items:center;border:1px solid var(--color-divider);border-radius:999px"><button class="btn btn-icon" style="width:30px;height:30px">−</button><b style="min-width:24px;text-align:center">2</b><button class="btn btn-icon" style="width:30px;height:30px">+</button></div></div>
+                <div style="display:flex;align-items:center;gap:10px;font-size:14px"><span style="flex:1">Dissertativa</span><div style="display:flex;align-items:center;border:1px solid var(--color-divider);border-radius:999px"><button class="btn btn-icon" style="width:30px;height:30px">−</button><b style="min-width:24px;text-align:center">2</b><button class="btn btn-icon" style="width:30px;height:30px">+</button></div></div>
+                <div style="font-size:12px;color:var(--color-neutral-700);border-top:1px solid var(--color-divider);padding-top:8px">Total: <b style="color:var(--color-text)">12 questões</b></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px;padding:18px 20px;border-radius:24px;background:var(--color-neutral-100)">
+                <b style="font-size:14px">Dificuldade</b>
+                <div class="seg"><label class="seg-opt"><input type="radio" name="p5d">Fácil</label><label class="seg-opt"><input type="radio" name="p5d">Média</label><label class="seg-opt"><input type="radio" name="p5d">Difícil</label><label class="seg-opt"><input type="radio" name="p5d" defaultChecked="{{ true }}">Mista</label></div>
+                <div style="display:flex;height:10px;border-radius:999px;overflow:hidden"><span style="width:30%;background:var(--color-accent-2-400)"></span><span style="width:50%;background:var(--color-accent-500)"></span><span style="width:20%;background:var(--color-accent-800)"></span></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--color-neutral-800)"><span>Fácil 4</span><span>Média 6</span><span>Difícil 2</span></div>
+                <div class="field"><label>Pontuação total</label><input class="input" value="10,0 pontos"></div>
+              </div>
+            </section>
+            <div class="field"><label>Instruções para a IA (opcional)</label><textarea class="input" style="border-radius:20px;min-height:60px;background:var(--color-neutral-100)">Priorizar aplicação clínica (dislipidemias). Evitar pegadinhas de nomenclatura.</textarea></div>
+          </div>
+          <aside style="display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:28px;background:var(--color-neutral-100);align-self:start;margin-top:52px">
+            <b style="font-size:16px">Resumo</b>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:14px"><div style="display:flex;justify-content:space-between"><span style="color:var(--color-neutral-700)">Questões</span><b>12</b></div><div style="display:flex;justify-content:space-between"><span style="color:var(--color-neutral-700)">Fontes</span><b>59 páginas</b></div><div style="display:flex;justify-content:space-between"><span style="color:var(--color-neutral-700)">Gabarito</span><b>Com explicações</b></div><div style="display:flex;justify-content:space-between"><span style="color:var(--color-neutral-700)">IA</span><b>Ollama Cloud (sua)</b></div><div style="display:flex;justify-content:space-between"><span style="color:var(--color-neutral-700)">Consumo</span><b>1 geração</b></div></div>
+            <div style="display:flex;gap:8px;padding:10px 12px;border-radius:16px;background:var(--color-neutral-200);font-size:12px;color:var(--color-neutral-800)"><dc-import name="Icon" icon="lock" size="14" hint-size="14px,14px"></dc-import>A avaliação será criada como rascunho privado. Você revisa cada questão antes de finalizar.</div>
+            <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:12px 18px"><dc-import name="Icon" icon="sparkles" size="15" hint-size="15px,15px"></dc-import>Gerar 12 questões</button>
+            <span style="font-size:12px;color:var(--color-neutral-700)">Leva cerca de 1 minuto. Você pode sair da tela.</span>
+          </aside>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P6</b> · Geração em andamento</div>
+      <div data-screen-label="P6 Gerando" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="prof" active="avaliacoes" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:32px 40px;display:flex;flex-direction:column;gap:24px;overflow:hidden">
+          <div><div style="font-size:13px;color:var(--color-neutral-700)">Avaliações · Bioquímica Metabólica</div><h1 style="font-size:32px;margin:2px 0 0">P3 — Lipídios e membranas</h1></div>
+          <div style="display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:24px">
+            <section style="display:flex;flex-direction:column;gap:16px;padding:24px;border-radius:28px;background:var(--color-neutral-100)">
+              <div style="display:flex;gap:12px;align-items:center"><span style="width:44px;height:44px;border-radius:50%;background:var(--color-accent-100);color:var(--color-accent-800);display:grid;place-items:center"><dc-import name="Icon" icon="loader" size="20" hint-size="20px,20px"></dc-import></span><div><b style="font-size:16px">Gerando questões</b><div style="font-size:13px;color:var(--color-neutral-700)">7 de 12 · cerca de 30 s</div></div></div>
+              <div style="height:8px;border-radius:999px;background:var(--color-accent-200)"><div style="width:58%;height:100%;border-radius:999px;background:var(--color-accent-700)"></div></div>
+              <div style="display:flex;flex-direction:column;gap:12px;font-size:14px">
+                <div style="display:flex;gap:10px;align-items:center;color:var(--color-accent-2-800)"><dc-import name="Icon" icon="check" size="16" hint-size="16px,16px"></dc-import>Lendo 59 páginas dos materiais</div>
+                <div style="display:flex;gap:10px;align-items:center;color:var(--color-accent-2-800)"><dc-import name="Icon" icon="check" size="16" hint-size="16px,16px"></dc-import>Mapeando 9 tópicos</div>
+                <div style="display:flex;gap:10px;align-items:center;font-weight:700"><dc-import name="Icon" icon="loader" size="16" hint-size="16px,16px" style="color:var(--color-accent-700)"></dc-import>Escrevendo questões e alternativas</div>
+                <div style="display:flex;gap:10px;align-items:center;color:var(--color-neutral-600)"><span style="width:16px;height:16px;border-radius:50%;border:1.5px solid var(--color-neutral-400)"></span>Conferindo gabarito e fontes</div>
+              </div>
+              <button class="btn btn-secondary" style="align-self:flex-start">Cancelar geração</button>
+            </section>
+            <section style="display:flex;flex-direction:column;gap:10px">
+              <b style="font-size:14px;color:var(--color-neutral-800)">Prévia — já pode começar a revisar</b>
+              <div style="padding:16px 18px;border-radius:22px;background:var(--color-neutral-100);font-size:14px;display:flex;flex-direction:column;gap:6px"><div style="display:flex;gap:8px;font-size:12px"><b>1.</b><span class="tag tag-neutral">Múltipla escolha</span><span class="tag tag-accent-2">Fácil</span></div>Quais características estruturais diferenciam ácidos graxos saturados de insaturados?</div>
+              <div style="padding:16px 18px;border-radius:22px;background:var(--color-neutral-100);font-size:14px;display:flex;flex-direction:column;gap:6px"><div style="display:flex;gap:8px;font-size:12px"><b>2.</b><span class="tag tag-neutral">Múltipla escolha</span><span class="tag tag-accent">Média</span></div>Um paciente com deficiência de lipase pancreática apresentaria qual alteração nas fezes?</div>
+              <div style="padding:16px 18px;border-radius:22px;background:var(--color-neutral-100);font-size:14px;display:flex;flex-direction:column;gap:6px"><div style="display:flex;gap:8px;font-size:12px"><b>3.</b><span class="tag tag-neutral">V ou F</span><span class="tag tag-accent">Média</span></div>O colesterol aumenta a fluidez da membrana em temperaturas baixas.</div>
+              <div style="padding:16px 18px;border-radius:22px;border:1.5px dashed var(--color-neutral-400);height:64px"></div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P6m</b> · Geração — falha e limite</div>
+      <div data-screen-label="P6m Geração falhou" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;gap:8px;padding:48px 12px 4px"><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="back" size="18" hint-size="18px,18px"></dc-import></button></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:16px;padding:0 20px 20px">
+          <div style="font-family:var(--font-heading);font-size:26px;line-height:1.15">P3 — Lipídios e membranas</div>
+          <div style="display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:24px;background:var(--color-accent-100);border:1px solid var(--color-accent-300);color:var(--color-accent-900)">
+            <div style="display:flex;gap:10px;align-items:center"><dc-import name="Icon" icon="cloudoff" size="20" hint-size="20px,20px"></dc-import><b style="font-size:16px">A geração parou na questão 7</b></div>
+            <span style="font-size:14px">Sua IA (Ollama Cloud) não respondeu. As 6 questões prontas foram salvas no rascunho. Nenhuma geração foi descontada.</span>
+            <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);min-height:48px"><dc-import name="Icon" icon="refresh" size="15" hint-size="15px,15px"></dc-import>Continuar de onde parou</button>
+            <button class="btn btn-secondary" style="min-height:44px;border-color:var(--color-accent-300)">Revisar as 6 questões</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:24px;background:var(--color-neutral-100)">
+            <div style="display:flex;gap:10px;align-items:center"><dc-import name="Icon" icon="chart" size="18" hint-size="18px,18px"></dc-import><b style="font-size:15px">Outro caso: limite atingido</b></div>
+            <span style="font-size:14px;color:var(--color-neutral-800)">Você usou 100 de 100 gerações do Plano Essencial. Renova em 1º nov.</span>
+            <div style="display:flex;gap:8px"><button class="btn btn-secondary" style="min-height:44px">Usar minha IA</button><button class="btn btn-ghost" style="color:var(--color-accent-700);min-height:44px">Ver planos</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P7</b> · Editor da avaliação</div>
+      <div data-screen-label="P7 Editor" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:12px;padding:14px 24px;background:var(--color-neutral-100);border-bottom:1px solid var(--color-divider)">
+          <button class="btn btn-icon btn-secondary"><dc-import name="Icon" icon="back" size="16" hint-size="16px,16px"></dc-import></button>
+          <div style="flex:1;min-width:0"><div style="display:flex;gap:8px;align-items:center"><b style="font-size:16px">P2 — Metabolismo de carboidratos</b><span class="tag tag-accent" style="font-weight:600">Em revisão</span><span class="tag tag-outline" style="color:var(--color-accent-700);border-color:var(--color-accent-700)">v3</span></div><div style="font-size:12px;color:var(--color-neutral-700);display:flex;gap:6px;align-items:center"><dc-import name="Icon" icon="lock" size="12" hint-size="12px,12px"></dc-import>Privada · salvo há 5 s · 12 questões · 10,0 pts</div></div>
+          <button class="btn btn-secondary"><dc-import name="Icon" icon="branch" size="15" hint-size="15px,15px"></dc-import>Versões</button>
+          <button class="btn btn-secondary"><dc-import name="Icon" icon="eye" size="15" hint-size="15px,15px"></dc-import>Pré-visualizar</button>
+          <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)">Revisar e finalizar</button>
+        </div>
+        <div style="flex:1;display:flex;min-height:0">
+          <nav style="width:280px;flex:none;display:flex;flex-direction:column;gap:4px;padding:16px;border-right:1px solid var(--color-divider);overflow:hidden">
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:0 6px 6px"><b style="font-size:13px">Questões</b><span style="font-size:12px;color:var(--color-neutral-700)">9 de 12 revisadas</span></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;font-size:13px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><b>1</b><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Saldo energético da glicólise</span><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px" style="color:var(--color-accent-2-700)"></dc-import></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;font-size:13px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><b>2</b><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Hexoquinase vs glicoquinase</span><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px" style="color:var(--color-accent-2-700)"></dc-import></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;font-size:13px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><b>3</b><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Destino do piruvato</span><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px" style="color:var(--color-accent-2-700)"></dc-import></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;font-size:13px;background:var(--color-neutral-100);box-shadow:var(--shadow-sm);font-weight:700;color:var(--color-accent-800)"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><b>4</b><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Etapa irreversível da via</span><dc-import name="Icon" icon="flag" size="14" hint-size="14px,14px"></dc-import></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;font-size:13px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><b>5</b><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Regulação por frutose-2,6-BP</span><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px" style="color:var(--color-accent-2-700)"></dc-import></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;font-size:13px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><b>6</b><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Fermentação lática no músculo</span><dc-import name="Icon" icon="flag" size="14" hint-size="14px,14px" style="color:var(--color-accent-700)"></dc-import></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;font-size:13px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><b>7</b><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Gliconeogênese: enzimas exclusivas</span><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px" style="color:var(--color-accent-2-700)"></dc-import></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;font-size:13px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><b>8</b><span style="flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Ciclo de Cori</span><dc-import name="Icon" icon="flag" size="14" hint-size="14px,14px" style="color:var(--color-accent-700)"></dc-import></div>
+            <div style="display:flex;gap:8px;align-items:center;padding:9px 10px;border-radius:14px;font-size:13px;color:var(--color-neutral-700)">… mais 4</div>
+            <div style="flex:1"></div>
+            <button class="btn btn-secondary"><dc-import name="Icon" icon="plus" size="15" hint-size="15px,15px"></dc-import>Adicionar questão</button>
+            <button class="btn btn-ghost" style="color:var(--color-accent-700)"><dc-import name="Icon" icon="sparkles" size="15" hint-size="15px,15px"></dc-import>Gerar mais com IA</button>
+          </nav>
+          <div style="flex:1;min-width:0;padding:24px 32px;display:flex;flex-direction:column;gap:16px;overflow:hidden">
+            <div style="display:flex;gap:8px;padding:10px 14px;border-radius:16px;background:var(--color-accent-100);border:1px solid var(--color-accent-200);font-size:13px;color:var(--color-accent-900);align-items:center"><dc-import name="Icon" icon="flag" size="15" hint-size="15px,15px"></dc-import><span style="flex:1">Marcada para revisão: duas alternativas podem ser consideradas corretas.</span><button class="btn btn-ghost" style="color:var(--color-accent-800)">Marcar como revisada</button></div>
+            <div style="display:flex;gap:10px;align-items:center"><b style="font-size:18px">Questão 4</b><div style="flex:1"></div><button class="btn btn-icon btn-secondary"><dc-import name="Icon" icon="copy" size="15" hint-size="15px,15px"></dc-import></button><button class="btn btn-icon btn-secondary"><dc-import name="Icon" icon="refresh" size="15" hint-size="15px,15px"></dc-import></button><button class="btn btn-icon btn-secondary" style="color:var(--color-accent-800)"><dc-import name="Icon" icon="trash" size="15" hint-size="15px,15px"></dc-import></button></div>
+            <div class="field"><label>Enunciado</label><textarea class="input" style="border-radius:20px;min-height:72px;background:var(--color-neutral-100);font-size:15px">Qual enzima catalisa a etapa irreversível que compromete a glicose exclusivamente com a glicólise?</textarea></div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;justify-content:space-between;font-size:12px;color:var(--color-neutral-800)"><span>Alternativas · clique no círculo para definir o gabarito</span><a href="#">Embaralhar</a></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:8px 12px 8px 10px;border-radius:999px;background:var(--color-accent-2-100);border:1.5px solid var(--color-accent-2-500)"><span style="width:22px;height:22px;border-radius:50%;background:var(--color-accent-2-600);color:var(--color-neutral-100);display:grid;place-items:center;flex:none"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><b style="width:16px">A</b><span style="flex:1;font-size:14px">Fosfofrutoquinase-1</span><span style="font-size:12px;font-weight:700;color:var(--color-accent-2-800)">Gabarito</span></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:8px 12px 8px 10px;border-radius:999px;background:var(--color-neutral-100);border:1px solid var(--color-divider)"><span style="width:22px;height:22px;border-radius:50%;border:1.5px solid var(--color-neutral-500);flex:none"></span><b style="width:16px">B</b><span style="flex:1;font-size:14px">Hexoquinase</span><dc-import name="Icon" icon="x" size="14" hint-size="14px,14px" style="color:var(--color-neutral-600)"></dc-import></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:8px 12px 8px 10px;border-radius:999px;background:var(--color-neutral-100);border:1px solid var(--color-divider)"><span style="width:22px;height:22px;border-radius:50%;border:1.5px solid var(--color-neutral-500);flex:none"></span><b style="width:16px">C</b><span style="flex:1;font-size:14px">Piruvato quinase</span><dc-import name="Icon" icon="x" size="14" hint-size="14px,14px" style="color:var(--color-neutral-600)"></dc-import></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:8px 12px 8px 10px;border-radius:999px;background:var(--color-neutral-100);border:1px solid var(--color-divider)"><span style="width:22px;height:22px;border-radius:50%;border:1.5px solid var(--color-neutral-500);flex:none"></span><b style="width:16px">D</b><span style="flex:1;font-size:14px">Gliceraldeído-3-fosfato desidrogenase</span><dc-import name="Icon" icon="x" size="14" hint-size="14px,14px" style="color:var(--color-neutral-600)"></dc-import></div>
+              <button class="btn btn-ghost" style="color:var(--color-accent-700);align-self:flex-start"><dc-import name="Icon" icon="plus" size="14" hint-size="14px,14px"></dc-import>Alternativa</button>
+            </div>
+          </div>
+          <aside style="width:290px;flex:none;display:flex;flex-direction:column;gap:16px;padding:24px 22px;border-left:1px solid var(--color-divider);background:var(--color-neutral-100)">
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--color-neutral-800)">Tipo</span><div class="input" style="display:flex;align-items:center;justify-content:space-between;background:var(--color-neutral-200)">Múltipla escolha<dc-import name="Icon" icon="down" size="15" hint-size="15px,15px"></dc-import></div></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--color-neutral-800)">Dificuldade</span><div class="seg"><label class="seg-opt"><input type="radio" name="p7d">Fácil</label><label class="seg-opt"><input type="radio" name="p7d" defaultChecked="{{ true }}">Média</label><label class="seg-opt"><input type="radio" name="p7d">Difícil</label></div></div>
+            <div class="field"><label>Pontuação</label><input class="input" value="1,0" style="background:var(--color-neutral-200)"></div>
+            <div class="field"><label>Explicação do gabarito</label><textarea class="input" style="border-radius:18px;min-height:96px;background:var(--color-neutral-200);font-size:13px">A PFK-1 forma frutose-1,6-bisfosfato, intermediário que só segue pela glicólise. A hexoquinase também é irreversível, mas seu produto tem outros destinos.</textarea></div>
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--color-neutral-800)">Fonte</span><span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 6px;border-radius:999px;background:var(--color-accent-100);color:var(--color-accent-800);font-size:12px;font-weight:600;border:1px solid var(--color-accent-200);width:max-content"><dc-import name="Icon" icon="file" size="13" hint-size="13px,13px"></dc-import>Glicólise.pdf · p. 12</span></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P7m</b> · Editor — celular</div>
+      <div data-screen-label="P7m Editor mobile" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;gap:8px;padding:48px 12px 8px;background:var(--color-neutral-100);border-bottom:1px solid var(--color-divider)"><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="back" size="18" hint-size="18px,18px"></dc-import></button><div style="flex:1;min-width:0"><b style="font-size:14px">P2 — Carboidratos</b><div style="font-size:12px;color:var(--color-neutral-700)">Questão 4 de 12 · privada</div></div><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="more" size="18" hint-size="18px,18px"></dc-import></button></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding:16px 20px;overflow:hidden">
+          <div style="display:flex;gap:8px"><span class="tag tag-neutral">Múltipla escolha</span><span class="tag tag-accent">Média</span><span class="tag tag-neutral">1,0 pt</span></div>
+          <div style="font-size:16px;line-height:1.5">Qual enzima catalisa a etapa irreversível que compromete a glicose exclusivamente com a glicólise?</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:15px">
+            <div style="display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:20px;background:var(--color-accent-2-100);border:1.5px solid var(--color-accent-2-500);min-height:44px;box-sizing:border-box"><span style="width:22px;height:22px;border-radius:50%;background:var(--color-accent-2-600);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1">A · Fosfofrutoquinase-1</span></div>
+            <div style="display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:20px;background:var(--color-neutral-100);min-height:44px;box-sizing:border-box"><span style="width:22px;height:22px;border-radius:50%;border:1.5px solid var(--color-neutral-500)"></span><span>B · Hexoquinase</span></div>
+            <div style="display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:20px;background:var(--color-neutral-100);min-height:44px;box-sizing:border-box"><span style="width:22px;height:22px;border-radius:50%;border:1.5px solid var(--color-neutral-500)"></span><span>C · Piruvato quinase</span></div>
+            <div style="display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:20px;background:var(--color-neutral-100);min-height:44px;box-sizing:border-box"><span style="width:22px;height:22px;border-radius:50%;border:1.5px solid var(--color-neutral-500)"></span><span>D · G3P desidrogenase</span></div>
+          </div>
+          <button class="btn btn-secondary" style="min-height:44px"><dc-import name="Icon" icon="pencil" size="15" hint-size="15px,15px"></dc-import>Editar questão</button>
+        </div>
+        <div style="display:flex;gap:8px;padding:12px 20px 28px;background:var(--color-neutral-100);border-top:1px solid var(--color-divider)"><button class="btn btn-secondary btn-icon" style="width:48px;height:48px"><dc-import name="Icon" icon="left" size="18" hint-size="18px,18px"></dc-import></button><button class="btn btn-primary" style="flex:1;background:var(--color-accent-700);color:var(--color-neutral-100);min-height:48px"><dc-import name="Icon" icon="check" size="15" hint-size="15px,15px"></dc-import>Marcar revisada</button><button class="btn btn-secondary btn-icon" style="width:48px;height:48px"><dc-import name="Icon" icon="right" size="18" hint-size="18px,18px"></dc-import></button></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P8</b> · Revisão, finalização, duplicação e versões</div>
+      <div data-screen-label="P8 Revisão e versões" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="prof" active="avaliacoes" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:32px 40px;display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;overflow:hidden">
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div><div style="font-size:13px;color:var(--color-neutral-700)">P2 — Metabolismo de carboidratos · v3</div><h1 style="font-size:32px;margin:2px 0 0">Revisar e finalizar</h1></div>
+            <section style="display:flex;flex-direction:column;gap:4px;padding:20px 24px;border-radius:28px;background:var(--color-neutral-100)">
+              <b style="font-size:15px;margin-bottom:6px">Verificação</b>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-divider);font-size:14px"><span style="width:22px;height:22px;border-radius:50%;background:var(--color-accent-2-600);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1">Todas as questões têm gabarito</span></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-divider);font-size:14px"><span style="width:22px;height:22px;border-radius:50%;background:var(--color-accent-2-600);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1">Pontuação soma 10,0</span></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-divider);font-size:14px"><span style="width:22px;height:22px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="alert" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1"><b>3 questões ainda marcadas para revisão</b> — 4, 6 e 8</span><button class="btn btn-ghost" style="color:var(--color-accent-700)">Ir para a 4</button></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;font-size:14px"><span style="width:22px;height:22px;border-radius:50%;background:var(--color-accent-2-600);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1">Distribuição: 4 fáceis · 6 médias · 2 difíceis</span></div>
+            </section>
+            <section style="display:flex;gap:14px;padding:18px 22px;border-radius:24px;background:var(--color-neutral-100);border:1px solid var(--color-divider);align-items:flex-start">
+              <dc-import name="Icon" icon="lock" size="20" hint-size="20px,20px" style="margin-top:2px"></dc-import>
+              <div style="flex:1;font-size:14px;line-height:1.55"><b>Finalizar não libera para a turma.</b> A avaliação fica bloqueada para edição e pronta para exportar. Para alterar depois, crie uma nova versão. Para orientar os alunos, publique um roteiro de estudo.</div>
+            </section>
+            <div style="display:flex;gap:10px;align-items:center"><button class="btn btn-primary" disabled style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:12px 20px">Finalizar avaliação</button><span style="font-size:13px;color:var(--color-neutral-700)">Resolva as 3 marcações para finalizar.</span><div style="flex:1"></div><button class="btn btn-secondary"><dc-import name="Icon" icon="copy" size="15" hint-size="15px,15px"></dc-import>Duplicar</button><button class="btn btn-secondary"><dc-import name="Icon" icon="download" size="15" hint-size="15px,15px"></dc-import>Exportar</button></div>
+          </div>
+          <aside style="display:flex;flex-direction:column;gap:6px;padding:22px;border-radius:28px;background:var(--color-neutral-100);align-self:start">
+            <b style="font-size:16px;margin-bottom:6px">Versões</b>
+            <div style="display:flex;gap:12px;padding:12px;border-radius:18px;background:var(--color-accent-100)"><span style="width:10px;height:10px;border-radius:50%;background:var(--color-accent-700);margin-top:6px;flex:none"></span><div style="flex:1;font-size:13px"><div style="display:flex;justify-content:space-between"><b style="font-size:14px">v3 · atual</b><span class="tag tag-accent">Em revisão</span></div><div style="color:var(--color-neutral-800)">Hoje, 15:02 · 3 questões trocadas</div></div></div>
+            <div style="display:flex;gap:12px;padding:12px"><span style="width:10px;height:10px;border-radius:50%;background:var(--color-neutral-500);margin-top:6px;flex:none"></span><div style="flex:1;font-size:13px"><div style="display:flex;justify-content:space-between"><b style="font-size:14px">v2</b><span class="tag tag-accent-2">Finalizada</span></div><div style="color:var(--color-neutral-700)">30 set · aplicada no Diurno</div><div style="display:flex;gap:12px;margin-top:4px"><a href="#">Ver</a><a href="#">Comparar</a><a href="#">Exportar</a></div></div></div>
+            <div style="display:flex;gap:12px;padding:12px"><span style="width:10px;height:10px;border-radius:50%;background:var(--color-neutral-500);margin-top:6px;flex:none"></span><div style="flex:1;font-size:13px"><div style="display:flex;justify-content:space-between"><b style="font-size:14px">v1</b><span class="tag tag-neutral">Gerada por IA</span></div><div style="color:var(--color-neutral-700)">28 set · 12 questões originais</div><div style="display:flex;gap:12px;margin-top:4px"><a href="#">Ver</a><a href="#">Restaurar</a></div></div></div>
+          </aside>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P9</b> · Exportação — prova e gabarito separados</div>
+      <div data-screen-label="P9 Exportar" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex;position:relative">
+        <dc-import name="Sidebar" role="prof" active="avaliacoes" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;padding:32px 40px"><h1 style="font-size:32px;margin:0">P1 — Bioquímica estrutural</h1></main>
+        <div style="position:absolute;inset:0;background:color-mix(in srgb, var(--color-neutral-900) 45%, transparent);display:grid;place-items:center">
+          <div class="dialog" style="width:720px;background:var(--color-neutral-100);gap:18px;padding:28px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><div class="dialog-title" style="font-size:24px">Exportar P1 — v2</div><button class="btn btn-icon btn-ghost" style="color:var(--color-text)"><dc-import name="Icon" icon="x" size="18" hint-size="18px,18px"></dc-import></button></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+              <div style="display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:24px;border:2px solid var(--color-accent-700)">
+                <div style="display:flex;gap:10px;align-items:center"><dc-import name="Icon" icon="printer" size="20" hint-size="20px,20px" style="color:var(--color-accent-700)"></dc-import><b style="font-size:16px;flex:1">Prova</b><span style="width:20px;height:20px;border-radius:7px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span></div>
+                <span style="font-size:13px;color:var(--color-neutral-800)">Somente enunciados e alternativas. Sem gabarito nem explicações.</span>
+                <div class="seg" style="align-self:flex-start"><label class="seg-opt"><input type="radio" name="p9a" defaultChecked="{{ true }}">PDF</label><label class="seg-opt"><input type="radio" name="p9a">DOCX</label></div>
+                <div style="display:flex;gap:10px;align-items:center;font-size:13px"><span style="width:18px;height:18px;border-radius:6px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="12" hint-size="12px,12px"></dc-import></span>Cabeçalho com nome, turma e data</div>
+                <div style="display:flex;gap:10px;align-items:center;font-size:13px"><span style="width:18px;height:18px;border-radius:6px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="12" hint-size="12px,12px"></dc-import></span>Gerar 2 versões embaralhadas (A e B)</div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:12px;padding:18px;border-radius:24px;border:2px solid var(--color-accent-700)">
+                <div style="display:flex;gap:10px;align-items:center"><dc-import name="Icon" icon="key" size="20" hint-size="20px,20px" style="color:var(--color-accent-700)"></dc-import><b style="font-size:16px;flex:1">Gabarito</b><span style="width:20px;height:20px;border-radius:7px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span></div>
+                <span style="font-size:13px;color:var(--color-neutral-800)">Arquivo separado, só para você. Inclui as versões A e B.</span>
+                <div class="seg" style="align-self:flex-start"><label class="seg-opt"><input type="radio" name="p9b" defaultChecked="{{ true }}">PDF</label><label class="seg-opt"><input type="radio" name="p9b">DOCX</label></div>
+                <div style="display:flex;gap:10px;align-items:center;font-size:13px"><span style="width:18px;height:18px;border-radius:6px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="12" hint-size="12px,12px"></dc-import></span>Incluir explicações</div>
+                <div style="display:flex;gap:10px;align-items:center;font-size:13px"><span style="width:18px;height:18px;border-radius:6px;border:1.5px solid var(--color-neutral-500)"></span>Incluir referência de página</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--color-neutral-200);font-size:13px"><dc-import name="Icon" icon="file" size="16" hint-size="16px,16px"></dc-import><span style="flex:1">Serão baixados: <b>P1_v2_prova_A.pdf</b>, <b>P1_v2_prova_B.pdf</b> e <b>P1_v2_gabarito.pdf</b></span></div>
+            <div class="dialog-actions"><button class="btn btn-secondary">Cancelar</button><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)"><dc-import name="Icon" icon="download" size="15" hint-size="15px,15px"></dc-import>Baixar 3 arquivos</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>P10</b> · Roteiro de estudo — só tópicos e competências</div>
+      <div data-screen-label="P10 Roteiro" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="prof" active="roteiros" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:28px 40px;display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;overflow:hidden">
+          <div style="display:flex;flex-direction:column;gap:16px;min-width:0">
+            <div><div style="font-size:13px;color:var(--color-neutral-700)">Criado a partir de P2 — Metabolismo de carboidratos</div><h1 style="font-size:32px;margin:2px 0 0">Roteiro de estudo — P2</h1></div>
+            <div style="display:flex;gap:12px;padding:12px 16px;border-radius:18px;background:var(--color-neutral-100);border:1px solid var(--color-divider);font-size:13px;align-items:center"><dc-import name="Icon" icon="shield" size="18" hint-size="18px,18px" style="color:var(--color-accent-2-700)"></dc-import><span style="flex:1">O roteiro <b>nunca inclui</b> questões, alternativas, gabarito ou pontuação. Os alunos veem só o que está à direita.</span></div>
+            <section style="display:flex;flex-direction:column;gap:8px;padding:18px 20px;border-radius:24px;background:var(--color-neutral-100)">
+              <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:14px">Tópicos</b><button class="btn btn-ghost" style="color:var(--color-accent-700)"><dc-import name="Icon" icon="plus" size="14" hint-size="14px,14px"></dc-import>Tópico</button></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:8px 12px;border-radius:14px;border:1px solid var(--color-divider);font-size:14px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><span style="flex:1">Glicólise: fases e saldo energético</span><span style="font-size:12px;color:var(--color-neutral-700)">Glicólise.pdf · p. 8–15</span></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:8px 12px;border-radius:14px;border:1px solid var(--color-divider);font-size:14px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><span style="flex:1">Regulação da PFK-1 e hexoquinase</span><span style="font-size:12px;color:var(--color-neutral-700)">p. 12–14</span></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:8px 12px;border-radius:14px;border:1px solid var(--color-divider);font-size:14px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><span style="flex:1">Destinos do piruvato e fermentação</span><span style="font-size:12px;color:var(--color-neutral-700)">p. 18–22</span></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:8px 12px;border-radius:14px;border:1px solid var(--color-divider);font-size:14px"><dc-import name="Icon" icon="grip" size="14" hint-size="14px,14px" style="color:var(--color-neutral-500)"></dc-import><span style="flex:1">Gliconeogênese e ciclo de Cori</span><span style="font-size:12px;color:var(--color-neutral-700)">Aula 5 · slides 3–14</span></div>
+            </section>
+            <section style="display:flex;flex-direction:column;gap:8px;padding:18px 20px;border-radius:24px;background:var(--color-neutral-100)">
+              <b style="font-size:14px">Competências esperadas</b>
+              <div style="display:flex;gap:8px;flex-wrap:wrap"><span class="tag tag-accent-2" style="font-size:13px;padding:6px 12px">Relacionar regulação enzimática ao estado energético</span><span class="tag tag-accent-2" style="font-size:13px;padding:6px 12px">Interpretar casos de jejum e exercício</span><span class="tag tag-accent-2" style="font-size:13px;padding:6px 12px">Comparar vias aeróbica e anaeróbica</span><span class="tag tag-outline" style="font-size:13px;padding:6px 12px;color:var(--color-accent-700);border-color:var(--color-accent-700)">+ competência</span></div>
+            </section>
+            <div style="display:flex;gap:10px;align-items:center;margin-top:auto"><div class="input" style="width:280px;display:flex;align-items:center;justify-content:space-between;background:var(--color-neutral-100)">Bioquímica — Noturno<dc-import name="Icon" icon="down" size="15" hint-size="15px,15px"></dc-import></div><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:11px 20px"><dc-import name="Icon" icon="send" size="15" hint-size="15px,15px"></dc-import>Publicar para a turma</button></div>
+          </div>
+          <aside style="display:flex;flex-direction:column;gap:12px">
+            <div style="font-size:12px;color:var(--color-neutral-700);display:flex;gap:6px;align-items:center"><dc-import name="Icon" icon="eye" size="13" hint-size="13px,13px"></dc-import>Como o aluno vê</div>
+            <div style="display:flex;flex-direction:column;gap:14px;padding:24px;border-radius:28px;background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+              <span class="tag tag-accent-2" style="align-self:flex-start;font-weight:600">Roteiro · Bioquímica</span>
+              <div style="font-family:var(--font-heading);font-size:22px;line-height:1.2">Prepare-se para a P2</div>
+              <div style="font-size:13px;color:var(--color-neutral-700)">Publicado pela Profa. Marina · prova em 16 out</div>
+              <div style="display:flex;flex-direction:column;gap:10px;font-size:14px">
+                <div style="display:flex;gap:10px"><b style="color:var(--color-accent-2-700)">1</b>Glicólise: fases e saldo energético</div>
+                <div style="display:flex;gap:10px"><b style="color:var(--color-accent-2-700)">2</b>Regulação da PFK-1 e hexoquinase</div>
+                <div style="display:flex;gap:10px"><b style="color:var(--color-accent-2-700)">3</b>Destinos do piruvato e fermentação</div>
+                <div style="display:flex;gap:10px"><b style="color:var(--color-accent-2-700)">4</b>Gliconeogênese e ciclo de Cori</div>
+              </div>
+              <button class="btn btn-secondary" style="align-self:flex-start">Criar plano a partir do roteiro</button>
+            </div>
+          </aside>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

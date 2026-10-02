@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/styles.css">
+<script src="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/_ds_bundle.js"></script>
+<style>html,body{margin:0;background:var(--color-neutral-300)} a{color:var(--color-accent-700)} a:hover{color:var(--color-accent-800)}</style>
+</helmet>
+<div style="padding:72px;display:flex;flex-direction:column;gap:64px">
+  <header style="display:flex;flex-direction:column;gap:8px;max-width:760px">
+    <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-800);font-weight:700">Facilita Estudo · 01</div>
+    <h1 style="font-size:48px;margin:0">Entrada e conta</h1>
+    <p style="font-size:16px;color:var(--color-neutral-800);margin:0">Home pública → cadastro (perfil → dados) → login / recuperação → escolha de contexto quando a pessoa tem os dois perfis.</p>
+  </header>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>E1</b> · Home pública — desktop</div>
+      <div data-screen-label="E1 Home pública" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;position:relative">
+        <div style="position:absolute;right:-120px;top:-80px;width:520px;height:520px;border-radius:50%;background:var(--color-accent-100)"></div>
+        <div style="position:absolute;right:220px;top:360px;width:260px;height:260px;border-radius:50%;background:var(--color-accent-2-100)"></div>
+        <nav class="nav" style="padding:24px 56px;position:relative">
+          <div class="nav-brand" style="display:flex;align-items:center;gap:10px"><span style="width:30px;height:30px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:16px">f</span>Facilita Estudo</div>
+          <a href="#">Para professores</a><a href="#">Para alunos</a><a href="#">Planos</a>
+          <button class="btn btn-secondary">Entrar</button>
+          <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)">Criar conta</button>
+        </nav>
+        <div style="display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px;padding:56px 56px 0;position:relative;flex:1">
+          <div style="display:flex;flex-direction:column;gap:22px;padding-top:24px">
+            <h1 style="font-size:54px;line-height:1.06;margin:0">Seus materiais, prontos para ensinar e aprender.</h1>
+            <p style="font-size:18px;line-height:1.6;color:var(--color-neutral-800);margin:0;max-width:520px">Professores organizam turmas e criam avaliações com IA a partir dos próprios PDFs. Alunos estudam com resumos, flashcards e um tutor que sempre mostra a página de onde veio cada resposta.</p>
+            <div style="display:flex;gap:12px"><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:13px 22px;font-size:15px">Começar grátis</button><button class="btn btn-secondary" style="padding:13px 22px;font-size:15px">Já tenho conta</button></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:28px;max-width:560px">
+              <div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:8px;font-weight:700"><dc-import name="Icon" icon="cap" size="18" hint-size="18px,18px" style="color:var(--color-accent-700)"></dc-import>Para professores</div><div style="font-size:14px;line-height:1.6;color:var(--color-neutral-800)">Turmas e materiais liberados<br>Provas geradas e revisadas por você<br>Prova e gabarito exportados à parte</div></div>
+              <div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:8px;font-weight:700"><dc-import name="Icon" icon="book" size="18" hint-size="18px,18px" style="color:var(--color-accent-2-700)"></dc-import>Para alunos</div><div style="font-size:14px;line-height:1.6;color:var(--color-neutral-800)">Tutor com referência por página<br>Resumos, flashcards e plano<br>Simulados com explicações</div></div>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px;padding:24px;margin-top:8px;border-radius:32px;background:var(--color-neutral-100);box-shadow:var(--shadow-md);align-self:start">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--color-neutral-700)"><dc-import name="Icon" icon="file" size="16" hint-size="16px,16px"></dc-import>Cap. 3 — Glicólise.pdf</div>
+            <div style="align-self:flex-end;max-width:80%;padding:12px 16px;border-radius:20px 20px 6px 20px;background:var(--color-neutral-200);font-size:14px">Por que a hexoquinase é inibida pelo próprio produto?</div>
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:14px;line-height:1.6">
+              <div>A glicose-6-fosfato acumulada sinaliza que a célula já tem substrato suficiente, então ela inibe a hexoquinase por retroalimentação negativa <b style="color:var(--color-accent-700)">[1]</b>. No fígado, a glicoquinase não sofre essa inibição <b style="color:var(--color-accent-700)">[2]</b>.</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 6px;border-radius:999px;background:var(--color-accent-100);color:var(--color-accent-800);font-size:12px;font-weight:600;border:1px solid var(--color-accent-200)"><span style="width:18px;height:18px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:10px">1</span>Glicólise · p. 12</span>
+                <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 6px;border-radius:999px;background:var(--color-accent-100);color:var(--color-accent-800);font-size:12px;font-weight:600;border:1px solid var(--color-accent-200)"><span style="width:18px;height:18px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:10px">2</span>Glicólise · p. 14</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>E1m</b> · Home pública — celular</div>
+      <div data-screen-label="E1m Home pública mobile" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;position:relative;box-sizing:border-box">
+        <div style="position:absolute;right:-90px;top:60px;width:260px;height:260px;border-radius:50%;background:var(--color-accent-100)"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:52px 20px 12px;position:relative"><div style="display:flex;align-items:center;gap:8px;font-family:var(--font-heading);font-size:18px"><span style="width:28px;height:28px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:15px">f</span>Facilita Estudo</div><button class="btn btn-icon btn-secondary" style="width:44px;height:44px"><dc-import name="Icon" icon="menu" size="18" hint-size="18px,18px"></dc-import></button></div>
+        <div style="display:flex;flex-direction:column;gap:18px;padding:36px 20px;position:relative">
+          <h1 style="font-size:38px;line-height:1.08;margin:0">Seus materiais, prontos para ensinar e aprender.</h1>
+          <p style="font-size:16px;line-height:1.6;color:var(--color-neutral-800);margin:0">Avaliações com IA para professores. Resumos, flashcards e tutor com referência por página para alunos.</p>
+          <button class="btn btn-primary btn-block" style="background:var(--color-accent-700);color:var(--color-neutral-100);min-height:48px;font-size:15px">Começar grátis</button>
+          <button class="btn btn-secondary" style="min-height:48px;font-size:15px">Já tenho conta</button>
+          <div style="display:flex;flex-direction:column;gap:14px;margin-top:12px;padding:20px;border-radius:28px;background:var(--color-neutral-100)">
+            <div style="display:flex;gap:10px;align-items:center;font-weight:700"><dc-import name="Icon" icon="cap" size="18" hint-size="18px,18px" style="color:var(--color-accent-700)"></dc-import>Para professores</div>
+            <div style="font-size:14px;color:var(--color-neutral-800)">Turmas, materiais liberados e provas revisadas por você.</div>
+            <div style="display:flex;gap:10px;align-items:center;font-weight:700"><dc-import name="Icon" icon="book" size="18" hint-size="18px,18px" style="color:var(--color-accent-2-700)"></dc-import>Para alunos</div>
+            <div style="font-size:14px;color:var(--color-neutral-800)">Estude com o que o professor liberou e com seus próprios arquivos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>E2</b> · Cadastro — escolha do perfil</div>
+      <div data-screen-label="E2 Cadastro perfil" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <div style="flex:1;display:flex;flex-direction:column;padding:40px 72px;background:var(--color-neutral-100)">
+          <div style="display:flex;align-items:center;gap:10px;font-family:var(--font-heading);font-size:19px"><span style="width:30px;height:30px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:16px">f</span>Facilita Estudo</div>
+          <div style="display:flex;flex-direction:column;gap:22px;margin-top:88px;max-width:520px">
+            <div style="font-size:13px;color:var(--color-neutral-700)">Passo 1 de 2</div>
+            <h1 style="font-size:36px;margin:0">Como você vai usar o Facilita Estudo?</h1>
+            <p style="margin:0;color:var(--color-neutral-800)">Escolha o perfil inicial. Depois você pode ativar o outro em Configurações e alternar a qualquer momento.</p>
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <label style="display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:24px;border:2px solid var(--color-accent-700);background:var(--color-accent-100);cursor:pointer">
+                <span style="width:44px;height:44px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;flex:none"><dc-import name="Icon" icon="cap" size="20" hint-size="20px,20px"></dc-import></span>
+                <span style="flex:1;display:flex;flex-direction:column;gap:4px"><b style="font-size:16px">Sou professor(a)</b><span style="font-size:14px;color:var(--color-neutral-800)">Organizar turmas, liberar materiais e criar avaliações.</span></span>
+                <span style="width:20px;height:20px;border-radius:50%;border:6px solid var(--color-accent-700);background:var(--color-neutral-100);flex:none;margin-top:2px;box-sizing:border-box"></span>
+              </label>
+              <label style="display:flex;gap:16px;align-items:flex-start;padding:20px;border-radius:24px;border:1px solid var(--color-divider);cursor:pointer">
+                <span style="width:44px;height:44px;border-radius:50%;background:var(--color-accent-2-100);color:var(--color-accent-2-800);display:grid;place-items:center;flex:none"><dc-import name="Icon" icon="book" size="20" hint-size="20px,20px"></dc-import></span>
+                <span style="flex:1;display:flex;flex-direction:column;gap:4px"><b style="font-size:16px">Sou aluno(a)</b><span style="font-size:14px;color:var(--color-neutral-800)">Estudar com resumos, flashcards, simulados e tutor de IA.</span></span>
+                <span style="width:20px;height:20px;border-radius:50%;border:1.5px solid var(--color-neutral-500);flex:none;margin-top:2px"></span>
+              </label>
+            </div>
+            <div style="display:flex;gap:12px;align-items:center"><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:12px 22px">Continuar</button><span style="font-size:14px;color:var(--color-neutral-700)">Já tem conta? <a href="#">Entrar</a></span></div>
+          </div>
+        </div>
+        <div style="width:440px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:48px">
+          <div style="position:absolute;left:-60px;top:80px;width:380px;height:380px;border-radius:50%;background:var(--color-accent-100)"></div>
+          <div style="position:absolute;right:-80px;top:300px;width:280px;height:280px;border-radius:50%;background:var(--color-accent-2-100)"></div>
+          <div style="position:relative;font-family:var(--font-heading);font-size:28px;line-height:1.2">Uma conta, dois papéis. Ensine numa turma e estude em outra.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>E3</b> · Cadastro — dados, com erros de formulário</div>
+      <div data-screen-label="E3 Cadastro dados" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <div style="flex:1;display:flex;flex-direction:column;padding:40px 72px;background:var(--color-neutral-100)">
+          <div style="display:flex;align-items:center;gap:10px;font-family:var(--font-heading);font-size:19px"><span style="width:30px;height:30px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:16px">f</span>Facilita Estudo</div>
+          <div style="display:flex;flex-direction:column;gap:18px;margin-top:48px;max-width:480px">
+            <div style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--color-neutral-700)"><dc-import name="Icon" icon="left" size="16" hint-size="16px,16px"></dc-import>Passo 2 de 2 · <span class="tag tag-accent" style="font-weight:600">Professor(a)</span></div>
+            <h1 style="font-size:36px;margin:0">Crie sua conta</h1>
+            <div style="display:flex;gap:12px;padding:12px 16px;border-radius:18px;background:var(--color-accent-100);color:var(--color-accent-900);font-size:14px;align-items:center;border:1px solid var(--color-accent-200)"><dc-import name="Icon" icon="alert" size="18" hint-size="18px,18px"></dc-import>Corrija 2 campos para continuar.</div>
+            <div class="field"><label>Nome completo</label><input class="input" value="Marina Couto"></div>
+            <div class="field"><label style="color:var(--color-accent-800)">E-mail</label><input class="input" value="marina.couto@email" style="border-color:var(--color-accent-700);background:var(--color-accent-100)"><div style="display:flex;gap:6px;align-items:center;margin-top:6px;font-size:12px;color:var(--color-accent-800)"><dc-import name="Icon" icon="alert" size="14" hint-size="14px,14px"></dc-import>Digite um e-mail válido, como nome@dominio.com.</div></div>
+            <div class="field"><label style="color:var(--color-accent-800)">Senha</label><input class="input" type="password" value="abc" style="border-color:var(--color-accent-700);background:var(--color-accent-100)"><div style="display:flex;flex-direction:column;gap:4px;margin-top:8px;font-size:12px"><span style="display:flex;gap:6px;align-items:center;color:var(--color-accent-800)"><dc-import name="Icon" icon="x" size="13" hint-size="13px,13px"></dc-import>Pelo menos 8 caracteres</span><span style="display:flex;gap:6px;align-items:center;color:var(--color-accent-2-700)"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import>Uma letra</span><span style="display:flex;gap:6px;align-items:center;color:var(--color-accent-800)"><dc-import name="Icon" icon="x" size="13" hint-size="13px,13px"></dc-import>Um número</span></div></div>
+            <div class="field"><label>Instituição (opcional)</label><input class="input" placeholder="Ex.: Universidade Federal, Colégio Estadual…"></div>
+            <div style="display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--color-neutral-800)"><span style="width:20px;height:20px;border-radius:7px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;flex:none"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span>Li e aceito os <a href="#">Termos de uso</a> e a <a href="#">Política de privacidade</a>.</div>
+            <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:12px 22px;align-self:flex-start">Criar conta</button>
+          </div>
+        </div>
+        <div style="width:440px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:48px">
+          <div style="position:absolute;left:-60px;top:80px;width:380px;height:380px;border-radius:50%;background:var(--color-accent-100)"></div>
+          <div style="position:absolute;right:-80px;top:300px;width:280px;height:280px;border-radius:50%;background:var(--color-accent-2-100)"></div>
+          <div style="position:relative;font-family:var(--font-heading);font-size:28px;line-height:1.2">Uma conta, dois papéis. Ensine numa turma e estude em outra.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>E4</b> · Login — desktop</div>
+      <div data-screen-label="E4 Login" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <div style="flex:1;display:flex;flex-direction:column;padding:40px 72px;background:var(--color-neutral-100)">
+          <div style="display:flex;align-items:center;gap:10px;font-family:var(--font-heading);font-size:19px"><span style="width:30px;height:30px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:16px">f</span>Facilita Estudo</div>
+          <div style="display:flex;flex-direction:column;gap:18px;margin-top:120px;max-width:420px">
+            <h1 style="font-size:36px;margin:0">Bom te ver de novo</h1>
+            <div class="field"><label>E-mail</label><input class="input" value="marina.couto@email.com"></div>
+            <div class="field"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px"><span style="color:var(--color-neutral-800)">Senha</span><a href="#">Esqueci minha senha</a></div><input class="input" type="password" value="••••••••••"></div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px"><span style="width:20px;height:20px;border-radius:7px;border:1.5px solid var(--color-neutral-500)"></span>Manter conectado neste dispositivo</div>
+            <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:12px 22px;align-self:flex-start">Entrar</button>
+            <span style="font-size:14px;color:var(--color-neutral-700)">Ainda não tem conta? <a href="#">Criar conta</a></span>
+          </div>
+        </div>
+        <div style="width:440px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:48px">
+          <div style="position:absolute;left:-60px;top:80px;width:380px;height:380px;border-radius:50%;background:var(--color-accent-100)"></div>
+          <div style="position:absolute;right:-80px;top:300px;width:280px;height:280px;border-radius:50%;background:var(--color-accent-2-100)"></div>
+          <div style="position:relative;font-family:var(--font-heading);font-size:28px;line-height:1.2">Toda resposta aponta a página do material de onde veio.</div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>E4m</b> · Login — erro de credencial</div>
+      <div data-screen-label="E4m Login mobile" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-100);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box;padding:56px 20px 20px;gap:18px">
+        <div style="display:flex;align-items:center;gap:8px;font-family:var(--font-heading);font-size:18px"><span style="width:28px;height:28px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:15px">f</span>Facilita Estudo</div>
+        <h1 style="font-size:32px;margin:40px 0 0">Bom te ver de novo</h1>
+        <div style="display:flex;gap:10px;padding:12px 14px;border-radius:18px;background:var(--color-accent-100);color:var(--color-accent-900);font-size:14px;border:1px solid var(--color-accent-200)"><dc-import name="Icon" icon="alert" size="18" hint-size="18px,18px"></dc-import><span>E-mail ou senha incorretos. Restam 3 tentativas antes do bloqueio temporário.</span></div>
+        <div class="field"><label>E-mail</label><input class="input" value="lucas.andrade@email.com" style="min-height:48px"></div>
+        <div class="field"><label>Senha</label><input class="input" type="password" value="••••••" style="min-height:48px;border-color:var(--color-accent-700)"></div>
+        <a href="#" style="font-size:14px;padding:6px 0">Esqueci minha senha</a>
+        <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);min-height:48px;font-size:15px">Entrar</button>
+        <div style="flex:1"></div>
+        <span style="font-size:14px;color:var(--color-neutral-700);text-align:center">Ainda não tem conta? <a href="#">Criar conta</a></span>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>E5</b> · Recuperação de senha — pedido</div>
+      <div data-screen-label="E5 Recuperar senha" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex;align-items:center;justify-content:center;position:relative">
+        <div style="position:absolute;left:-120px;bottom:-140px;width:460px;height:460px;border-radius:50%;background:var(--color-accent-100)"></div>
+        <div style="position:relative;width:460px;display:flex;flex-direction:column;gap:18px;padding:40px;border-radius:32px;background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+          <div style="display:flex;align-items:center;gap:6px;font-size:14px;color:var(--color-accent-700)"><dc-import name="Icon" icon="back" size="16" hint-size="16px,16px"></dc-import>Voltar ao login</div>
+          <h1 style="font-size:30px;margin:0">Recuperar senha</h1>
+          <p style="margin:0;color:var(--color-neutral-800);font-size:15px">Informe o e-mail da conta. Enviaremos um link válido por 30 minutos.</p>
+          <div class="field"><label>E-mail</label><input class="input" value="marina.couto@email.com"></div>
+          <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:12px 22px;align-self:flex-start">Enviar link</button>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>E5m</b> · Recuperação — e-mail enviado</div>
+      <div data-screen-label="E5m Link enviado" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-100);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box;padding:56px 20px 28px;gap:18px">
+        <div style="display:flex;align-items:center;gap:6px;font-size:14px;color:var(--color-accent-700);min-height:44px"><dc-import name="Icon" icon="back" size="16" hint-size="16px,16px"></dc-import>Voltar ao login</div>
+        <div style="width:72px;height:72px;border-radius:50%;background:var(--color-accent-2-100);color:var(--color-accent-2-800);display:grid;place-items:center;margin-top:40px"><dc-import name="Icon" icon="mail" size="30" hint-size="30px,30px"></dc-import></div>
+        <h1 style="font-size:30px;margin:0">Confira seu e-mail</h1>
+        <p style="margin:0;color:var(--color-neutral-800)">Se existir uma conta para <b>lucas.andrade@email.com</b>, você receberá o link em instantes. Verifique também o spam.</p>
+        <div style="flex:1"></div>
+        <button class="btn btn-secondary" style="min-height:48px">Reenviar em 0:42</button>
+        <button class="btn btn-ghost" style="color:var(--color-accent-700);min-height:44px">Usar outro e-mail</button>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>E6</b> · Seleção de contexto — pessoa com dois perfis</div>
+      <div data-screen-label="E6 Contexto" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex;flex-direction:column;padding:48px 72px;gap:56px">
+        <div style="display:flex;align-items:center;gap:10px;font-family:var(--font-heading);font-size:19px"><span style="width:30px;height:30px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:16px">f</span>Facilita Estudo</div>
+        <div style="display:flex;flex-direction:column;gap:10px"><h1 style="font-size:40px;margin:0">Olá, Marina. Como quer entrar hoje?</h1><p style="margin:0;color:var(--color-neutral-800)">Os dados de cada perfil ficam separados. Você pode trocar a qualquer momento pelo menu lateral.</p></div>
+        <div style="display:grid;grid-template-columns:repeat(2,minmax(0,440px));gap:24px">
+          <div style="display:flex;flex-direction:column;gap:16px;padding:32px;border-radius:32px;background:var(--color-neutral-100);border:2px solid var(--color-accent-700)">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="width:52px;height:52px;border-radius:50%;background:var(--color-accent-100);color:var(--color-accent-800);display:grid;place-items:center"><dc-import name="Icon" icon="cap" size="24" hint-size="24px,24px"></dc-import></span><span class="tag tag-neutral">Último acesso</span></div>
+            <div style="font-family:var(--font-heading);font-size:26px">Professora</div>
+            <div style="font-size:14px;line-height:1.7;color:var(--color-neutral-800)">3 turmas · 2 disciplinas<br>1 avaliação em revisão</div>
+            <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);align-self:flex-start;padding:11px 20px">Entrar como professora</button>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:16px;padding:32px;border-radius:32px;background:var(--color-neutral-100);border:1px solid var(--color-divider)">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="width:52px;height:52px;border-radius:50%;background:var(--color-accent-2-100);color:var(--color-accent-2-800);display:grid;place-items:center"><dc-import name="Icon" icon="book" size="24" hint-size="24px,24px"></dc-import></span></div>
+            <div style="font-family:var(--font-heading);font-size:26px">Aluna</div>
+            <div style="font-size:14px;line-height:1.7;color:var(--color-neutral-800)">Especialização em Docência · 1 turma<br>Simulado pendente para sexta</div>
+            <button class="btn btn-secondary" style="align-self:flex-start;padding:11px 20px">Entrar como aluna</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center;font-size:14px;color:var(--color-neutral-800)"><span style="width:20px;height:20px;border-radius:7px;border:1.5px solid var(--color-neutral-500)"></span>Lembrar minha escolha neste dispositivo</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>E6m</b> · Troca de contexto — folha inferior</div>
+      <div data-screen-label="E6m Troca de contexto" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box;position:relative">
+        <div style="padding:56px 20px;display:flex;flex-direction:column;gap:12px;opacity:.5"><div style="font-family:var(--font-heading);font-size:26px">Boa tarde, Marina</div><div style="height:120px;border-radius:24px;background:var(--color-neutral-100)"></div><div style="height:200px;border-radius:24px;background:var(--color-neutral-100)"></div></div>
+        <div style="position:absolute;inset:0;background:color-mix(in srgb, var(--color-neutral-900) 45%, transparent)"></div>
+        <div style="position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:12px;padding:12px 20px 32px;border-radius:32px 32px 0 0;background:var(--color-neutral-100)">
+          <div style="width:40px;height:5px;border-radius:999px;background:var(--color-neutral-400);align-self:center"></div>
+          <div style="font-weight:700;font-size:17px;margin-top:6px">Trocar perfil</div>
+          <div style="display:flex;gap:14px;align-items:center;padding:14px;border-radius:22px;background:var(--color-accent-100);border:2px solid var(--color-accent-700);min-height:44px"><span style="width:40px;height:40px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="cap" size="18" hint-size="18px,18px"></dc-import></span><div style="flex:1"><b>Professora</b><div style="font-size:12px;color:var(--color-neutral-800)">Atual</div></div><dc-import name="Icon" icon="check" size="18" hint-size="18px,18px" style="color:var(--color-accent-700)"></dc-import></div>
+          <div style="display:flex;gap:14px;align-items:center;padding:14px;border-radius:22px;border:1px solid var(--color-divider);min-height:44px"><span style="width:40px;height:40px;border-radius:50%;background:var(--color-accent-2-100);color:var(--color-accent-2-800);display:grid;place-items:center"><dc-import name="Icon" icon="book" size="18" hint-size="18px,18px"></dc-import></span><div style="flex:1"><b>Aluna</b><div style="font-size:12px;color:var(--color-neutral-700)">1 turma</div></div><dc-import name="Icon" icon="right" size="18" hint-size="18px,18px"></dc-import></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

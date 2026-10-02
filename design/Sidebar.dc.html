@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/styles.css">
+<script src="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/_ds_bundle.js"></script>
+</helmet>
+<aside style="width:248px;height:100%;flex:none;display:flex;flex-direction:column;gap:20px;padding:24px 16px 20px;background:var(--color-neutral-200);border-right:1px solid var(--color-divider);box-sizing:border-box">
+  <div style="display:flex;align-items:center;gap:10px;padding:0 8px">
+    <div style="width:30px;height:30px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-family:var(--font-heading);font-size:16px;line-height:1">f</div>
+    <div style="font-family:var(--font-heading);font-size:19px;line-height:1">Facilita Estudo</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;padding:8px 10px 8px 8px;background:var(--color-neutral-100);border:1px solid var(--color-divider);border-radius:999px">
+    <div style="width:28px;height:28px;border-radius:50%;background:{{ ctxBg }};color:{{ ctxFg }};display:grid;place-items:center">
+      <dc-import name="Icon" icon="{{ ctxIcon }}" size="15" hint-size="15px,15px"></dc-import>
+    </div>
+    <div style="flex:1;min-width:0;line-height:1.2">
+      <div style="font-size:11px;color:var(--color-neutral-700)">Atuando como</div>
+      <div style="font-size:14px;font-weight:700">{{ ctxLabel }}</div>
+    </div>
+    <dc-import name="Icon" icon="swap" size="16" hint-size="16px,16px" style="color:var(--color-neutral-700)"></dc-import>
+  </div>
+  <nav style="display:flex;flex-direction:column;gap:2px">
+    <sc-for list="{{ items }}" as="it" hint-placeholder-count="7">
+      <div style="display:flex;align-items:center;gap:12px;padding:9px 12px;border-radius:999px;font-size:14px;font-weight:{{ it.weight }};background:{{ it.bg }};color:{{ it.fg }}">
+        <dc-import name="Icon" icon="{{ it.icon }}" size="18" hint-size="18px,18px"></dc-import>
+        <span style="flex:1">{{ it.label }}</span>
+        <sc-if value="{{ it.badge }}" hint-placeholder-val="{{ false }}"><span style="font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--color-accent-200);color:var(--color-accent-800)">{{ it.badge }}</span></sc-if>
+      </div>
+    </sc-for>
+  </nav>
+  <div style="flex:1"></div>
+  <div style="display:flex;flex-direction:column;gap:8px;padding:14px;border-radius:20px;background:var(--color-neutral-100);border:1px solid var(--color-divider)">
+    <div style="display:flex;justify-content:space-between;font-size:12px"><span style="font-weight:700">Gerações de IA</span><span style="color:var(--color-neutral-700)">{{ usageLabel }}</span></div>
+    <div style="height:6px;border-radius:999px;background:var(--color-neutral-300);overflow:hidden"><div style="height:100%;width:{{ usagePct }};background:{{ usageColor }};border-radius:999px"></div></div>
+    <div style="font-size:11px;color:var(--color-neutral-700)">{{ planLabel }}</div>
+  </div>
+  <div style="display:flex;align-items:center;gap:10px;padding:0 6px">
+    <div style="width:34px;height:34px;border-radius:50%;background:var(--color-accent-2-200);color:var(--color-accent-2-800);display:grid;place-items:center;font-size:13px;font-weight:700">{{ initials }}</div>
+    <div style="flex:1;min-width:0;line-height:1.25"><div style="font-size:13px;font-weight:700">{{ user }}</div><div style="font-size:11px;color:var(--color-neutral-700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ email }}</div></div>
+  </div>
+</aside>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:248,&quot;height&quot;:820},&quot;role&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;prof&quot;,&quot;aluno&quot;],&quot;default&quot;:&quot;prof&quot;,&quot;tsType&quot;:&quot;'prof'|'aluno'&quot;},&quot;active&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;inicio&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;used&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:68,&quot;tsType&quot;:&quot;number&quot;},&quot;limit&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:100,&quot;tsType&quot;:&quot;number&quot;},&quot;user&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Marina Couto&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;email&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;marina.couto@email.com&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;badges&quot;:{&quot;editor&quot;:null,&quot;tsType&quot;:&quot;Record&lt;string,string&gt;&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    const role = this.props.role ?? 'prof';
+    const active = this.props.active ?? 'inicio';
+    const prof = [
+      ['inicio','Início','home'],['disciplinas','Disciplinas','book'],['turmas','Turmas','users'],
+      ['materiais','Materiais','folder'],['avaliacoes','Avaliações','clipboard'],['roteiros','Roteiros de estudo','list'],
+      ['conversas','Conversas com IA','chat'],['config','Configurações','sliders']];
+    const aluno = [
+      ['inicio','Início','home'],['disciplinas','Disciplinas','book'],['turmas','Minhas turmas','users'],
+      ['materiais','Materiais','folder'],['estudar','Resumos e flashcards','layers'],['plano','Plano de estudos','calendar'],
+      ['simulados','Simulados','target'],['conversas','Tutor de IA','chat'],['config','Configurações','sliders']];
+    const items = (role === 'prof' ? prof : aluno).map(([k, label, icon]) => ({
+      label, icon, badge: (this.props.badges || {})[k] || null,
+      bg: k === active ? 'var(--color-neutral-100)' : 'transparent',
+      fg: k === active ? 'var(--color-accent-700)' : 'var(--color-text)',
+      weight: k === active ? 700 : 400
+    }));
+    const used = Number(this.props.used ?? 68), limit = Number(this.props.limit ?? 100);
+    const user = this.props.user ?? (role === 'prof' ? 'Marina Couto' : 'Lucas Andrade');
+    return {
+      items, user,
+      email: this.props.email ?? (role === 'prof' ? 'marina.couto@email.com' : 'lucas.andrade@email.com'),
+      initials: user.split(' ').map(w => w[0]).slice(0, 2).join(''),
+      ctxLabel: role === 'prof' ? 'Professora' : 'Aluno',
+      ctxIcon: role === 'prof' ? 'cap' : 'book',
+      ctxBg: role === 'prof' ? 'var(--color-accent-100)' : 'var(--color-accent-2-100)',
+      ctxFg: role === 'prof' ? 'var(--color-accent-800)' : 'var(--color-accent-2-800)',
+      usageLabel: `${used} de ${limit}`,
+      usagePct: Math.min(100, used / limit * 100) + '%',
+      usageColor: used >= limit ? 'var(--color-accent-700)' : 'var(--color-accent-2-600)',
+      planLabel: used >= limit ? 'Limite atingido · renova em 1º nov' : 'Plano Essencial · renova em 1º nov'
+    };
+  }
+}
+</script>
+</body>
+</html>

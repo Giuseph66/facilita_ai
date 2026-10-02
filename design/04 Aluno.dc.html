@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/styles.css">
+<script src="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/_ds_bundle.js"></script>
+<style>html,body{margin:0;background:var(--color-neutral-300)} a{color:var(--color-accent-700)} a:hover{color:var(--color-accent-800)}</style>
+</helmet>
+<div style="padding:72px;display:flex;flex-direction:column;gap:64px">
+  <header style="display:flex;flex-direction:column;gap:8px;max-width:860px">
+    <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-800);font-weight:700">Facilita Estudo · 04</div>
+    <h1 style="font-size:48px;margin:0">Aluno</h1>
+    <p style="font-size:16px;color:var(--color-neutral-800);margin:0">Home → turma e materiais liberados → resumos, flashcards e plano → simulado → resultado → exercícios semelhantes. O aluno também envia materiais próprios, sempre privados.</p>
+  </header>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A1</b> · Home do aluno</div>
+      <div data-screen-label="A1 Home aluno" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="aluno" active="inicio" used="23" limit="50" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:32px 40px;display:flex;flex-direction:column;gap:22px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:16px"><div style="flex:1"><div style="font-size:14px;color:var(--color-neutral-700)">Sexta, 2 de outubro</div><h1 style="font-size:32px;margin:2px 0 0">Oi, Lucas</h1></div><button class="btn btn-secondary"><dc-import name="Icon" icon="upload" size="15" hint-size="15px,15px"></dc-import>Enviar material</button><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)"><dc-import name="Icon" icon="chat" size="15" hint-size="15px,15px"></dc-import>Perguntar ao tutor</button></div>
+          <section style="display:flex;flex-direction:column;gap:12px">
+            <h2 style="font-family:var(--font-body);font-weight:700;font-size:17px;margin:0">Continuar estudando</h2>
+            <div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) minmax(0,1fr);gap:14px">
+              <div style="display:flex;flex-direction:column;gap:10px;padding:22px;border-radius:28px;background:var(--color-neutral-100)">
+                <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--color-neutral-700)"><dc-import name="Icon" icon="file" size="14" hint-size="14px,14px"></dc-import>Leitura · Bioquímica</div>
+                <b style="font-size:17px">Cap. 3 — Glicólise</b>
+                <div style="font-size:13px;color:var(--color-neutral-700)">Parou na página 12 de 42</div>
+                <div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:29%;height:100%;border-radius:999px;background:var(--color-accent-2-600)"></div></div>
+                <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);align-self:flex-start;margin-top:4px"><dc-import name="Icon" icon="play" size="13" hint-size="13px,13px"></dc-import>Continuar</button>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px;padding:22px;border-radius:28px;background:var(--color-neutral-100)">
+                <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--color-neutral-700)"><dc-import name="Icon" icon="layers" size="14" hint-size="14px,14px"></dc-import>Flashcards</div>
+                <b style="font-size:17px">18 cartões para hoje</b>
+                <div style="font-size:13px;color:var(--color-neutral-700)">Glicólise · Enzimas</div>
+                <div style="flex:1"></div>
+                <button class="btn btn-secondary" style="align-self:flex-start">Revisar</button>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px;padding:22px;border-radius:28px;background:var(--color-accent-2-100)">
+                <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--color-accent-2-800)"><dc-import name="Icon" icon="list" size="14" hint-size="14px,14px"></dc-import>Novo roteiro da professora</div>
+                <b style="font-size:17px">Prepare-se para a P2</b>
+                <div style="font-size:13px;color:var(--color-accent-2-900)">4 tópicos · prova em 16 out</div>
+                <div style="flex:1"></div>
+                <button class="btn btn-secondary" style="align-self:flex-start;border-color:var(--color-accent-2-400)">Criar plano</button>
+              </div>
+            </div>
+          </section>
+          <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px">
+            <section style="display:flex;flex-direction:column;gap:2px;padding:20px 24px;border-radius:28px;background:var(--color-neutral-100)">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><h2 style="font-family:var(--font-body);font-weight:700;font-size:17px;margin:0">Disciplinas</h2><a href="#" style="font-size:14px">Ver todas</a></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-divider)"><span style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-600)"></span><div style="flex:1"><b style="font-size:14px">Bioquímica Metabólica</b><div style="font-size:12px;color:var(--color-neutral-700)">Turma Noturno · Profa. Marina Couto</div></div><span style="font-size:12px;color:var(--color-neutral-700)">68%</span></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-divider)"><span style="width:12px;height:12px;border-radius:50%;background:var(--color-accent-2-600)"></span><div style="flex:1"><b style="font-size:14px">Cálculo I</b><div style="font-size:12px;color:var(--color-neutral-700)">Só materiais próprios</div></div><span style="font-size:12px;color:var(--color-neutral-700)">41%</span></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0"><span style="width:12px;height:12px;border-radius:50%;background:var(--color-neutral-600)"></span><div style="flex:1"><b style="font-size:14px">Redação — ENEM</b><div style="font-size:12px;color:var(--color-neutral-700)">Só materiais próprios</div></div><span style="font-size:12px;color:var(--color-neutral-700)">12%</span></div>
+            </section>
+            <section style="display:flex;flex-direction:column;gap:2px;padding:20px 24px;border-radius:28px;background:var(--color-neutral-100)">
+              <h2 style="font-family:var(--font-body);font-weight:700;font-size:17px;margin:0 0 6px">Materiais recentes</h2>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-divider)"><dc-import name="Icon" icon="file" size="17" hint-size="17px,17px" style="color:var(--color-neutral-700)"></dc-import><div style="flex:1"><b style="font-size:14px">Aula 5 — Gliconeogênese.pptx</b><div style="font-size:12px;color:var(--color-neutral-700)">Liberado pela professora · ontem</div></div><span class="tag" style="gap:4px;background:var(--color-accent-2-100);color:var(--color-accent-2-800)"><dc-import name="Icon" icon="users" size="11" hint-size="11px,11px"></dc-import>Turma</span></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-divider)"><dc-import name="Icon" icon="file" size="17" hint-size="17px,17px" style="color:var(--color-neutral-700)"></dc-import><div style="flex:1"><b style="font-size:14px">Limites e continuidade.pdf</b><div style="font-size:12px;color:var(--color-neutral-700)">Cálculo I · enviado por você</div></div><span class="tag" style="gap:4px;background:var(--color-neutral-300);color:var(--color-neutral-900)"><dc-import name="Icon" icon="lock" size="11" hint-size="11px,11px"></dc-import>Meu</span></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0"><dc-import name="Icon" icon="file" size="17" hint-size="17px,17px" style="color:var(--color-neutral-700)"></dc-import><div style="flex:1"><b style="font-size:14px">Resumo — Regulação da glicólise</b><div style="font-size:12px;color:var(--color-neutral-700)">Criado por você · 3 dias</div></div><span class="tag" style="gap:4px;background:var(--color-neutral-300);color:var(--color-neutral-900)"><dc-import name="Icon" icon="lock" size="11" hint-size="11px,11px"></dc-import>Meu</span></div>
+            </section>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A1m</b> · Home — celular</div>
+      <div data-screen-label="A1m Home aluno mobile" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="flex:1;display:flex;flex-direction:column;gap:16px;padding:52px 20px 16px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:12px"><div style="flex:1"><div style="font-size:13px;color:var(--color-neutral-700)">Aluno</div><div style="font-family:var(--font-heading);font-size:26px">Oi, Lucas</div></div><div style="width:44px;height:44px;border-radius:50%;background:var(--color-accent-2-200);color:var(--color-accent-2-800);display:grid;place-items:center;font-weight:700">LA</div></div>
+          <div style="display:flex;flex-direction:column;gap:10px;padding:20px;border-radius:26px;background:var(--color-neutral-100)">
+            <div style="font-size:12px;color:var(--color-neutral-700)">Continuar · Bioquímica</div>
+            <b style="font-size:17px">Cap. 3 — Glicólise</b>
+            <div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:29%;height:100%;border-radius:999px;background:var(--color-accent-2-600)"></div></div>
+            <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);min-height:48px">Continuar na página 12</button>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:22px;background:var(--color-neutral-100)"><dc-import name="Icon" icon="layers" size="18" hint-size="18px,18px" style="color:var(--color-accent-700)"></dc-import><b style="font-size:15px">18 cartões</b><span style="font-size:12px;color:var(--color-neutral-700)">para hoje</span></div>
+            <div style="display:flex;flex-direction:column;gap:6px;padding:16px;border-radius:22px;background:var(--color-neutral-100)"><dc-import name="Icon" icon="target" size="18" hint-size="18px,18px" style="color:var(--color-accent-700)"></dc-import><b style="font-size:15px">Simulado</b><span style="font-size:12px;color:var(--color-neutral-700)">agendado sex</span></div>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;padding:14px 16px;border-radius:22px;background:var(--color-accent-2-100);color:var(--color-accent-2-900)"><dc-import name="Icon" icon="list" size="18" hint-size="18px,18px"></dc-import><div style="flex:1"><b style="font-size:14px">Roteiro da P2 publicado</b><div style="font-size:12px">4 tópicos · 16 out</div></div><dc-import name="Icon" icon="right" size="18" hint-size="18px,18px"></dc-import></div>
+        </div>
+        <dc-import name="TabBar" role="aluno" active="inicio" hint-size="100%,78px"></dc-import>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A2</b> · Turma — materiais liberados e entrada por código</div>
+      <div data-screen-label="A2 Turma aluno" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="aluno" active="turmas" used="23" limit="50" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:28px 40px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;overflow:hidden">
+          <div style="display:flex;flex-direction:column;gap:18px;min-width:0">
+            <div><div style="font-size:13px;color:var(--color-neutral-700)">Minhas turmas</div><h1 style="font-size:32px;margin:2px 0 0">Bioquímica — Noturno</h1><div style="font-size:14px;color:var(--color-neutral-700)">Profa. Marina Couto · 38 colegas</div></div>
+            <div style="display:flex;gap:12px;padding:16px 20px;border-radius:24px;background:var(--color-accent-2-100);color:var(--color-accent-2-900);align-items:center"><dc-import name="Icon" icon="list" size="20" hint-size="20px,20px"></dc-import><div style="flex:1"><b>Roteiro: Prepare-se para a P2</b><div style="font-size:13px">Glicólise · Regulação · Piruvato · Gliconeogênese — prova em 16 out</div></div><button class="btn btn-secondary" style="border-color:var(--color-accent-2-400)">Abrir roteiro</button></div>
+            <section style="display:flex;flex-direction:column;padding:8px 24px 14px;border-radius:28px;background:var(--color-neutral-100)">
+              <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-700);font-weight:700;padding:12px 0 4px">Unidade 1 · Fundamentos</div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-divider)"><dc-import name="Icon" icon="file" size="17" hint-size="17px,17px" style="color:var(--color-neutral-700)"></dc-import><div style="flex:1"><b style="font-size:14px">Cap. 1 — Água e pH.pdf</b><div style="font-size:12px;color:var(--color-neutral-700)">22 páginas · lido</div></div><dc-import name="Icon" icon="check" size="16" hint-size="16px,16px" style="color:var(--color-accent-2-700)"></dc-import></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0"><dc-import name="Icon" icon="file" size="17" hint-size="17px,17px" style="color:var(--color-neutral-700)"></dc-import><div style="flex:1"><b style="font-size:14px">Cap. 2 — Enzimas.pdf</b><div style="font-size:12px;color:var(--color-neutral-700)">36 páginas · 1 resumo seu</div></div><button class="btn btn-ghost" style="color:var(--color-accent-700)">Estudar</button></div>
+              <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-neutral-700);font-weight:700;padding:14px 0 4px">Unidade 2 · Carboidratos</div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-divider)"><dc-import name="Icon" icon="file" size="17" hint-size="17px,17px" style="color:var(--color-neutral-700)"></dc-import><div style="flex:1"><b style="font-size:14px">Cap. 3 — Glicólise.pdf</b><div style="font-size:12px;color:var(--color-neutral-700)">42 páginas · p. 12</div></div><button class="btn btn-ghost" style="color:var(--color-accent-700)">Continuar</button></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:10px 0;opacity:.6"><dc-import name="Icon" icon="clock" size="17" hint-size="17px,17px"></dc-import><div style="flex:1"><b style="font-size:14px">Aula 5 — Gliconeogênese.pptx</b><div style="font-size:12px">Disponível em 9 out, 19:00</div></div></div>
+            </section>
+          </div>
+          <aside style="display:flex;flex-direction:column;gap:14px;padding:22px;border-radius:28px;background:var(--color-neutral-100);align-self:start;margin-top:60px">
+            <b style="font-size:16px">Entrar em outra turma</b>
+            <span style="font-size:13px;color:var(--color-neutral-800)">Use o código ou link enviado pelo professor.</span>
+            <div class="field"><label style="color:var(--color-accent-800)">Código</label><input class="input" value="QMO-1193" style="font-weight:700;letter-spacing:.06em;border-color:var(--color-accent-700);background:var(--color-accent-100)"><div style="display:flex;gap:6px;align-items:center;margin-top:6px;font-size:12px;color:var(--color-accent-800)"><dc-import name="Icon" icon="alert" size="14" hint-size="14px,14px"></dc-import>Código não encontrado ou expirado.</div></div>
+            <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);align-self:flex-start">Entrar</button>
+            <div style="display:flex;gap:10px;align-items:center;padding:12px;border-radius:16px;background:var(--color-neutral-200);font-size:13px"><dc-import name="Icon" icon="clock" size="15" hint-size="15px,15px"></dc-import><span><b>Química — 2º ano A</b><br>Aguardando aprovação</span></div>
+          </aside>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A3</b> · Resumo — leitura com explicação de trecho</div>
+      <div data-screen-label="A3 Resumo leitura" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="aluno" active="estudar" used="23" limit="50" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;display:flex;flex-direction:column;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:12px;padding:16px 28px;border-bottom:1px solid var(--color-divider)"><button class="btn btn-icon btn-secondary"><dc-import name="Icon" icon="back" size="16" hint-size="16px,16px"></dc-import></button><div style="flex:1"><b style="font-size:15px">Resumo — Regulação da glicólise</b><div style="font-size:12px;color:var(--color-neutral-700)">De Cap. 3 — Glicólise.pdf, p. 8–15 · nível intermediário</div></div><span class="tag" style="gap:4px;background:var(--color-neutral-300);color:var(--color-neutral-900);font-weight:600"><dc-import name="Icon" icon="lock" size="12" hint-size="12px,12px"></dc-import>Só você</span><button class="btn btn-secondary"><dc-import name="Icon" icon="layers" size="15" hint-size="15px,15px"></dc-import>Gerar flashcards</button></div>
+          <div style="flex:1;display:flex;min-height:0">
+            <article style="flex:1;min-width:0;padding:36px 56px;display:flex;flex-direction:column;gap:16px;overflow:hidden">
+              <h2 style="font-size:28px;margin:0">Regulação da glicólise</h2>
+              <p style="font-size:17px;line-height:1.7;margin:0;max-width:64ch">A glicólise tem três etapas irreversíveis, e é nelas que a célula controla o fluxo da via <span style="display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);font-size:11px;font-weight:700;vertical-align:2px">1</span>.</p>
+              <h3 style="font-family:var(--font-body);font-weight:700;font-size:18px;margin:6px 0 0">Pontos de controle</h3>
+              <ul style="font-size:17px;line-height:1.7;margin:0;padding-left:22px;max-width:64ch">
+                <li><b>Hexoquinase</b> — inibida pelo próprio produto, a glicose-6-fosfato.</li>
+                <li><span style="background:var(--color-accent-200);border-radius:4px;padding:1px 3px"><b>PFK-1</b> — principal ponto de regulação; ativada por AMP e frutose-2,6-bisfosfato, inibida por ATP e citrato</span> <span style="display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);font-size:11px;font-weight:700;vertical-align:2px">2</span>.</li>
+                <li><b>Piruvato quinase</b> — ativada pela frutose-1,6-bisfosfato (ativação anterógrada).</li>
+              </ul>
+              <div style="position:relative;margin-left:120px;width:420px;display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:24px;background:var(--color-neutral-100);box-shadow:var(--shadow-lg)">
+                <div style="display:flex;gap:8px;align-items:center;font-size:13px;color:var(--color-accent-800);font-weight:700"><dc-import name="Icon" icon="sparkles" size="15" hint-size="15px,15px"></dc-import>Explicação mais simples</div>
+                <div style="font-size:15px;line-height:1.6">Pense na PFK-1 como um registro de água: quando falta energia (muito AMP), ela abre; quando sobra energia (muito ATP e citrato), ela fecha.</div>
+                <div style="display:flex;gap:8px"><button class="btn btn-secondary" style="padding:6px 12px;font-size:13px">Adicionar ao resumo</button><button class="btn btn-ghost" style="color:var(--color-accent-700);font-size:13px">Outro exemplo</button></div>
+              </div>
+            </article>
+            <aside style="width:300px;flex:none;display:flex;flex-direction:column;gap:12px;padding:22px;border-left:1px solid var(--color-divider);background:var(--color-neutral-100)">
+              <b style="font-size:14px">Fontes</b>
+              <div style="display:flex;gap:10px;font-size:13px;align-items:flex-start"><span style="width:20px;height:20px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:11px;font-weight:700;flex:none">1</span><span>Cap. 3 — Glicólise.pdf · <a href="#">p. 8</a></span></div>
+              <div style="display:flex;gap:10px;font-size:13px;align-items:flex-start"><span style="width:20px;height:20px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:11px;font-weight:700;flex:none">2</span><span>Cap. 3 — Glicólise.pdf · <a href="#">p. 12</a></span></div>
+              <div style="display:flex;gap:10px;font-size:13px;align-items:flex-start"><span style="width:20px;height:20px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:11px;font-weight:700;flex:none">3</span><span>Aula 5.pptx · <a href="#">slide 8</a></span></div>
+              <div style="flex:1"></div>
+              <b style="font-size:14px">Ajustar resumo</b>
+              <div class="seg"><label class="seg-opt"><input type="radio" name="a3">Curto</label><label class="seg-opt"><input type="radio" name="a3" defaultChecked="{{ true }}">Médio</label><label class="seg-opt"><input type="radio" name="a3">Detalhado</label></div>
+              <button class="btn btn-secondary"><dc-import name="Icon" icon="refresh" size="14" hint-size="14px,14px"></dc-import>Gerar novamente</button>
+            </aside>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4</b> · Flashcards — revisão</div>
+      <div data-screen-label="A4 Flashcards" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="aluno" active="estudar" used="23" limit="50" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:28px 40px;display:flex;flex-direction:column;gap:22px;overflow:hidden">
+          <div style="display:flex;align-items:center;gap:12px"><div style="flex:1"><h1 style="font-size:28px;margin:0">Glicólise · 18 para hoje</h1><div style="font-size:14px;color:var(--color-neutral-700)">Cartão 7 de 18 · repetição espaçada</div></div><button class="btn btn-secondary">Editar baralho</button></div>
+          <div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:39%;height:100%;border-radius:999px;background:var(--color-accent-2-600)"></div></div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px">
+            <div style="width:640px;min-height:340px;display:flex;flex-direction:column;gap:18px;padding:40px;border-radius:36px;background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+              <div style="font-size:12px;color:var(--color-neutral-700);display:flex;justify-content:space-between"><span>Pergunta</span><span>Glicólise.pdf · p. 12</span></div>
+              <div style="font-family:var(--font-heading);font-size:26px;line-height:1.25">Quais moléculas ativam e quais inibem a PFK-1?</div>
+              <div style="height:1px;background:var(--color-divider)"></div>
+              <div style="font-size:12px;color:var(--color-neutral-700)">Resposta</div>
+              <div style="font-size:18px;line-height:1.6"><b>Ativam:</b> AMP e frutose-2,6-bisfosfato.<br><b>Inibem:</b> ATP e citrato.</div>
+            </div>
+            <div style="display:flex;gap:10px">
+              <button class="btn btn-secondary" style="flex-direction:column;gap:2px;padding:12px 24px;color:var(--color-accent-800);border-color:var(--color-accent-300)">Errei<span style="font-family:var(--font-body);font-size:11px;color:var(--color-neutral-700)">em 1 min</span></button>
+              <button class="btn btn-secondary" style="flex-direction:column;gap:2px;padding:12px 24px">Difícil<span style="font-family:var(--font-body);font-size:11px;color:var(--color-neutral-700)">em 10 min</span></button>
+              <button class="btn btn-primary" style="flex-direction:column;gap:2px;padding:12px 24px;background:var(--color-accent-700);color:var(--color-neutral-100)">Bom<span style="font-family:var(--font-body);font-size:11px">em 2 dias</span></button>
+              <button class="btn btn-secondary" style="flex-direction:column;gap:2px;padding:12px 24px;color:var(--color-accent-2-800);border-color:var(--color-accent-2-400)">Fácil<span style="font-family:var(--font-body);font-size:11px;color:var(--color-neutral-700)">em 5 dias</span></button>
+            </div>
+            <div style="font-size:12px;color:var(--color-neutral-700)">Atalhos: 1 – 4 · espaço para virar</div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <section data-screen-label="A4m Flashcards mobile — comportamentos" style="display:flex;flex-direction:column;gap:20px">
+    <div style="display:flex;flex-direction:column;gap:6px;max-width:900px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4m</b> · Flashcards no celular — comportamentos</div>
+      <p style="margin:0;font-size:14px;color:var(--color-neutral-800)">Fluxo: frente → virar (toque) → avaliar (botões ou gesto) → próximo. Em qualquer cartão o aluno pede dica, pede explicação à IA com a página de origem ou abre as ações do cartão. Gestos sempre têm botão equivalente, para acessibilidade.</p>
+    </div>
+    <div style="display:flex;gap:32px;align-items:flex-start;flex-wrap:wrap">
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4m.1</b> · Frente — toque para virar</div>
+        <div data-screen-label="A4m.1 Frente" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+          <div style="display:flex;align-items:center;gap:8px;padding:48px 12px 8px"><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="x" size="18" hint-size="18px,18px"></dc-import></button><div style="flex:1;display:flex;flex-direction:column;gap:4px"><div style="display:flex;justify-content:space-between;font-size:11px;color:var(--color-neutral-700)"><span>Glicólise</span><span>7 de 18</span></div><div style="display:flex;gap:3px;height:6px"><span style="flex:4;border-radius:999px;background:var(--color-accent-2-600)"></span><span style="flex:2;border-radius:999px;background:var(--color-accent-500)"></span><span style="flex:12;border-radius:999px;background:var(--color-neutral-300)"></span></div></div><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="more" size="18" hint-size="18px,18px"></dc-import></button></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding:12px 20px 24px">
+            <div style="flex:1;position:relative">
+              <div style="position:absolute;left:20px;right:20px;top:14px;bottom:-14px;border-radius:32px;background:var(--color-neutral-300)"></div>
+              <div style="position:absolute;left:10px;right:10px;top:7px;bottom:-7px;border-radius:32px;background:var(--color-neutral-100);opacity:.7"></div>
+              <div style="position:absolute;inset:0;display:flex;flex-direction:column;gap:14px;padding:24px;border-radius:32px;background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+                <div style="display:flex;justify-content:space-between;align-items:center"><span class="tag tag-accent" style="font-weight:600">Revisão · errou ontem</span><span style="display:inline-flex;align-items:center;gap:5px;padding:6px 10px;border-radius:999px;background:var(--color-accent-100);color:var(--color-accent-800);font-size:12px;font-weight:600"><dc-import name="Icon" icon="file" size="12" hint-size="12px,12px"></dc-import>p. 12</span></div>
+                <div style="flex:1;display:flex;align-items:center"><div style="font-family:var(--font-heading);font-size:27px;line-height:1.25">Quais moléculas ativam e quais inibem a PFK-1?</div></div>
+                <div style="display:flex;gap:6px;align-items:center;justify-content:center;font-size:12px;color:var(--color-neutral-700)"><dc-import name="Icon" icon="undo" size="13" hint-size="13px,13px"></dc-import>Toque no cartão para virar</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:14px"><button class="btn btn-secondary" style="flex:1;min-height:48px"><dc-import name="Icon" icon="sparkles" size="15" hint-size="15px,15px"></dc-import>Dica</button><button class="btn btn-secondary" style="flex:1;min-height:48px"><dc-import name="Icon" icon="pencil" size="15" hint-size="15px,15px"></dc-import>Escrever resposta</button></div>
+            <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);min-height:52px;font-size:15px">Mostrar resposta</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4m.2</b> · Dica progressiva</div>
+        <div data-screen-label="A4m.2 Dica" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+          <div style="display:flex;align-items:center;gap:8px;padding:48px 12px 8px"><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="x" size="18" hint-size="18px,18px"></dc-import></button><div style="flex:1;display:flex;gap:3px;height:6px"><span style="flex:4;border-radius:999px;background:var(--color-accent-2-600)"></span><span style="flex:2;border-radius:999px;background:var(--color-accent-500)"></span><span style="flex:12;border-radius:999px;background:var(--color-neutral-300)"></span></div><span style="font-size:13px;padding:0 10px">7/18</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding:12px 20px 24px">
+            <div style="flex:1;display:flex;flex-direction:column;gap:16px;padding:24px;border-radius:32px;background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+              <div style="font-family:var(--font-heading);font-size:24px;line-height:1.25">Quais moléculas ativam e quais inibem a PFK-1?</div>
+              <div style="display:flex;flex-direction:column;gap:10px;margin-top:auto">
+                <div style="display:flex;gap:10px;padding:12px 14px;border-radius:20px;background:var(--color-accent-100);font-size:14px;line-height:1.5;color:var(--color-accent-900)"><b>1</b><span>Pense no estado energético: o que se acumula quando falta ATP?</span></div>
+                <div style="display:flex;gap:10px;padding:12px 14px;border-radius:20px;background:var(--color-accent-100);font-size:14px;line-height:1.5;color:var(--color-accent-900)"><b>2</b><span>Um ativador começa com “A” e tem um só fosfato.</span></div>
+                <div style="display:flex;gap:10px;padding:12px 14px;border-radius:20px;border:1.5px dashed var(--color-accent-300);font-size:14px;color:var(--color-neutral-700)"><b>3</b><span>Mais uma dica disponível</span></div>
+              </div>
+            </div>
+            <div style="font-size:12px;color:var(--color-neutral-700);text-align:center">Usar dica reduz o intervalo da próxima revisão.</div>
+            <div style="display:flex;gap:8px"><button class="btn btn-secondary" style="flex:1;min-height:48px">Próxima dica</button><button class="btn btn-primary" style="flex:1;background:var(--color-accent-700);color:var(--color-neutral-100);min-height:48px">Mostrar resposta</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4m.3</b> · Resposta digitada — conferência parcial</div>
+        <div data-screen-label="A4m.3 Escrever resposta" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+          <div style="display:flex;align-items:center;gap:8px;padding:48px 12px 8px"><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="x" size="18" hint-size="18px,18px"></dc-import></button><div style="flex:1;display:flex;gap:3px;height:6px"><span style="flex:4;border-radius:999px;background:var(--color-accent-2-600)"></span><span style="flex:2;border-radius:999px;background:var(--color-accent-500)"></span><span style="flex:12;border-radius:999px;background:var(--color-neutral-300)"></span></div><span style="font-size:13px;padding:0 10px">7/18</span></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:12px;padding:12px 20px 24px">
+            <div style="font-family:var(--font-heading);font-size:22px;line-height:1.25">Quais moléculas ativam e quais inibem a PFK-1?</div>
+            <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--color-neutral-700)">Sua resposta</span><div style="padding:14px 16px;border-radius:22px;background:var(--color-neutral-100);border:1px solid var(--color-divider);font-size:15px;line-height:1.5">Ativa: AMP. Inibe: ATP e glicose-6-fosfato.</div></div>
+            <div style="display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:24px;background:var(--color-neutral-100)">
+              <div style="display:flex;gap:8px;align-items:center;font-size:13px;font-weight:700;color:var(--color-accent-800)"><dc-import name="Icon" icon="sparkles" size="15" hint-size="15px,15px"></dc-import>Parcialmente certa · 2 de 4</div>
+              <div style="display:flex;flex-direction:column;gap:6px;font-size:14px">
+                <span style="display:flex;gap:8px;align-items:center;color:var(--color-accent-2-800)"><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px"></dc-import>AMP ativa</span>
+                <span style="display:flex;gap:8px;align-items:center;color:var(--color-accent-2-800)"><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px"></dc-import>ATP inibe</span>
+                <span style="display:flex;gap:8px;align-items:center;color:var(--color-accent-800)"><dc-import name="Icon" icon="x" size="14" hint-size="14px,14px"></dc-import>Faltou: frutose-2,6-bisfosfato ativa</span>
+                <span style="display:flex;gap:8px;align-items:center;color:var(--color-accent-800)"><dc-import name="Icon" icon="x" size="14" hint-size="14px,14px"></dc-import>G6P inibe a hexoquinase, não a PFK-1 — faltou citrato</span>
+              </div>
+            </div>
+            <div style="flex:1"></div>
+            <div style="font-size:12px;color:var(--color-neutral-700);text-align:center">Sugestão da IA: <b>Difícil</b>. Você decide.</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+              <button class="btn btn-secondary" style="flex-direction:column;gap:1px;min-height:56px;padding:6px;color:var(--color-accent-800);border-color:var(--color-accent-300)">Errei<span style="font-family:var(--font-body);font-size:10px;color:var(--color-neutral-700)">1 min</span></button>
+              <button class="btn btn-primary" style="flex-direction:column;gap:1px;min-height:56px;padding:6px;background:var(--color-accent-700);color:var(--color-neutral-100)">Difícil<span style="font-family:var(--font-body);font-size:10px">10 min</span></button>
+              <button class="btn btn-secondary" style="flex-direction:column;gap:1px;min-height:56px;padding:6px">Bom<span style="font-family:var(--font-body);font-size:10px;color:var(--color-neutral-700)">2 dias</span></button>
+              <button class="btn btn-secondary" style="flex-direction:column;gap:1px;min-height:56px;padding:6px;color:var(--color-accent-2-800);border-color:var(--color-accent-2-400)">Fácil<span style="font-family:var(--font-body);font-size:10px;color:var(--color-neutral-700)">5 dias</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4m.4</b> · Verso — avaliação por botões</div>
+        <div data-screen-label="A4m.4 Verso" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+          <div style="display:flex;align-items:center;gap:8px;padding:48px 12px 8px"><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="x" size="18" hint-size="18px,18px"></dc-import></button><div style="flex:1;display:flex;gap:3px;height:6px"><span style="flex:4;border-radius:999px;background:var(--color-accent-2-600)"></span><span style="flex:2;border-radius:999px;background:var(--color-accent-500)"></span><span style="flex:12;border-radius:999px;background:var(--color-neutral-300)"></span></div><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="undo" size="17" hint-size="17px,17px"></dc-import></button></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding:12px 20px 24px">
+            <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding:24px;border-radius:32px;background:var(--color-neutral-100);box-shadow:var(--shadow-md)">
+              <div style="font-size:15px;color:var(--color-neutral-700);line-height:1.4">Quais moléculas ativam e quais inibem a PFK-1?</div>
+              <div style="height:1px;background:var(--color-divider)"></div>
+              <div style="display:flex;flex-direction:column;gap:10px;font-size:18px;line-height:1.5">
+                <div style="display:flex;gap:10px;align-items:flex-start"><span class="tag tag-accent-2" style="font-weight:700;flex:none;margin-top:3px">Ativam</span><span>AMP · frutose-2,6-bisfosfato</span></div>
+                <div style="display:flex;gap:10px;align-items:flex-start"><span class="tag tag-accent" style="font-weight:700;flex:none;margin-top:3px">Inibem</span><span>ATP · citrato</span></div>
+              </div>
+              <div style="flex:1"></div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;background:var(--color-accent-100);color:var(--color-accent-800);font-size:12px;font-weight:600;border:1px solid var(--color-accent-200)"><dc-import name="Icon" icon="file" size="13" hint-size="13px,13px"></dc-import>Ver na p. 12</span><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;border:1px solid var(--color-divider);font-size:12px;font-weight:600"><dc-import name="Icon" icon="chat" size="13" hint-size="13px,13px"></dc-import>Explicar melhor</span></div>
+            </div>
+            <div style="font-size:12px;color:var(--color-neutral-700);text-align:center">Como foi? Ou deslize: ← errei · bom →</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+              <button class="btn btn-secondary" style="flex-direction:column;gap:1px;min-height:56px;padding:6px;color:var(--color-accent-800);border-color:var(--color-accent-300)">Errei<span style="font-family:var(--font-body);font-size:10px;color:var(--color-neutral-700)">1 min</span></button>
+              <button class="btn btn-secondary" style="flex-direction:column;gap:1px;min-height:56px;padding:6px">Difícil<span style="font-family:var(--font-body);font-size:10px;color:var(--color-neutral-700)">10 min</span></button>
+              <button class="btn btn-primary" style="flex-direction:column;gap:1px;min-height:56px;padding:6px;background:var(--color-accent-700);color:var(--color-neutral-100)">Bom<span style="font-family:var(--font-body);font-size:10px">2 dias</span></button>
+              <button class="btn btn-secondary" style="flex-direction:column;gap:1px;min-height:56px;padding:6px;color:var(--color-accent-2-800);border-color:var(--color-accent-2-400)">Fácil<span style="font-family:var(--font-body);font-size:10px;color:var(--color-neutral-700)">5 dias</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4m.5</b> · Gesto — arrastando para “Bom”</div>
+        <div data-screen-label="A4m.5 Gesto" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box;position:relative">
+          <div style="display:flex;align-items:center;gap:8px;padding:48px 12px 8px"><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="x" size="18" hint-size="18px,18px"></dc-import></button><div style="flex:1;display:flex;gap:3px;height:6px"><span style="flex:4;border-radius:999px;background:var(--color-accent-2-600)"></span><span style="flex:2;border-radius:999px;background:var(--color-accent-500)"></span><span style="flex:12;border-radius:999px;background:var(--color-neutral-300)"></span></div><span style="font-size:13px;padding:0 10px">7/18</span></div>
+          <div style="position:absolute;left:0;top:120px;bottom:120px;width:56px;display:flex;align-items:center;justify-content:center;color:var(--color-accent-800);opacity:.35;font-size:12px;font-weight:700;writing-mode:vertical-rl;transform:rotate(180deg)">Errei</div>
+          <div style="position:absolute;right:0;top:120px;bottom:120px;width:72px;display:flex;align-items:center;justify-content:center;background:linear-gradient(to left, var(--color-accent-2-200), transparent)"><span style="width:44px;height:44px;border-radius:50%;background:var(--color-accent-2-600);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="20" hint-size="20px,20px"></dc-import></span></div>
+          <div style="flex:1;position:relative;margin:12px 20px 24px">
+            <div style="position:absolute;inset:14px 14px 90px;border-radius:32px;background:var(--color-neutral-100);opacity:.7"></div>
+            <div style="position:absolute;left:0;right:0;top:0;bottom:76px;display:flex;flex-direction:column;gap:14px;padding:24px;border-radius:32px;background:var(--color-neutral-100);box-shadow:var(--shadow-lg);transform:translateX(70px) rotate(7deg);border:2px solid var(--color-accent-2-500)">
+              <span class="tag tag-accent-2" style="align-self:flex-start;font-weight:700;font-size:13px;padding:5px 12px">BOM · em 2 dias</span>
+              <div style="font-size:14px;color:var(--color-neutral-700)">Quais moléculas ativam e quais inibem a PFK-1?</div>
+              <div style="font-size:17px;line-height:1.5"><b>Ativam:</b> AMP, F-2,6-BP<br><b>Inibem:</b> ATP, citrato</div>
+            </div>
+            <div style="position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;font-size:12px;color:var(--color-neutral-700)"><span>↑ Difícil</span><span>Solte para confirmar</span><span>↓ Fácil</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4m.6</b> · “Explicar melhor” — IA com a página de origem</div>
+        <div data-screen-label="A4m.6 Explicar" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box;position:relative">
+          <div style="padding:56px 20px;opacity:.45"><div style="height:300px;border-radius:32px;background:var(--color-neutral-100)"></div></div>
+          <div style="position:absolute;inset:0;background:color-mix(in srgb, var(--color-neutral-900) 40%, transparent)"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;top:150px;display:flex;flex-direction:column;gap:14px;padding:12px 20px 28px;border-radius:32px 32px 0 0;background:var(--color-neutral-100)">
+            <div style="width:40px;height:5px;border-radius:999px;background:var(--color-neutral-400);align-self:center"></div>
+            <div style="display:flex;gap:8px;align-items:center"><dc-import name="Icon" icon="sparkles" size="17" hint-size="17px,17px" style="color:var(--color-accent-700)"></dc-import><b style="font-size:16px;flex:1">Por que esses reguladores?</b><dc-import name="Icon" icon="x" size="18" hint-size="18px,18px"></dc-import></div>
+            <div style="font-size:15px;line-height:1.6">A PFK-1 “lê” a energia da célula. Muito <b>AMP</b> significa pouca energia → acelera. Muito <b>ATP</b> ou <b>citrato</b> (o ciclo de Krebs já está cheio) → freia <span style="display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);font-size:11px;font-weight:700">1</span>.</div>
+            <div style="padding:14px 16px;border-radius:14px;background:var(--color-neutral-200);font-family:Georgia, serif;font-size:12px;line-height:1.6"><div style="font-family:var(--font-body);font-size:11px;font-weight:700;color:var(--color-neutral-700);margin-bottom:4px">Cap. 3 — Glicólise · p. 12</div><span style="background:var(--color-accent-200);border-radius:3px;padding:1px 3px">A PFK-1 é ativada por AMP e frutose-2,6-bisfosfato e inibida por ATP e citrato…</span></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap"><span style="padding:9px 14px;border-radius:999px;border:1px solid var(--color-divider);font-size:13px">Dar um exemplo</span><span style="padding:9px 14px;border-radius:999px;border:1px solid var(--color-divider);font-size:13px">E no jejum?</span><span style="padding:9px 14px;border-radius:999px;border:1px solid var(--color-divider);font-size:13px">Criar cartão sobre citrato</span></div>
+            <div style="flex:1"></div>
+            <div style="display:flex;gap:8px"><button class="btn btn-secondary" style="flex:1;min-height:48px"><dc-import name="Icon" icon="file" size="15" hint-size="15px,15px"></dc-import>Abrir p. 12</button><button class="btn btn-primary" style="flex:1;background:var(--color-accent-700);color:var(--color-neutral-100);min-height:48px">Voltar ao cartão</button></div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4m.7</b> · Ações do cartão (toque longo ou ⋯)</div>
+        <div data-screen-label="A4m.7 Ações do cartão" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box;position:relative">
+          <div style="padding:56px 20px;opacity:.45"><div style="height:420px;border-radius:32px;background:var(--color-neutral-100)"></div></div>
+          <div style="position:absolute;inset:0;background:color-mix(in srgb, var(--color-neutral-900) 40%, transparent)"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;display:flex;flex-direction:column;gap:2px;padding:12px 16px 28px;border-radius:32px 32px 0 0;background:var(--color-neutral-100)">
+            <div style="width:40px;height:5px;border-radius:999px;background:var(--color-neutral-400);align-self:center;margin-bottom:8px"></div>
+            <div style="font-size:12px;color:var(--color-neutral-700);padding:0 8px 6px">Cartão 7 · criado pela IA a partir de Glicólise.pdf</div>
+            <div style="display:flex;gap:14px;align-items:center;padding:12px 8px;min-height:44px;font-size:15px"><dc-import name="Icon" icon="pencil" size="18" hint-size="18px,18px"></dc-import>Editar frente e verso</div>
+            <div style="display:flex;gap:14px;align-items:center;padding:12px 8px;min-height:44px;font-size:15px"><dc-import name="Icon" icon="file" size="18" hint-size="18px,18px"></dc-import>Ver origem na página 12</div>
+            <div style="display:flex;gap:14px;align-items:center;padding:12px 8px;min-height:44px;font-size:15px"><dc-import name="Icon" icon="flag" size="18" hint-size="18px,18px"></dc-import>Marcar como difícil</div>
+            <div style="display:flex;gap:14px;align-items:center;padding:12px 8px;min-height:44px;font-size:15px"><dc-import name="Icon" icon="clock" size="18" hint-size="18px,18px"></dc-import><span style="flex:1">Adiar para amanhã</span></div>
+            <div style="display:flex;gap:14px;align-items:center;padding:12px 8px;min-height:44px;font-size:15px"><dc-import name="Icon" icon="eye" size="18" hint-size="18px,18px"></dc-import>Suspender (não mostrar mais)</div>
+            <div style="display:flex;gap:14px;align-items:center;padding:12px 8px;min-height:44px;font-size:15px;color:var(--color-accent-800)"><dc-import name="Icon" icon="alert" size="18" hint-size="18px,18px"></dc-import>A resposta está errada</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4m.8</b> · Sessão concluída</div>
+        <div data-screen-label="A4m.8 Sessão concluída" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box;position:relative">
+          <div style="position:absolute;right:-80px;top:40px;width:260px;height:260px;border-radius:50%;background:var(--color-accent-2-100)"></div>
+          <div style="flex:1;display:flex;flex-direction:column;gap:16px;padding:72px 20px 28px;position:relative">
+            <span style="width:56px;height:56px;border-radius:50%;background:var(--color-accent-2-600);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="26" hint-size="26px,26px"></dc-import></span>
+            <div style="font-family:var(--font-heading);font-size:30px;line-height:1.15">18 cartões revisados</div>
+            <div style="font-size:15px;color:var(--color-neutral-800)">14 min · 3 dias seguidos</div>
+            <div style="display:flex;height:10px;border-radius:999px;overflow:hidden"><span style="width:61%;background:var(--color-accent-2-600)"></span><span style="width:22%;background:var(--color-accent-400)"></span><span style="width:17%;background:var(--color-accent-700)"></span></div>
+            <div style="display:flex;justify-content:space-between;font-size:13px"><span>11 bons/fáceis</span><span>4 difíceis</span><span>3 errados</span></div>
+            <div style="display:flex;flex-direction:column;padding:6px 16px;border-radius:24px;background:var(--color-neutral-100)">
+              <div style="font-size:12px;color:var(--color-neutral-700);padding:8px 0 2px">Para reforçar</div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--color-divider);font-size:14px"><span style="width:8px;height:8px;border-radius:50%;background:var(--color-accent-700)"></span><span style="flex:1">Reguladores da PFK-1</span><span style="font-size:12px;color:var(--color-neutral-700)">p. 12</span></div>
+              <div style="display:flex;gap:10px;align-items:center;padding:10px 0;font-size:14px"><span style="width:8px;height:8px;border-radius:50%;background:var(--color-accent-700)"></span><span style="flex:1">Destino do NADH na fermentação</span><span style="font-size:12px;color:var(--color-neutral-700)">p. 20</span></div>
+            </div>
+            <div style="font-size:13px;color:var(--color-neutral-800)">Próxima revisão: amanhã · 9 cartões</div>
+            <div style="flex:1"></div>
+            <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);min-height:48px">Rever os 3 errados agora</button>
+            <button class="btn btn-secondary" style="min-height:48px">Exercícios desses assuntos</button>
+            <button class="btn btn-ghost" style="color:var(--color-accent-700);min-height:44px">Voltar ao início</button>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="font-size:13px;color:var(--color-neutral-800)"><b>A4m.9</b> · Tudo em dia / criando baralho</div>
+        <div data-screen-label="A4m.9 Vazio e geração" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+          <div style="flex:1;display:flex;flex-direction:column;gap:16px;padding:56px 20px 16px">
+            <div style="font-family:var(--font-heading);font-size:26px">Flashcards</div>
+            <div style="display:flex;flex-direction:column;gap:10px;padding:22px;border-radius:28px;border:1.5px dashed var(--color-neutral-400)">
+              <dc-import name="Icon" icon="check" size="22" hint-size="22px,22px" style="color:var(--color-accent-2-700)"></dc-import>
+              <b style="font-size:17px">Tudo em dia na Glicólise</b>
+              <span style="font-size:14px;color:var(--color-neutral-800)">Próximos 9 cartões amanhã. Quer adiantar ou praticar outro tema?</span>
+              <div style="display:flex;gap:8px"><button class="btn btn-secondary" style="min-height:44px">Adiantar 10</button><button class="btn btn-ghost" style="color:var(--color-accent-700);min-height:44px">Modo livre</button></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:24px;background:var(--color-accent-100);border:1px solid var(--color-accent-200)">
+              <div style="display:flex;gap:10px;align-items:center;font-size:14px;color:var(--color-accent-900)"><dc-import name="Icon" icon="loader" size="17" hint-size="17px,17px"></dc-import><b style="flex:1">Criando cartões de Lipídios.pdf</b><span>12/20</span></div>
+              <div style="height:6px;border-radius:999px;background:var(--color-accent-200)"><div style="width:60%;height:100%;border-radius:999px;background:var(--color-accent-700)"></div></div>
+              <span style="font-size:13px;color:var(--color-accent-900)">Pode começar pelos 12 prontos.</span>
+              <button class="btn btn-secondary" style="align-self:flex-start;min-height:44px;border-color:var(--color-accent-300)">Começar agora</button>
+            </div>
+            <div style="display:flex;gap:10px;padding:14px 16px;border-radius:22px;background:var(--color-neutral-100);font-size:14px;align-items:flex-start"><dc-import name="Icon" icon="cloudoff" size="18" hint-size="18px,18px"></dc-import><span><b>Sem conexão.</b> Seus 18 cartões de hoje estão salvos no aparelho; as respostas sincronizam depois.</span></div>
+          </div>
+          <dc-import name="TabBar" role="aluno" active="estudar" hint-size="100%,78px"></dc-import>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A5</b> · Plano de estudos</div>
+      <div data-screen-label="A5 Plano" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="aluno" active="plano" used="23" limit="50" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:28px 40px;display:flex;flex-direction:column;gap:20px;overflow:hidden">
+          <div style="display:flex;align-items:flex-end;gap:12px"><div style="flex:1"><h1 style="font-size:32px;margin:0">Plano para a P2</h1><div style="font-size:14px;color:var(--color-neutral-700)">Baseado no roteiro da Profa. Marina · 5 de 14 sessões feitas · prova em 16 out</div></div><button class="btn btn-secondary"><dc-import name="Icon" icon="sliders" size="15" hint-size="15px,15px"></dc-import>Ajustar disponibilidade</button></div>
+          <div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;flex:1;min-height:0">
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;color:var(--color-neutral-700)">Seg 28</div><div style="padding:12px;border-radius:18px;background:var(--color-accent-2-100);font-size:13px;color:var(--color-accent-2-900)"><div style="display:flex;justify-content:space-between"><b>Leitura</b><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px"></dc-import></div>Glicólise p. 1–11 · 40 min</div></div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;color:var(--color-neutral-700)">Ter 29</div><div style="padding:12px;border-radius:18px;background:var(--color-accent-2-100);font-size:13px;color:var(--color-accent-2-900)"><div style="display:flex;justify-content:space-between"><b>Flashcards</b><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px"></dc-import></div>12 cartões · 15 min</div><div style="padding:12px;border-radius:18px;background:var(--color-accent-2-100);font-size:13px;color:var(--color-accent-2-900)"><div style="display:flex;justify-content:space-between"><b>Resumo</b><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px"></dc-import></div>Regulação · 25 min</div></div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;color:var(--color-neutral-700)">Qua 30</div><div style="padding:12px;border-radius:18px;background:var(--color-neutral-100);font-size:13px;border:1.5px dashed var(--color-accent-400)"><div style="display:flex;justify-content:space-between"><b>Exercícios</b><span style="color:var(--color-accent-800);font-size:11px;font-weight:700">Atrasada</span></div>Piruvato · 30 min</div></div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;color:var(--color-neutral-700)">Qui 1</div><div style="padding:12px;border-radius:18px;background:var(--color-accent-2-100);font-size:13px;color:var(--color-accent-2-900)"><div style="display:flex;justify-content:space-between"><b>Leitura</b><dc-import name="Icon" icon="check" size="14" hint-size="14px,14px"></dc-import></div>Glicólise p. 12–22 · 40 min</div></div>
+            <div style="display:flex;flex-direction:column;gap:8px"><div style="font-size:13px;font-weight:700;color:var(--color-accent-800)">Hoje · Sex 2</div><div style="padding:12px;border-radius:18px;background:var(--color-neutral-100);font-size:13px;border:2px solid var(--color-accent-700);display:flex;flex-direction:column;gap:8px"><div><b>Flashcards</b><br>18 cartões · 20 min</div><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:6px 12px;font-size:13px">Começar</button></div><div style="padding:12px;border-radius:18px;background:var(--color-neutral-100);font-size:13px"><b>Tutor</b><br>Dúvidas de regulação · 15 min</div></div>
+          </div>
+          <section style="display:flex;flex-direction:column;gap:10px;padding:18px 22px;border-radius:24px;background:var(--color-neutral-100)">
+            <b style="font-size:14px">Tópicos do roteiro</b>
+            <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;font-size:13px">
+              <div style="display:flex;flex-direction:column;gap:6px"><span>Glicólise: fases</span><div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:90%;height:100%;border-radius:999px;background:var(--color-accent-2-600)"></div></div></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span>Regulação</span><div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:60%;height:100%;border-radius:999px;background:var(--color-accent-2-600)"></div></div></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span>Piruvato e fermentação</span><div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:20%;height:100%;border-radius:999px;background:var(--color-accent-500)"></div></div></div>
+              <div style="display:flex;flex-direction:column;gap:6px"><span>Gliconeogênese</span><div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:0%;height:100%"></div></div></div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A6</b> · Configuração do simulado</div>
+      <div data-screen-label="A6 Configurar simulado" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="aluno" active="simulados" used="23" limit="50" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:32px 40px;display:flex;flex-direction:column;gap:20px;overflow:hidden;max-width:820px">
+          <div><div style="font-size:13px;color:var(--color-neutral-700)">Simulados</div><h1 style="font-size:32px;margin:2px 0 0">Novo simulado</h1><div style="font-size:14px;color:var(--color-neutral-700)">Gerado a partir dos materiais que você pode ver. Respostas e explicações aparecem depois que você entregar.</div></div>
+          <section style="display:flex;flex-direction:column;gap:8px;padding:18px 22px;border-radius:24px;background:var(--color-neutral-100)">
+            <b style="font-size:14px">Conteúdo</b>
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px;padding:6px 0"><span style="width:20px;height:20px;border-radius:7px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1">Roteiro da P2 — 4 tópicos</span><span class="tag tag-accent-2">Turma</span></div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px;padding:6px 0"><span style="width:20px;height:20px;border-radius:7px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span><span style="flex:1">Cap. 3 — Glicólise.pdf</span><span class="tag tag-accent-2">Turma</span></div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:14px;padding:6px 0"><span style="width:20px;height:20px;border-radius:7px;border:1.5px solid var(--color-neutral-500)"></span><span style="flex:1">Minhas anotações de bioquímica.pdf</span><span class="tag" style="background:var(--color-neutral-300);color:var(--color-neutral-900)">Meu</span></div>
+          </section>
+          <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px">
+            <div style="display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:24px;background:var(--color-neutral-100)"><b style="font-size:14px">Questões</b><div class="seg" style="align-self:flex-start"><label class="seg-opt"><input type="radio" name="a6q">10</label><label class="seg-opt"><input type="radio" name="a6q" defaultChecked="{{ true }}">20</label><label class="seg-opt"><input type="radio" name="a6q">30</label></div></div>
+            <div style="display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:24px;background:var(--color-neutral-100)"><b style="font-size:14px">Dificuldade</b><div class="seg" style="align-self:flex-start"><label class="seg-opt"><input type="radio" name="a6d">Fácil</label><label class="seg-opt"><input type="radio" name="a6d" defaultChecked="{{ true }}">Mista</label><label class="seg-opt"><input type="radio" name="a6d">Difícil</label></div></div>
+            <div style="display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:24px;background:var(--color-neutral-100)"><b style="font-size:14px">Tempo</b><div class="seg" style="align-self:flex-start"><label class="seg-opt"><input type="radio" name="a6t">Livre</label><label class="seg-opt"><input type="radio" name="a6t" defaultChecked="{{ true }}">40 min</label><label class="seg-opt"><input type="radio" name="a6t">60 min</label></div></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;font-size:14px"><span style="width:40px;height:24px;border-radius:999px;background:var(--color-accent-2-600);position:relative;flex:none"><span style="position:absolute;right:3px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--color-neutral-100)"></span></span>Priorizar assuntos em que errei mais</div>
+          <div style="display:flex;gap:12px;align-items:center"><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);padding:12px 22px"><dc-import name="Icon" icon="play" size="13" hint-size="13px,13px"></dc-import>Gerar e começar</button><span style="font-size:13px;color:var(--color-neutral-700)">Usa 1 geração · restam 27 este mês</span></div>
+        </main>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A7</b> · Realização do simulado — sem respostas até a entrega</div>
+      <div data-screen-label="A7 Simulado" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex;flex-direction:column">
+        <div style="display:flex;align-items:center;gap:16px;padding:16px 32px;background:var(--color-neutral-100);border-bottom:1px solid var(--color-divider)">
+          <b style="font-size:15px;flex:1">Simulado · Metabolismo de carboidratos</b>
+          <span style="display:flex;gap:6px;align-items:center;font-size:14px;font-weight:700;padding:6px 14px;border-radius:999px;background:var(--color-neutral-200)"><dc-import name="Icon" icon="clock" size="15" hint-size="15px,15px"></dc-import>27:42</span>
+          <button class="btn btn-secondary">Pausar</button>
+          <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)">Entregar</button>
+        </div>
+        <div style="flex:1;display:flex;min-height:0">
+          <div style="flex:1;display:flex;flex-direction:column;gap:22px;padding:48px 96px;max-width:860px">
+            <div style="display:flex;gap:10px;align-items:center;font-size:13px;color:var(--color-neutral-700)"><b style="color:var(--color-text);font-size:15px">Questão 8 de 20</b><span class="tag tag-neutral">Regulação</span><div style="flex:1"></div><button class="btn btn-ghost" style="color:var(--color-accent-700)"><dc-import name="Icon" icon="flag" size="14" hint-size="14px,14px"></dc-import>Marcar para revisar</button></div>
+            <div style="font-size:20px;line-height:1.55">Durante um exercício intenso, a concentração de AMP no músculo aumenta. Qual o efeito esperado sobre a glicólise?</div>
+            <div style="display:flex;flex-direction:column;gap:10px;font-size:16px">
+              <div style="display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:22px;background:var(--color-neutral-100);border:1px solid var(--color-divider)"><span style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--color-neutral-500);display:grid;place-items:center;font-size:13px;font-weight:700">A</span>Inibição da PFK-1 e redução do fluxo</div>
+              <div style="display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:22px;background:var(--color-accent-100);border:2px solid var(--color-accent-700)"><span style="width:28px;height:28px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:13px;font-weight:700">B</span>Ativação da PFK-1 e aumento do fluxo</div>
+              <div style="display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:22px;background:var(--color-neutral-100);border:1px solid var(--color-divider)"><span style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--color-neutral-500);display:grid;place-items:center;font-size:13px;font-weight:700">C</span>Nenhum efeito, pois o AMP atua apenas na mitocôndria</div>
+              <div style="display:flex;gap:14px;align-items:center;padding:14px 18px;border-radius:22px;background:var(--color-neutral-100);border:1px solid var(--color-divider)"><span style="width:28px;height:28px;border-radius:50%;border:1.5px solid var(--color-neutral-500);display:grid;place-items:center;font-size:13px;font-weight:700">D</span>Ativação da hexoquinase pelo AMP</div>
+            </div>
+            <div style="display:flex;gap:10px"><button class="btn btn-secondary"><dc-import name="Icon" icon="left" size="15" hint-size="15px,15px"></dc-import>Anterior</button><button class="btn btn-secondary">Próxima<dc-import name="Icon" icon="right" size="15" hint-size="15px,15px"></dc-import></button></div>
+          </div>
+          <aside style="width:280px;flex:none;display:flex;flex-direction:column;gap:14px;padding:28px 24px;border-left:1px solid var(--color-divider)">
+            <b style="font-size:14px">Questões</b>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px">
+              <span style="height:36px;border-radius:12px;background:var(--color-neutral-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:13px;font-weight:700">1</span><span style="height:36px;border-radius:12px;background:var(--color-neutral-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:13px;font-weight:700">2</span><span style="height:36px;border-radius:12px;background:var(--color-neutral-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:13px;font-weight:700">3</span><span style="height:36px;border-radius:12px;background:var(--color-accent-200);color:var(--color-accent-900);display:grid;place-items:center;font-size:13px;font-weight:700">4</span><span style="height:36px;border-radius:12px;background:var(--color-neutral-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:13px;font-weight:700">5</span>
+              <span style="height:36px;border-radius:12px;background:var(--color-neutral-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:13px;font-weight:700">6</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">7</span><span style="height:36px;border-radius:12px;border:2px solid var(--color-accent-700);display:grid;place-items:center;font-size:13px;font-weight:700">8</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">9</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">10</span>
+              <span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">11</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">12</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">13</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">14</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">15</span>
+              <span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">16</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">17</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">18</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">19</span><span style="height:36px;border-radius:12px;border:1px solid var(--color-divider);display:grid;place-items:center;font-size:13px">20</span>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;color:var(--color-neutral-800)"><span style="display:flex;gap:8px;align-items:center"><span style="width:12px;height:12px;border-radius:4px;background:var(--color-neutral-700)"></span>Respondida · 6</span><span style="display:flex;gap:8px;align-items:center"><span style="width:12px;height:12px;border-radius:4px;background:var(--color-accent-200)"></span>Para revisar · 1</span><span style="display:flex;gap:8px;align-items:center"><span style="width:12px;height:12px;border-radius:4px;border:1px solid var(--color-neutral-500)"></span>Em branco · 13</span></div>
+          </aside>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A7m</b> · Simulado — celular</div>
+      <div data-screen-label="A7m Simulado mobile" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;gap:10px;padding:48px 16px 12px;background:var(--color-neutral-100);border-bottom:1px solid var(--color-divider)"><b style="flex:1;font-size:14px">Questão 8 de 20</b><span style="display:flex;gap:6px;align-items:center;font-size:13px;font-weight:700;padding:6px 12px;border-radius:999px;background:var(--color-neutral-200)"><dc-import name="Icon" icon="clock" size="14" hint-size="14px,14px"></dc-import>27:42</span><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="flag" size="17" hint-size="17px,17px"></dc-import></button></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:16px;padding:20px;overflow:hidden">
+          <div style="font-size:17px;line-height:1.55">Durante um exercício intenso, a concentração de AMP no músculo aumenta. Qual o efeito esperado sobre a glicólise?</div>
+          <div style="display:flex;flex-direction:column;gap:8px;font-size:15px">
+            <div style="display:flex;gap:12px;align-items:center;padding:14px;border-radius:20px;background:var(--color-neutral-100);min-height:52px;box-sizing:border-box"><b style="width:24px">A</b>Inibição da PFK-1</div>
+            <div style="display:flex;gap:12px;align-items:center;padding:14px;border-radius:20px;background:var(--color-accent-100);border:2px solid var(--color-accent-700);min-height:52px;box-sizing:border-box"><b style="width:24px">B</b>Ativação da PFK-1 e aumento do fluxo</div>
+            <div style="display:flex;gap:12px;align-items:center;padding:14px;border-radius:20px;background:var(--color-neutral-100);min-height:52px;box-sizing:border-box"><b style="width:24px">C</b>Nenhum efeito</div>
+            <div style="display:flex;gap:12px;align-items:center;padding:14px;border-radius:20px;background:var(--color-neutral-100);min-height:52px;box-sizing:border-box"><b style="width:24px">D</b>Ativação da hexoquinase</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;padding:12px 20px 28px;background:var(--color-neutral-100);border-top:1px solid var(--color-divider)"><button class="btn btn-secondary" style="min-height:48px;flex:1">Anterior</button><button class="btn btn-primary" style="min-height:48px;flex:1;background:var(--color-accent-700);color:var(--color-neutral-100)">Próxima</button></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A8</b> · Resultado — acertos, erros, explicações e revisão por assunto</div>
+      <div data-screen-label="A8 Resultado" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="aluno" active="simulados" used="24" limit="50" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:28px 40px;display:grid;grid-template-columns:320px minmax(0,1fr);gap:24px;overflow:hidden">
+          <div style="display:flex;flex-direction:column;gap:16px">
+            <div><div style="font-size:13px;color:var(--color-neutral-700)">Simulado · entregue há 1 min</div><h1 style="font-size:28px;margin:2px 0 0">Resultado</h1></div>
+            <div style="display:flex;flex-direction:column;gap:6px;padding:22px;border-radius:28px;background:var(--color-neutral-100)"><div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-heading);font-size:52px;line-height:1">14</span><span style="font-size:18px;color:var(--color-neutral-700)">de 20</span></div><div style="font-size:14px;color:var(--color-neutral-800)">70% de acertos · 32 min</div><div style="display:flex;height:8px;border-radius:999px;overflow:hidden;margin-top:6px"><span style="width:70%;background:var(--color-accent-2-600)"></span><span style="width:25%;background:var(--color-accent-500)"></span><span style="width:5%;background:var(--color-neutral-400)"></span></div><div style="display:flex;gap:14px;font-size:12px;color:var(--color-neutral-800)"><span>14 certas</span><span>5 erradas</span><span>1 em branco</span></div></div>
+            <div style="display:flex;flex-direction:column;gap:10px;padding:20px 22px;border-radius:28px;background:var(--color-neutral-100)">
+              <b style="font-size:14px">Por assunto</b>
+              <div style="display:flex;flex-direction:column;gap:4px;font-size:13px"><div style="display:flex;justify-content:space-between"><span>Glicólise: fases</span><b>6/6</b></div><div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:100%;height:100%;border-radius:999px;background:var(--color-accent-2-600)"></div></div></div>
+              <div style="display:flex;flex-direction:column;gap:4px;font-size:13px"><div style="display:flex;justify-content:space-between"><span>Regulação</span><b>4/6</b></div><div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:66%;height:100%;border-radius:999px;background:var(--color-accent-2-600)"></div></div></div>
+              <div style="display:flex;flex-direction:column;gap:4px;font-size:13px"><div style="display:flex;justify-content:space-between"><span>Piruvato e fermentação</span><b style="color:var(--color-accent-800)">1/4</b></div><div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:25%;height:100%;border-radius:999px;background:var(--color-accent-600)"></div></div></div>
+              <div style="display:flex;flex-direction:column;gap:4px;font-size:13px"><div style="display:flex;justify-content:space-between"><span>Gliconeogênese</span><b>3/4</b></div><div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:75%;height:100%;border-radius:999px;background:var(--color-accent-2-600)"></div></div></div>
+              <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);margin-top:6px"><dc-import name="Icon" icon="target" size="15" hint-size="15px,15px"></dc-import>Praticar Piruvato</button>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:12px;min-width:0;padding-top:52px">
+            <div style="display:flex;gap:10px;align-items:center"><div class="seg"><label class="seg-opt"><input type="radio" name="a8">Todas</label><label class="seg-opt"><input type="radio" name="a8" defaultChecked="{{ true }}">Erradas · 6</label><label class="seg-opt"><input type="radio" name="a8">Certas</label></div></div>
+            <div style="display:flex;flex-direction:column;gap:12px;padding:20px 22px;border-radius:26px;background:var(--color-neutral-100)">
+              <div style="display:flex;gap:8px;align-items:center;font-size:13px"><span style="width:22px;height:22px;border-radius:50%;background:var(--color-accent-200);color:var(--color-accent-900);display:grid;place-items:center"><dc-import name="Icon" icon="x" size="13" hint-size="13px,13px"></dc-import></span><b>Questão 12</b><span class="tag tag-neutral">Piruvato e fermentação</span></div>
+              <div style="font-size:15px;line-height:1.55">Em condições anaeróbicas, por que o músculo converte piruvato em lactato?</div>
+              <div style="display:flex;flex-direction:column;gap:6px;font-size:14px">
+                <div style="display:flex;gap:10px;align-items:center;padding:9px 14px;border-radius:16px;background:var(--color-accent-100);color:var(--color-accent-900)"><dc-import name="Icon" icon="x" size="15" hint-size="15px,15px"></dc-import><span style="flex:1">Para produzir ATP adicional</span><span style="font-size:12px;font-weight:700">Sua resposta</span></div>
+                <div style="display:flex;gap:10px;align-items:center;padding:9px 14px;border-radius:16px;background:var(--color-accent-2-100);color:var(--color-accent-2-900)"><dc-import name="Icon" icon="check" size="15" hint-size="15px,15px"></dc-import><span style="flex:1">Para regenerar NAD⁺ e manter a glicólise</span><span style="font-size:12px;font-weight:700">Correta</span></div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px;padding:14px 16px;border-radius:18px;background:var(--color-neutral-200);font-size:14px;line-height:1.6"><b>Por quê</b>A lactato desidrogenase oxida NADH a NAD⁺. Sem NAD⁺, a etapa da gliceraldeído-3-fosfato desidrogenase para. A conversão não gera ATP extra.<span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 6px;border-radius:999px;background:var(--color-accent-100);color:var(--color-accent-800);font-size:12px;font-weight:600;border:1px solid var(--color-accent-200);width:max-content"><dc-import name="Icon" icon="file" size="13" hint-size="13px,13px"></dc-import>Glicólise.pdf · p. 20</span></div>
+              <div style="display:flex;gap:8px"><button class="btn btn-secondary">Perguntar ao tutor</button><button class="btn btn-ghost" style="color:var(--color-accent-700)">Exercícios semelhantes</button></div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:center;padding:14px 22px;border-radius:22px;background:var(--color-neutral-100);font-size:14px"><span style="width:22px;height:22px;border-radius:50%;background:var(--color-accent-200);color:var(--color-accent-900);display:grid;place-items:center"><dc-import name="Icon" icon="x" size="13" hint-size="13px,13px"></dc-import></span><b>Questão 14</b><span style="flex:1;color:var(--color-neutral-700);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Rendimento da fermentação alcoólica em leveduras…</span><dc-import name="Icon" icon="down" size="16" hint-size="16px,16px"></dc-import></div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A8m</b> · Resultado — celular</div>
+      <div data-screen-label="A8m Resultado mobile" style="width:390px;height:844px;border-radius:48px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);border:8px solid var(--color-neutral-900);display:flex;flex-direction:column;box-sizing:border-box">
+        <div style="display:flex;align-items:center;gap:8px;padding:48px 12px 4px"><button class="btn btn-icon" style="width:44px;height:44px"><dc-import name="Icon" icon="x" size="18" hint-size="18px,18px"></dc-import></button></div>
+        <div style="flex:1;display:flex;flex-direction:column;gap:14px;padding:0 20px 20px;overflow:hidden">
+          <div style="display:flex;align-items:baseline;gap:8px"><span style="font-family:var(--font-heading);font-size:56px;line-height:1">14</span><span style="font-size:18px;color:var(--color-neutral-700)">de 20 · 70%</span></div>
+          <div style="display:flex;height:8px;border-radius:999px;overflow:hidden"><span style="width:70%;background:var(--color-accent-2-600)"></span><span style="width:25%;background:var(--color-accent-500)"></span><span style="width:5%;background:var(--color-neutral-400)"></span></div>
+          <div style="display:flex;flex-direction:column;padding:6px 18px;border-radius:24px;background:var(--color-neutral-100)">
+            <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--color-divider);font-size:14px"><span>Glicólise: fases</span><b>6/6</b></div>
+            <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--color-divider);font-size:14px"><span>Regulação</span><b>4/6</b></div>
+            <div style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--color-divider);font-size:14px;color:var(--color-accent-800)"><span>Piruvato e fermentação</span><b>1/4</b></div>
+            <div style="display:flex;justify-content:space-between;padding:12px 0;font-size:14px"><span>Gliconeogênese</span><b>3/4</b></div>
+          </div>
+          <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);min-height:48px">Praticar Piruvato e fermentação</button>
+          <button class="btn btn-secondary" style="min-height:48px">Ver 6 questões erradas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:48px;align-items:flex-start;flex-wrap:wrap">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="font-size:13px;color:var(--color-neutral-800)"><b>A9</b> · Exercícios semelhantes — prática com correção imediata</div>
+      <div data-screen-label="A9 Exercícios semelhantes" style="width:1280px;height:820px;border-radius:24px;overflow:hidden;background:var(--color-neutral-200);box-shadow:var(--shadow-lg);display:flex">
+        <dc-import name="Sidebar" role="aluno" active="simulados" used="25" limit="50" hint-size="248px,100%"></dc-import>
+        <main style="flex:1;min-width:0;padding:32px 40px;display:flex;flex-direction:column;gap:20px;overflow:hidden;max-width:860px">
+          <div><div style="font-size:13px;color:var(--color-neutral-700)">Praticar · baseado nos seus erros</div><h1 style="font-size:30px;margin:2px 0 0">Piruvato e fermentação</h1></div>
+          <div style="display:flex;gap:6px"><span style="flex:1;height:6px;border-radius:999px;background:var(--color-accent-2-600)"></span><span style="flex:1;height:6px;border-radius:999px;background:var(--color-accent-500)"></span><span style="flex:1;height:6px;border-radius:999px;background:var(--color-neutral-700)"></span><span style="flex:1;height:6px;border-radius:999px;background:var(--color-neutral-300)"></span><span style="flex:1;height:6px;border-radius:999px;background:var(--color-neutral-300)"></span></div>
+          <div style="display:flex;flex-direction:column;gap:14px;padding:26px;border-radius:28px;background:var(--color-neutral-100)">
+            <div style="font-size:13px;color:var(--color-neutral-700)">Exercício 3 de 5 · semelhante à questão 12</div>
+            <div style="font-size:18px;line-height:1.55">Uma linhagem de células sem lactato desidrogenase é cultivada sem oxigênio. O que acontece com a glicólise?</div>
+            <div style="display:flex;flex-direction:column;gap:8px;font-size:15px">
+              <div style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:20px;border:1px solid var(--color-divider)"><b>A</b>Acelera, pois sobra piruvato</div>
+              <div style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:20px;background:var(--color-accent-2-100);border:2px solid var(--color-accent-2-600);color:var(--color-accent-2-900)"><b>B</b><span style="flex:1">Para, por falta de NAD⁺ regenerado</span><dc-import name="Icon" icon="check" size="17" hint-size="17px,17px"></dc-import></div>
+              <div style="display:flex;gap:12px;align-items:center;padding:12px 16px;border-radius:20px;border:1px solid var(--color-divider)"><b>C</b>Segue normal pela via das pentoses</div>
+            </div>
+            <div style="display:flex;gap:10px;padding:14px 16px;border-radius:18px;background:var(--color-accent-2-100);color:var(--color-accent-2-900);font-size:14px;line-height:1.6"><dc-import name="Icon" icon="check" size="18" hint-size="18px,18px"></dc-import><span><b>Certo!</b> Sem LDH, o NADH se acumula e a G3P desidrogenase fica sem NAD⁺ — o mesmo raciocínio da questão 12.</span></div>
+            <div style="display:flex;gap:8px"><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)">Próximo exercício</button><button class="btn btn-ghost" style="color:var(--color-accent-700)">Ver na página 20</button></div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

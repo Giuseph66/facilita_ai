@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/styles.css">
+<script src="_ds/organic-741c293f-e984-4ceb-bfc7-94b1f1cd9282/_ds_bundle.js"></script>
+<style>html,body{margin:0;background:var(--color-neutral-300)} a{color:var(--color-accent-700)} a:hover{color:var(--color-accent-800)}</style>
+</helmet>
+<div style="padding:72px;display:flex;flex-direction:column;gap:56px;width:1480px">
+  <header style="display:flex;flex-direction:column;gap:10px;max-width:760px">
+    <div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-accent-800);font-weight:700">Facilita Estudo · 00</div>
+    <h1 style="font-size:48px;margin:0">Design system</h1>
+    <p style="font-size:17px;color:var(--color-neutral-800);margin:0;text-wrap:pretty">Base Organic ajustada ao briefing: chão cinza-bege (<code>neutral-200</code>), superfícies quase brancas (<code>neutral-100</code>) e ações no terracota profundo (<code>accent-700</code>), com contraste AA para texto. Caprasimo fica restrita a títulos de página; toda a interface e leitura usam Figtree.</p>
+    <div style="display:flex;gap:16px;font-size:14px;margin-top:6px"><a href="01 Entrada e Conta.dc.html">01 Entrada</a><a href="02 Compartilhado.dc.html">02 Compartilhado</a><a href="03 Professor.dc.html">03 Professor</a><a href="04 Aluno.dc.html">04 Aluno</a><a href="05 Configuracoes.dc.html">05 Configurações</a></div>
+  </header>
+
+  <section data-screen-label="DS Cor" style="display:flex;flex-direction:column;gap:20px;padding:40px;border-radius:32px;background:var(--color-neutral-100)">
+    <h2 style="font-size:28px;margin:0">Cor</h2>
+    <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px">
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:88px;border-radius:20px;background:var(--color-neutral-200);border:1px solid var(--color-divider)"></div><b style="font-size:14px">Fundo</b><span style="font-size:12px;color:var(--color-neutral-700)">--color-neutral-200 · chão do app</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:88px;border-radius:20px;background:var(--color-neutral-100);border:1px solid var(--color-divider)"></div><b style="font-size:14px">Superfície</b><span style="font-size:12px;color:var(--color-neutral-700)">--color-neutral-100 · painéis, leitura</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:88px;border-radius:20px;background:var(--color-text)"></div><b style="font-size:14px">Texto principal</b><span style="font-size:12px;color:var(--color-neutral-700)">--color-text · 15.2:1 sobre superfície</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:88px;border-radius:20px;background:var(--color-neutral-700)"></div><b style="font-size:14px">Texto secundário</b><span style="font-size:12px;color:var(--color-neutral-700)">--color-neutral-700 · 6.4:1</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:88px;border-radius:20px;background:var(--color-accent-700)"></div><b style="font-size:14px">Ação</b><span style="font-size:12px;color:var(--color-neutral-700)">--color-accent-700 · botões, links (6.9:1)</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:88px;border-radius:20px;background:var(--color-accent-100);border:1px solid var(--color-accent-200)"></div><b style="font-size:14px">Destaque leve</b><span style="font-size:12px;color:var(--color-neutral-700)">--color-accent-100 · seleção, IA</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:88px;border-radius:20px;background:var(--color-accent-2-600)"></div><b style="font-size:14px">Liberado / concluído</b><span style="font-size:12px;color:var(--color-neutral-700)">--color-accent-2-* · sálvia</span></div>
+      <div style="display:flex;flex-direction:column;gap:8px"><div style="height:88px;border-radius:20px;background:var(--color-neutral-800)"></div><b style="font-size:14px">Privado</b><span style="font-size:12px;color:var(--color-neutral-700)">--color-neutral-800 + cadeado</span></div>
+    </div>
+    <p style="font-size:13px;color:var(--color-neutral-700);margin:0;max-width:720px">Atenção e erro usam o terracota escuro (<code>accent-800</code> sobre <code>accent-100</code>) sempre com ícone e texto — nunca só cor. O sálvia é a segunda voz: tudo o que o aluno pode ver.</p>
+  </section>
+
+  <section data-screen-label="DS Tipografia" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;padding:40px;border-radius:32px;background:var(--color-neutral-100)">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <h2 style="font-size:28px;margin:0">Tipografia</h2>
+      <div><div style="font-size:12px;color:var(--color-neutral-700)">Display · Caprasimo 44/1.1 — só na home pública</div><div style="font-family:var(--font-heading);font-size:44px;line-height:1.1">Estude com o que importa</div></div>
+      <div><div style="font-size:12px;color:var(--color-neutral-700)">Título de página · Caprasimo 30/1.15</div><div style="font-family:var(--font-heading);font-size:30px;line-height:1.15">Bioquímica Metabólica</div></div>
+      <div><div style="font-size:12px;color:var(--color-neutral-700)">Título de seção · Figtree 700 18</div><div style="font-size:18px;font-weight:700">Materiais recentes</div></div>
+      <div><div style="font-size:12px;color:var(--color-neutral-700)">Rótulo · Figtree 600 13</div><div style="font-size:13px;font-weight:600">Tipo de questão</div></div>
+      <div><div style="font-size:12px;color:var(--color-neutral-700)">Legenda · Figtree 400 12</div><div style="font-size:12px;color:var(--color-neutral-700)">Atualizado há 2 horas · 42 páginas</div></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <div><div style="font-size:12px;color:var(--color-neutral-700)">Corpo de interface · Figtree 15/1.55</div><p style="font-size:15px;line-height:1.55;margin:0">Envie um PDF ou PPTX. O texto é extraído página a página para que cada resposta da IA aponte a origem.</p></div>
+      <div><div style="font-size:12px;color:var(--color-neutral-700)">Leitura longa · Figtree 17/1.7, medida ≤ 68ch</div><p style="font-size:17px;line-height:1.7;margin:0;max-width:62ch;text-wrap:pretty">A glicólise ocorre no citosol e converte uma molécula de glicose em duas de piruvato, com saldo de duas moléculas de ATP e duas de NADH. É a via comum ao metabolismo aeróbico e anaeróbico.</p></div>
+    </div>
+  </section>
+
+  <section data-screen-label="DS Espaço" style="display:flex;flex-direction:column;gap:20px;padding:40px;border-radius:32px;background:var(--color-neutral-100)">
+    <h2 style="font-size:28px;margin:0">Espaçamento, raios e elevação</h2>
+    <div style="display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap">
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><div style="width:4.4px;height:40px;background:var(--color-accent-2-500);border-radius:2px"></div><span style="font-size:12px">space-1 · 4.4</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><div style="width:8.8px;height:40px;background:var(--color-accent-2-500);border-radius:2px"></div><span style="font-size:12px">space-2 · 8.8</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><div style="width:13.2px;height:40px;background:var(--color-accent-2-500);border-radius:2px"></div><span style="font-size:12px">space-3 · 13.2</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><div style="width:17.6px;height:40px;background:var(--color-accent-2-500);border-radius:2px"></div><span style="font-size:12px">space-4 · 17.6</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><div style="width:26.4px;height:40px;background:var(--color-accent-2-500);border-radius:2px"></div><span style="font-size:12px">space-6 · 26.4</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-start"><div style="width:35.2px;height:40px;background:var(--color-accent-2-500);border-radius:2px"></div><span style="font-size:12px">space-8 · 35.2</span></div>
+      <div style="width:40px"></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><div style="width:72px;height:56px;background:var(--color-neutral-200);border-radius:8px"></div><span style="font-size:12px">sm 8 · chips</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><div style="width:72px;height:56px;background:var(--color-neutral-200);border-radius:16px"></div><span style="font-size:12px">md 16 · linhas</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><div style="width:72px;height:56px;background:var(--color-neutral-200);border-radius:28px"></div><span style="font-size:12px">lg 28 · painéis</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><div style="width:72px;height:56px;background:var(--color-neutral-200);border-radius:999px"></div><span style="font-size:12px">pill · botões</span></div>
+      <div style="width:40px"></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><div class="elev-sm" style="width:72px;height:56px;background:var(--color-neutral-100);border-radius:16px"></div><span style="font-size:12px">shadow-sm</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><div class="elev-md" style="width:72px;height:56px;background:var(--color-neutral-100);border-radius:16px"></div><span style="font-size:12px">shadow-md · menus</span></div>
+      <div style="display:flex;flex-direction:column;gap:6px"><div class="elev-lg" style="width:72px;height:56px;background:var(--color-neutral-100);border-radius:16px"></div><span style="font-size:12px">shadow-lg · diálogos</span></div>
+    </div>
+    <p style="font-size:13px;color:var(--color-neutral-700);margin:0;max-width:760px">Grade desktop: sidebar 248 + conteúdo fluido com margem 40. Celular: margem 20, alvos de toque ≥ 44px. Agrupar conteúdo em listas dentro de um painel, não em cartões soltos.</p>
+  </section>
+
+  <section data-screen-label="DS Botões" style="display:flex;flex-direction:column;gap:22px;padding:40px;border-radius:32px;background:var(--color-neutral-100)">
+    <h2 style="font-size:28px;margin:0">Botões e estados</h2>
+    <div style="display:grid;grid-template-columns:140px repeat(6,minmax(0,1fr));gap:16px 12px;align-items:center;font-size:12px;color:var(--color-neutral-700)">
+      <span></span><span>Padrão</span><span>Hover</span><span>Pressionado</span><span>Foco (teclado)</span><span>Desativado</span><span>Carregando</span>
+      <b style="color:var(--color-text);font-size:13px">Primário</b>
+      <div><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)">Gerar avaliação</button></div>
+      <div><button class="btn btn-primary" style="background:var(--color-accent-800);color:var(--color-neutral-100)">Gerar avaliação</button></div>
+      <div><button class="btn btn-primary" style="background:var(--color-accent-900);color:var(--color-neutral-100)">Gerar avaliação</button></div>
+      <div><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100);outline:2px solid var(--color-accent);outline-offset:2px">Gerar avaliação</button></div>
+      <div><button class="btn btn-primary" disabled style="background:var(--color-accent-700);color:var(--color-neutral-100)">Gerar avaliação</button></div>
+      <div><button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)"><dc-import name="Icon" icon="loader" size="15" hint-size="15px,15px"></dc-import>Gerando…</button></div>
+      <b style="color:var(--color-text);font-size:13px">Secundário</b>
+      <div><button class="btn btn-secondary">Duplicar</button></div>
+      <div><button class="btn btn-secondary" style="background:color-mix(in srgb, var(--color-text) 7%, transparent)">Duplicar</button></div>
+      <div><button class="btn btn-secondary" style="background:color-mix(in srgb, var(--color-text) 14%, transparent)">Duplicar</button></div>
+      <div><button class="btn btn-secondary" style="outline:2px solid var(--color-accent);outline-offset:2px">Duplicar</button></div>
+      <div><button class="btn btn-secondary" disabled>Duplicar</button></div>
+      <div><button class="btn btn-secondary"><dc-import name="Icon" icon="loader" size="15" hint-size="15px,15px"></dc-import>Duplicando…</button></div>
+      <b style="color:var(--color-text);font-size:13px">Discreto</b>
+      <div><button class="btn btn-ghost" style="color:var(--color-accent-700)">Ver todas</button></div>
+      <div><button class="btn btn-ghost" style="color:var(--color-accent-700);background:color-mix(in srgb, var(--color-accent) 10%, transparent)">Ver todas</button></div>
+      <div><button class="btn btn-ghost" style="color:var(--color-accent-700);background:color-mix(in srgb, var(--color-accent) 18%, transparent)">Ver todas</button></div>
+      <div><button class="btn btn-ghost" style="color:var(--color-accent-700);outline:2px solid var(--color-accent);outline-offset:2px">Ver todas</button></div>
+      <div><button class="btn btn-ghost" disabled style="color:var(--color-accent-700)">Ver todas</button></div>
+      <span>—</span>
+      <b style="color:var(--color-text);font-size:13px">Destrutivo</b>
+      <div><button class="btn btn-secondary" style="color:var(--color-accent-800);border-color:var(--color-accent-300)">Remover chave</button></div>
+      <div><button class="btn btn-secondary" style="color:var(--color-accent-800);border-color:var(--color-accent-300);background:var(--color-accent-100)">Remover chave</button></div>
+      <div><button class="btn btn-secondary" style="color:var(--color-accent-900);border-color:var(--color-accent-400);background:var(--color-accent-200)">Remover chave</button></div>
+      <div><button class="btn btn-secondary" style="color:var(--color-accent-800);border-color:var(--color-accent-300);outline:2px solid var(--color-accent);outline-offset:2px">Remover chave</button></div>
+      <div><button class="btn btn-secondary" disabled style="color:var(--color-accent-800);border-color:var(--color-accent-300)">Remover chave</button></div>
+      <span>—</span>
+      <b style="color:var(--color-text);font-size:13px">Ícone</b>
+      <div><button class="btn btn-secondary btn-icon"><dc-import name="Icon" icon="more" size="16" hint-size="16px,16px"></dc-import></button></div>
+      <div><button class="btn btn-secondary btn-icon" style="background:color-mix(in srgb, var(--color-text) 7%, transparent)"><dc-import name="Icon" icon="more" size="16" hint-size="16px,16px"></dc-import></button></div>
+      <div><button class="btn btn-secondary btn-icon" style="background:color-mix(in srgb, var(--color-text) 14%, transparent)"><dc-import name="Icon" icon="more" size="16" hint-size="16px,16px"></dc-import></button></div>
+      <div><button class="btn btn-secondary btn-icon" style="outline:2px solid var(--color-accent);outline-offset:2px"><dc-import name="Icon" icon="more" size="16" hint-size="16px,16px"></dc-import></button></div>
+      <div><button class="btn btn-secondary btn-icon" disabled><dc-import name="Icon" icon="more" size="16" hint-size="16px,16px"></dc-import></button></div>
+      <span>—</span>
+    </div>
+  </section>
+
+  <section data-screen-label="DS Formulários" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;padding:40px;border-radius:32px;background:var(--color-neutral-100)">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <h2 style="font-size:28px;margin:0">Campos</h2>
+      <div class="field"><label>E-mail</label><input class="input" placeholder="nome@instituicao.edu.br"></div>
+      <div class="field"><label>E-mail · foco</label><input class="input" value="marina.couto@" style="border-color:var(--color-accent);outline:2px solid var(--color-accent);outline-offset:0"></div>
+      <div class="field"><label style="color:var(--color-accent-800)">Senha · erro</label><input class="input" value="1234" type="password" style="border-color:var(--color-accent-700);background:var(--color-accent-100)"><div style="display:flex;gap:6px;align-items:center;margin-top:6px;font-size:12px;color:var(--color-accent-800)"><dc-import name="Icon" icon="alert" size="14" hint-size="14px,14px"></dc-import>Use pelo menos 8 caracteres, com uma letra e um número.</div></div>
+      <div class="field"><label>Instituição · desativado</label><input class="input" value="Definida pela turma" disabled style="opacity:.55"></div>
+      <div class="field"><label>Instruções para a IA (opcional)</label><textarea class="input" style="border-radius:20px">Priorizar questões de aplicação clínica.</textarea></div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <h2 style="font-size:28px;margin:0">Seleção</h2>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--color-neutral-700)">Segmentado</span><div class="seg"><label class="seg-opt"><input type="radio" name="d1">Fácil</label><label class="seg-opt"><input type="radio" name="d1" defaultChecked="{{ true }}">Média</label><label class="seg-opt"><input type="radio" name="d1">Difícil</label><label class="seg-opt"><input type="radio" name="d1">Mista</label></div></div>
+      <div style="display:flex;gap:20px"><label class="radio"><input type="radio" name="r1" defaultChecked="{{ true }}"><span class="dot"></span>Professor(a)</label><label class="radio"><input type="radio" name="r1"><span class="dot"></span>Aluno(a)</label></div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px"><span style="width:20px;height:20px;border-radius:7px;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span>Múltipla escolha</div>
+        <div style="display:flex;align-items:center;gap:10px;font-size:14px"><span style="width:20px;height:20px;border-radius:7px;border:1.5px solid var(--color-neutral-500)"></span>Verdadeiro ou falso</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px"><span style="width:40px;height:24px;border-radius:999px;background:var(--color-accent-2-600);position:relative;flex:none"><span style="position:absolute;right:3px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--color-neutral-100)"></span></span>Liberado para a turma</div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:14px"><span style="width:40px;height:24px;border-radius:999px;background:var(--color-neutral-400);position:relative;flex:none"><span style="position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:var(--color-neutral-100)"></span></span>Privado</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px"><span style="font-size:12px;color:var(--color-neutral-700)">Quantidade</span><div style="display:flex;align-items:center;gap:0;border:1px solid var(--color-divider);border-radius:999px;width:max-content"><button class="btn btn-icon">−</button><span style="min-width:40px;text-align:center;font-weight:700">12</span><button class="btn btn-icon">+</button></div></div>
+    </div>
+  </section>
+
+  <section data-screen-label="DS Status" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;padding:40px;border-radius:32px;background:var(--color-neutral-100)">
+    <div style="display:flex;flex-direction:column;gap:18px">
+      <h2 style="font-size:28px;margin:0">Visibilidade e status</h2>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <span class="tag" style="gap:5px;background:var(--color-neutral-300);color:var(--color-neutral-900);font-weight:600"><dc-import name="Icon" icon="lock" size="12" hint-size="12px,12px"></dc-import>Privado</span>
+        <span class="tag" style="gap:5px;background:var(--color-accent-2-100);color:var(--color-accent-2-800);font-weight:600"><dc-import name="Icon" icon="eye" size="12" hint-size="12px,12px"></dc-import>Liberado · Bioquímica Noturno</span>
+      </div>
+      <p style="font-size:13px;color:var(--color-neutral-700);margin:0">Todo material, avaliação e conversa exibe uma das duas marcas. Avaliações e gabaritos nunca recebem “Liberado”.</p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <span class="tag tag-neutral" style="font-weight:600">Rascunho</span>
+        <span class="tag tag-accent" style="font-weight:600">Em revisão</span>
+        <span class="tag tag-accent-2" style="font-weight:600">Finalizada</span>
+        <span class="tag tag-outline" style="color:var(--color-accent-700);border-color:var(--color-accent-700);font-weight:600">v3</span>
+        <span class="tag tag-neutral" style="font-weight:600">Prova</span>
+        <span class="tag tag-neutral" style="font-weight:600">Trabalho</span>
+        <span class="tag tag-neutral" style="font-weight:600">Exercícios</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <span style="font-size:12px;color:var(--color-neutral-700)">Referência a material (resposta da IA)</span>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 6px;border-radius:999px;background:var(--color-accent-100);color:var(--color-accent-800);font-size:12px;font-weight:600;border:1px solid var(--color-accent-200)"><span style="width:18px;height:18px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:10px">1</span>Cap. 3 — Glicólise · p. 12</span>
+          <span style="display:inline-flex;align-items:center;gap:6px;padding:4px 10px 4px 6px;border-radius:999px;background:var(--color-accent-100);color:var(--color-accent-800);font-size:12px;font-weight:600;border:1px solid var(--color-accent-200)"><span style="width:18px;height:18px;border-radius:50%;background:var(--color-accent-700);color:var(--color-neutral-100);display:grid;place-items:center;font-size:10px">2</span>Aula 5.pptx · slide 8</span>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="font-size:28px;margin:0">Processamento</h2>
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:20px;border:1px solid var(--color-divider)">
+        <dc-import name="Icon" icon="upload" size="18" hint-size="18px,18px" style="color:var(--color-neutral-700)"></dc-import>
+        <div style="flex:1;display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font-size:14px"><b>Aula 6 — Ciclo de Krebs.pptx</b><span style="color:var(--color-neutral-700)">Enviando · 45%</span></div><div style="height:6px;border-radius:999px;background:var(--color-neutral-300)"><div style="width:45%;height:100%;border-radius:999px;background:var(--color-neutral-700)"></div></div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:20px;border:1px solid var(--color-divider);background:var(--color-accent-100)">
+        <dc-import name="Icon" icon="loader" size="18" hint-size="18px,18px" style="color:var(--color-accent-700)"></dc-import>
+        <div style="flex:1;display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;font-size:14px"><b>Cap. 4 — Lipídios.pdf</b><span style="color:var(--color-accent-800)">Lendo página 18 de 40</span></div><div style="height:6px;border-radius:999px;background:var(--color-accent-200)"><div style="width:45%;height:100%;border-radius:999px;background:var(--color-accent-700)"></div></div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:20px;border:1px solid var(--color-divider)">
+        <span style="width:22px;height:22px;border-radius:50%;background:var(--color-accent-2-600);color:var(--color-neutral-100);display:grid;place-items:center"><dc-import name="Icon" icon="check" size="13" hint-size="13px,13px"></dc-import></span>
+        <div style="flex:1;font-size:14px"><b>Cap. 3 — Glicólise.pdf</b><div style="font-size:12px;color:var(--color-neutral-700)">Pronto · 42 páginas indexadas</div></div>
+        <button class="btn btn-ghost" style="color:var(--color-accent-700)">Abrir</button>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:20px;border:1px solid var(--color-accent-300);background:var(--color-accent-100)">
+        <dc-import name="Icon" icon="alert" size="20" hint-size="20px,20px" style="color:var(--color-accent-800)"></dc-import>
+        <div style="flex:1;font-size:14px;color:var(--color-accent-900)"><b>Lista_escaneada.pdf</b><div style="font-size:12px">Não foi possível ler o texto. O arquivo parece ser uma imagem.</div></div>
+        <button class="btn btn-secondary" style="color:var(--color-accent-800);border-color:var(--color-accent-300)">Tentar de novo</button>
+      </div>
+    </div>
+  </section>
+
+  <section data-screen-label="DS Feedback" style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;padding:40px;border-radius:32px;background:var(--color-neutral-100)">
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="font-size:28px;margin:0">Avisos</h2>
+      <div style="display:flex;gap:12px;padding:14px 18px;border-radius:20px;background:var(--color-accent-100);border:1px solid var(--color-accent-200);color:var(--color-accent-900);font-size:14px;align-items:flex-start"><dc-import name="Icon" icon="chart" size="18" hint-size="18px,18px"></dc-import><div style="flex:1"><b>Você usou todas as 100 gerações do mês.</b><div>Renova em 1º de novembro. Conecte sua chave Ollama Cloud para continuar agora.</div></div><button class="btn btn-secondary" style="border-color:var(--color-accent-300)">Ver plano</button></div>
+      <div style="display:flex;gap:12px;padding:14px 18px;border-radius:20px;background:var(--color-neutral-200);border:1px solid var(--color-divider);font-size:14px;align-items:flex-start"><dc-import name="Icon" icon="cloudoff" size="18" hint-size="18px,18px"></dc-import><div style="flex:1"><b>A IA está indisponível no momento.</b><div style="color:var(--color-neutral-800)">Seus materiais continuam acessíveis. Tentaremos novamente em 30 s.</div></div><button class="btn btn-ghost" style="color:var(--color-accent-700)">Tentar agora</button></div>
+      <div style="display:flex;gap:12px;padding:14px 18px;border-radius:20px;background:var(--color-accent-2-100);border:1px solid var(--color-accent-2-200);color:var(--color-accent-2-900);font-size:14px;align-items:center"><dc-import name="Icon" icon="check" size="18" hint-size="18px,18px"></dc-import><b style="flex:1">Avaliação finalizada. Ela continua privada.</b><dc-import name="Icon" icon="x" size="16" hint-size="16px,16px"></dc-import></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding:32px;border-radius:28px;border:1.5px dashed var(--color-neutral-400);margin-top:8px">
+        <div style="width:56px;height:56px;border-radius:50%;background:var(--color-neutral-200);display:grid;place-items:center"><dc-import name="Icon" icon="folder" size="24" hint-size="24px,24px" style="color:var(--color-neutral-700)"></dc-import></div>
+        <b style="font-size:17px">Nenhum material ainda</b>
+        <span style="font-size:14px;color:var(--color-neutral-700);max-width:340px">Envie PDFs ou apresentações desta disciplina para gerar resumos, questões e conversar com a IA.</span>
+        <button class="btn btn-primary" style="background:var(--color-accent-700);color:var(--color-neutral-100)"><dc-import name="Icon" icon="upload" size="15" hint-size="15px,15px"></dc-import>Enviar material</button>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <h2 style="font-size:28px;margin:0">Diálogo e questão</h2>
+      <div class="dialog" style="width:100%;background:var(--color-neutral-100);border:1px solid var(--color-divider)">
+        <div class="dialog-title">Excluir a questão 4?</div>
+        <div class="dialog-body">Ela sai desta versão da avaliação. Versões anteriores não são alteradas.</div>
+        <div class="dialog-actions"><button class="btn btn-secondary">Cancelar</button><button class="btn btn-primary" style="background:var(--color-accent-800);color:var(--color-neutral-100)">Excluir questão</button></div>
+      </div>
+      <div style="display:flex;gap:12px;padding:18px;border-radius:24px;border:1px solid var(--color-divider);background:var(--color-neutral-100)">
+        <dc-import name="Icon" icon="grip" size="18" hint-size="18px,18px" style="color:var(--color-neutral-500);margin-top:2px"></dc-import>
+        <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;gap:8px;align-items:center;font-size:12px;color:var(--color-neutral-700)"><b style="color:var(--color-text);font-size:14px">4.</b><span class="tag tag-neutral">Múltipla escolha</span><span class="tag tag-accent">Média</span><span>1,0 pt</span></div>
+          <div style="font-size:15px">Qual enzima catalisa a etapa irreversível que compromete a glicose com a glicólise?</div>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:14px">
+            <div style="display:flex;gap:10px;align-items:center;padding:8px 12px;border-radius:14px;background:var(--color-accent-2-100);color:var(--color-accent-2-900)"><b>A</b><span style="flex:1">Fosfofrutoquinase-1</span><dc-import name="Icon" icon="check" size="15" hint-size="15px,15px"></dc-import><span style="font-size:12px;font-weight:700">Gabarito</span></div>
+            <div style="display:flex;gap:10px;padding:8px 12px"><b>B</b><span>Hexoquinase</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+</x-dc>
+</body>
+</html>
