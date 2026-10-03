@@ -5,7 +5,9 @@ export const personaSchema = z.enum(['STUDENT', 'TEACHER']);
 export type Persona = z.infer<typeof personaSchema>;
 
 const emailSchema = z.string().trim().email().max(254).transform((value) => value.toLowerCase());
-const passwordSchema = z.string().min(12).max(128);
+const passwordSchema = z.string().min(12).max(128)
+  .refine((value) => /\p{L}/u.test(value), 'A senha precisa ter ao menos uma letra.')
+  .refine((value) => /\d/.test(value), 'A senha precisa ter ao menos um número.');
 
 export const registerSchema = z.object({
   email: emailSchema,

@@ -18,7 +18,7 @@ export class AuthMailerService {
         secure: process.env.SMTP_SECURE === 'true',
         auth: process.env.SMTP_USER ? { user: process.env.SMTP_USER, pass: process.env.SMTP_PASSWORD } : undefined,
       });
-    const link = new URL('/auth/password-reset', appOrigin);
+    const link = new URL('/recuperar-senha', appOrigin);
     link.searchParams.set('token', token);
     await transport.sendMail({
       from,

@@ -71,8 +71,8 @@ function ShellFrame({ children }: { children: React.ReactNode }) {
         <div className="select-wrap"><select id="workspace-select" value={activeWorkspace?.id || ""} onChange={(event) => setWorkspaceId(event.target.value)}>{session.workspaces.map((space) => <option key={space.id} value={space.id}>{space.name}</option>)}</select><ChevronDown size={15} aria-hidden="true" /></div>
       </div>
       <div className="persona-switch" role="group" aria-label="Experiência">
-        {allowed.teacher && <button type="button" aria-pressed={persona === "TEACHER"} disabled={switching} onClick={() => void doSwitchPersona("TEACHER")}><GraduationCap size={16} />Professora</button>}
-        {allowed.student && <button type="button" aria-pressed={persona === "STUDENT"} disabled={switching} onClick={() => void doSwitchPersona("STUDENT")}><BookOpen size={16} />Aluna</button>}
+        {allowed.teacher && <button type="button" aria-pressed={persona === "TEACHER"} disabled={switching} onClick={() => void doSwitchPersona("TEACHER")}><GraduationCap size={16} />Docente</button>}
+        {allowed.student && <button type="button" aria-pressed={persona === "STUDENT"} disabled={switching} onClick={() => void doSwitchPersona("STUDENT")}><BookOpen size={16} />Estudante</button>}
       </div>
       {switchError && <p className="inline-error" role="alert">{switchError}</p>}
       <nav className="sidebar-nav">{visibleItems.map(({ href, label, icon: Icon }) => <Link key={href} href={href} className={path === href || (href !== "/app" && path.startsWith(`${href}/`)) ? "active" : ""}><Icon size={18} strokeWidth={2.4} aria-hidden="true" /><span>{label}</span>{label === "Estudar com IA" && <span className="nav-sparkle"><Sparkles size={12} /></span>}</Link>)}</nav>
