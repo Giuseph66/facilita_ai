@@ -1,6 +1,6 @@
 # Facilita Estudo — documentação de engenharia
 
-Planejamento inicial, elaborado em 02/10/2026. Nenhuma funcionalidade do produto foi implementada nesta etapa.
+Planejamento inicial e documentação de desenvolvimento, iniciados em 02/10/2026. Consulte o estado abaixo para distinguir especificação de implementação validada.
 
 ## Leitura recomendada
 
@@ -12,18 +12,18 @@ Planejamento inicial, elaborado em 02/10/2026. Nenhuma funcionalidade do produto
 6. [Entregas, dependências e gates](IMPLEMENTATION_PLAN.md).
 7. [Ownership e prompts dos quatro agentes](SUBAGENT_PLAN.md).
 8. [Testes e Definition of Done](TEST_STRATEGY.md).
+9. [Contrato de desenvolvimento atual](DEVELOPMENT_CONTRACT.md), [ambiente local](LOCAL_DEVELOPMENT.md), [validação](VALIDATION.md) e [operação](OPERATIONS.md).
 
 [Requisitos originais](REQUISITOS_ORIGINAIS.md) preserva o pedido fornecido pelo usuário. O plano mestre reúne os documentos temáticos; ao atualizar um tema, atualizar também sua versão consolidada.
 
 ## Estado atual
 
-- Workspace original vazio, sem Git, código ou configuração.
-- Esta entrega cria somente documentação.
-- E00: planejamento entregue. E01 e demais entregas: não executadas.
-- Contratos descritos aqui ainda não são código, migrations ou uma especificação OpenAPI validada.
+- Implementação local em `backend/` e `front-end/`, com planejamento e documentação centralizados nesta pasta.
+- Fluxos e verificações locais aprovados; condições externas para produção permanecem explícitas.
+- [Estado e evidências atuais](DEVELOPMENT_STATUS.md) registram execução e pendências.
 - Preços, limites comerciais, fornecedor de IA da plataforma e termos aplicáveis continuam sujeitos às validações registradas.
-- Quatro agentes planejados para desenvolvimento posterior; nenhum foi acionado nesta entrega.
-- Comandos documentados são futuros. Não representam testes, lint, build ou chamadas cloud já executados.
+- Desenvolvimento distribuído entre coordenador e três subagentes autorizados pelo usuário.
+- Testes, lint, build e verificações locais executados com autorização. Chamadas cloud reais ainda dependem de credencial e orçamento de teste.
 
 ## Convenções
 

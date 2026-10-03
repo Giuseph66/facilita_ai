@@ -1,0 +1,47 @@
+import type { PublicOperation } from '../contracts/openapi';
+import { addPersonaSchema, loginSchema, passwordResetSchema, profilePatchSchema, recoverySchema, registerSchema } from './auth/auth.dto';
+import {
+  classInputSchema,
+  classPatchSchema,
+  courseInputSchema,
+  coursePatchSchema,
+  enrollmentInputSchema,
+  invitationInputSchema,
+  materialInputSchema,
+  materialReleaseInputSchema,
+} from './academic/academic.dto';
+import { privacyRequestSchema } from './privacy/privacy.dto';
+
+export const corePublicOperations: PublicOperation[] = [
+  { method: 'post', path: '/auth/register', operationId: 'register', public: true, body: registerSchema },
+  { method: 'post', path: '/auth/login', operationId: 'login', public: true, body: loginSchema },
+  { method: 'get', path: '/auth/session', operationId: 'getSession' },
+  { method: 'delete', path: '/auth/session', operationId: 'logout', success: 204 },
+  { method: 'post', path: '/auth/password-recovery', operationId: 'requestPasswordRecovery', public: true, body: recoverySchema, success: 202 },
+  { method: 'post', path: '/auth/password-reset', operationId: 'resetPassword', public: true, body: passwordResetSchema, success: 204 },
+  { method: 'patch', path: '/me/profile', operationId: 'patchProfile', body: profilePatchSchema },
+  { method: 'post', path: '/me/personas', operationId: 'addPersona', body: addPersonaSchema },
+  { method: 'get', path: '/workspaces', operationId: 'listWorkspaces' },
+  { method: 'get', path: '/workspaces/:workspaceId/courses', operationId: 'listCourses' },
+  { method: 'post', path: '/workspaces/:workspaceId/courses', operationId: 'createCourse', body: courseInputSchema },
+  { method: 'get', path: '/courses/:courseId', operationId: 'getCourse' },
+  { method: 'patch', path: '/courses/:courseId', operationId: 'patchCourse', body: coursePatchSchema },
+  { method: 'get', path: '/courses/:courseId/classes', operationId: 'listCourseClasses' },
+  { method: 'post', path: '/courses/:courseId/classes', operationId: 'createClass', body: classInputSchema },
+  { method: 'get', path: '/courses/:courseId/materials', operationId: 'listMaterials' },
+  { method: 'post', path: '/courses/:courseId/materials', operationId: 'createMaterial', body: materialInputSchema },
+  { method: 'get', path: '/classes', operationId: 'listClasses' },
+  { method: 'get', path: '/classes/:classId', operationId: 'getClass' },
+  { method: 'patch', path: '/classes/:classId', operationId: 'patchClass', body: classPatchSchema },
+  { method: 'post', path: '/classes/:classId/invitations', operationId: 'createInvitation', body: invitationInputSchema },
+  { method: 'delete', path: '/classes/:classId/enrollments/:userId', operationId: 'revokeEnrollment', success: 204 },
+  { method: 'post', path: '/enrollments', operationId: 'enroll', body: enrollmentInputSchema },
+  { method: 'put', path: '/materials/:materialId/classes/:classId', operationId: 'releaseMaterial', body: materialReleaseInputSchema },
+  { method: 'delete', path: '/materials/:materialId/classes/:classId', operationId: 'revokeMaterial', success: 204 },
+  { method: 'get', path: '/plans', operationId: 'listPlans', public: true },
+  { method: 'get', path: '/me/entitlements', operationId: 'getEntitlements' },
+  { method: 'get', path: '/me/usage', operationId: 'getUsage' },
+  { method: 'get', path: '/me/privacy-requests', operationId: 'listPrivacyRequests' },
+  { method: 'post', path: '/me/privacy-requests', operationId: 'createPrivacyRequest', body: privacyRequestSchema, success: 202 },
+  { method: 'get', path: '/me/privacy-requests/:requestId/export', operationId: 'downloadPrivacyExport' },
+];

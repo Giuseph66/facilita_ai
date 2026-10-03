@@ -1,0 +1,91 @@
+import type { ApiErrorBody, JobView } from "./types";
+
+const apiRoot = "/api/v1";
+let csrfToken: string | null = null;
+
+export function setCsrfToken(token: string | null) {
+  csrfToken = token;
+}
+
+export class ApiError extends Error {
+  code: string;
+  requestId?: string;
+  status: number;
+
+  constructor(status: number, body: ApiErrorBody) {
+    super(body.message || body.code || "Não foi possível concluir a solicitação.");
+    this.name = "ApiError";
+    this.status = status;
+    this.code = body.code || "REQUEST_FAILED";
+    this.requestId = body.requestId;
+  }
+}
+
+export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
+  const headers = new Headers(init.headers);
+  const isForm = typeof FormData !== "undefined" && init.body instanceof FormData;
+  if (init.body && !isForm && !headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
+  if (init.method && !["GET", "HEAD", "OPTIONS"].includes(init.method.toUpperCase()) && csrfToken) {
+    headers.set("X-CSRF-Token", csrfToken);
+  }
+
+  const response = await fetch(`${apiRoot}${path.startsWith("/") ? path : `/${path}`}`, {
+    ...init,
+    headers,
+    credentials: "include",
+    cache: "no-store",
+  });
+
+  if (response.status === 204) return undefined as T;
+  const contentType = response.headers.get("content-type") || "";
+  const payload = contentType.includes("application/json") ? await response.json() : await response.text();
+  if (!response.ok) {
+    const body = typeof payload === "object" && payload !== null
+      ? payload as ApiErrorBody
+      : { code: "REQUEST_FAILED", message: String(payload) };
+    throw new ApiError(response.status, body);
+  }
+  return payload as T;
+}
+
+export function jsonBody(value: unknown) {
+  return JSON.stringify(value);
+}
+
+export function newIdempotencyKey() {
+  return typeof crypto !== "undefined" && "randomUUID" in crypto
+    ? crypto.randomUUID()
+    : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
+
+export function errorCopy(error: unknown) {
+  if (!(error instanceof ApiError)) return "Não foi possível conectar ao serviço. Confira sua conexão e tente novamente.";
+  const messages: Record<string, string> = {
+    UNAUTHENTICATED: "Sua sessão terminou. Entre novamente para continuar.",
+    CSRF_INVALID: "A sessão mudou. Atualize a página e tente de novo.",
+    VALIDATION_FAILED: "Confira os campos destacados e tente novamente.",
+    FORBIDDEN: "Sua conta não tem acesso a esta ação neste contexto.",
+    RESOURCE_NOT_FOUND: "Este conteúdo não está disponível para sua conta.",
+    REVISION_CONFLICT: "Este conteúdo foi alterado em outra sessão. Recarregue antes de salvar.",
+    CAPABILITY_REQUIRED: "Este recurso não está incluído no plano atual.",
+    QUOTA_EXCEEDED: "O limite deste período foi atingido. Você ainda pode ler e editar seus materiais.",
+    INVALID_STATE: "Esta ação não está disponível para o estado atual.",
+    RATE_LIMITED: "Muitas tentativas em pouco tempo. Aguarde um momento e tente de novo.",
+    PROVIDER_UNAVAILABLE: "O serviço de IA está indisponível. Sua solicitação pode ser tentada novamente.",
+    PROVIDER_NOT_CONFIGURED: "Conecte uma IA em Configurações para gerar este conteúdo.",
+    PROVIDER_AUTH_FAILED: "A conexão com sua IA não foi aceita. Confira a configuração e tente novamente.",
+    DOCUMENT_NOT_READY: "Este material ainda está sendo processado.",
+    CONTEXT_REVOKED: "O acesso a este contexto foi revogado. A resposta dependente não está disponível.",
+    SECRET_MATERIAL_CANNOT_BE_SHARED: "Este material está marcado como secreto e não pode ser liberado.",
+    INVALID_CREDENTIALS: "E-mail ou senha incorretos. Confira os dados e tente novamente.",
+    ACCOUNT_UNAVAILABLE: "Não foi possível criar esta conta. Confira os dados ou entre se já tiver acesso.",
+    TOKEN_INVALID_OR_EXPIRED: "Este link de recuperação não é mais válido. Solicite novas instruções para redefinir sua senha.",
+  };
+  return messages[error.code] || `Não foi possível concluir. Código: ${error.code}${error.requestId ? ` · solicitação ${error.requestId}` : ""}`;
+}
+
+export function isTerminalJob(job: JobView) {
+  return ["completed", "complete", "succeeded", "failed", "cancelled", "canceled"].includes(job.state.toLowerCase());
+}

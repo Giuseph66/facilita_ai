@@ -1,0 +1,26 @@
+{
+  "name": "facilita-estudo",
+  "private": true,
+  "packageManager": "pnpm@10.17.0",
+  "engines": { "node": ">=22.12.0" },
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "typecheck": "pnpm -r typecheck",
+    "lint": "pnpm -r lint",
+    "test": "pnpm --filter @facilita/backend test",
+    "test:integration": "pnpm --filter @facilita/backend test:integration",
+    "test:e2e": "pnpm --filter @facilita/front-end test:e2e",
+    "db:migrate": "pnpm --filter @facilita/backend db:migrate",
+    "setup:local": "node backend/scripts/setup-local.mjs",
+    "model:install": "pnpm --filter @facilita/backend model:install",
+    "infra:up": "docker compose --env-file backend/.env -f backend/compose.yaml up -d",
+    "infra:down": "docker compose --env-file backend/.env -f backend/compose.yaml down"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "eslint": "^9.39.1",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.48.0"
+  }
+}

@@ -1,0 +1,10 @@
+packages:
+  - backend
+  - front-end
+
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - argon2
+  - esbuild
+  - onnxruntime-node
+  - sharp
