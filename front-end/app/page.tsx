@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ArrowRight, BookOpenCheck, CalendarCheck, ClipboardList, FileDown, FileText, FolderOpen, Layers, Lock, MessageSquareText, Quote, Send, Users } from "lucide-react";
+import { BookOpenCheck, CalendarCheck, ClipboardList, FileDown, FileText, FolderOpen, Layers, Lock, MessageSquareText, Quote, Send, Users } from "lucide-react";
+import { ClosingCta, FooterAccountLinks, HeroActions, NavAccount } from "@/components/landing-account";
 import { PublicPlans } from "@/components/public-plans";
 import "./landing.css";
 
@@ -41,7 +42,7 @@ export default function LandingPage() {
       <div className="lp-container lp-nav-inner">
         <Brand />
         <nav aria-label="Navegação principal"><a href="#recursos">Recursos</a><a href="#como-funciona">Como funciona</a><a href="#planos">Planos</a><a href="#perguntas">Perguntas</a></nav>
-        <div className="lp-nav-actions"><Link href="/entrar" className="lp-nav-login">Entrar</Link><Link href="/cadastro" className="button button-primary">Criar conta</Link></div>
+        <NavAccount />
       </div>
     </header>
 
@@ -51,8 +52,7 @@ export default function LandingPage() {
           <p className="lp-label">Plataforma de estudo para docentes e estudantes</p>
           <h1>Seus materiais de aula, prontos para estudar.</h1>
           <p className="lp-lede">Envie PDFs e apresentações, organize por disciplina e turma, e crie resumos, cartões, simulados e avaliações. Toda resposta indica a página de onde veio.</p>
-          <div className="lp-hero-actions"><Link href="/cadastro" className="button button-primary button-large">Criar conta grátis<ArrowRight size={17} /></Link><a href="#planos" className="button button-secondary button-large">Ver planos</a></div>
-          <p className="lp-hero-note">Plano Livre sem custo · Funciona no computador e no celular</p>
+          <HeroActions />
         </div>
 
         <div className="lp-preview" aria-hidden="true">
@@ -61,11 +61,11 @@ export default function LandingPage() {
             <div className="lp-window-body">
               <aside className="lp-window-side">
                 <small>MATERIAIS</small>
-                <p className="active"><FileText size={13} />Cap. 4 — Divisão celular.pdf</p>
-                <p><FileText size={13} />Aula 07 — Meiose.pptx</p>
-                <p><FileText size={13} />Lista de exercícios 2.pdf</p>
+                <p className="active"><FileText size={13} /><span>Cap. 4 — Divisão celular.pdf</span></p>
+                <p><FileText size={13} /><span>Aula 07 — Meiose.pptx</span></p>
+                <p><FileText size={13} /><span>Lista de exercícios 2.pdf</span></p>
                 <small>TURMA</small>
-                <p><Users size={13} />2º ano B · 31 estudantes</p>
+                <p><Users size={13} /><span>2º ano B · 31 estudantes</span></p>
               </aside>
               <div className="lp-chat">
                 <div className="lp-msg lp-msg-user">Qual a principal diferença entre mitose e meiose?</div>
@@ -131,17 +131,12 @@ export default function LandingPage() {
       </div>
     </section>
 
-    <section className="lp-cta">
-      <div className="lp-container lp-cta-inner">
-        <div><h2>Crie sua conta e envie o primeiro material.</h2><p>Plano Livre sem custo e sem cartão de crédito.</p></div>
-        <div className="lp-cta-actions"><Link href="/cadastro" className="button button-large lp-cta-primary">Criar conta grátis<ArrowRight size={17} /></Link><Link href="/entrar" className="lp-cta-link">Já tenho conta</Link></div>
-      </div>
-    </section>
+    <section className="lp-cta"><ClosingCta /></section>
 
     <footer className="lp-footer">
       <div className="lp-container lp-footer-inner">
         <div className="lp-footer-brand"><Brand /><p>Organização de materiais, estudo e avaliações para docentes e estudantes.</p></div>
-        <nav aria-label="Rodapé"><div><strong>Produto</strong><a href="#recursos">Recursos</a><a href="#planos">Planos</a><a href="#perguntas">Perguntas</a></div><div><strong>Conta</strong><Link href="/entrar">Entrar</Link><Link href="/cadastro">Criar conta</Link><Link href="/recuperar-senha">Recuperar senha</Link></div></nav>
+        <nav aria-label="Rodapé"><div><strong>Produto</strong><a href="#recursos">Recursos</a><a href="#planos">Planos</a><a href="#perguntas">Perguntas</a></div><FooterAccountLinks /></nav>
       </div>
       <div className="lp-container lp-footer-bottom"><span>© {new Date().getFullYear()} Facilita Estudo</span></div>
     </footer>

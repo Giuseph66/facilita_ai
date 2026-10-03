@@ -4,6 +4,7 @@ import {
   AIProvider,
   GenerationInput,
   GenerationResult,
+  KeyUsage,
   ModelDescriptor,
   ProviderContext,
   ProviderHealth,
@@ -26,9 +27,28 @@ export class OllamaCloudProvider implements AIProvider {
       .map((name) => ({ id: name, name, provider: 'ollama', capabilities: ['CHAT', 'TEXT'] }));
   }
 
+  /**
+   * ollama.com/api/usage reports, per limit window (e.g. `session` ~5h, `weekly` 7 days), the fraction already used.
+   * It is not in the public docs yet, so unknown windows are kept by name and anything malformed is ignored.
+   */
+  async getUsage(context: ProviderContext): Promise<KeyUsage | null> {
+    const response = await this.request('/api/usage', { method: 'GET', headers: { accept: 'application/json' } }, context);
+    if (!response.ok) this.raiseProviderError(response.status);
+    const body = await this.readJson<{ limits?: Record<string, { usage?: unknown } | null> }>(response, 200_000);
+    if (!body.limits || typeof body.limits !== 'object') return null;
+    const windows = Object.entries(body.limits)
+      .filter(([name, window]) => /^[a-z_]{1,32}$/.test(name) && typeof window?.usage === 'number' && Number.isFinite(window.usage))
+      .map(([name, window]) => ({ name, used: Math.min(1, Math.max(0, window!.usage as number)) }));
+    return windows.length ? { windows, checkedAt: new Date().toISOString() } : null;
+  }
+
   async healthCheck(context: ProviderContext): Promise<ProviderHealth> {
     const checkedAt = new Date().toISOString();
     try {
+      // /api/tags is public on ollama.com and accepts any key, so it cannot prove the credential.
+      // /api/me (used by `ollama signin`) rejects invalid keys with 401 and consumes no tokens.
+      const identity = await this.request('/api/me', { method: 'POST' }, context);
+      if (!identity.ok) this.raiseProviderError(identity.status);
       const models = await this.getModels(context);
       return { status: 'CONNECTED', models, checkedAt };
     } catch (error) {

@@ -3,12 +3,45 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { api, errorCopy, isTerminalJob } from "@/lib/api";
-import type { JobView } from "@/lib/types";
+import { api, errorCodeCopy, errorCopy, isTerminalJob } from "@/lib/api";
+import { formatPercent, keyName, NEAR_LIMIT_USED, tightestWindow, usageSummary } from "@/lib/ai-keys";
+import type { JobView, OllamaConnectionView } from "@/lib/types";
 import { Notice } from "./ui";
 import { ArrowRight, LoaderCircle, X } from "lucide-react";
 
 type JobResult = { artifactId?: string; assessmentId?: string; messageId?: string; exportId?: string; documentId?: string; practiceTestId?: string };
+
+const featureLabels: Record<string, { label: string; done: string }> = {
+  AI_CONNECTION_CHECK: { label: "Verificação da conexão de IA", done: "Verificação concluída" },
+  ASSESSMENT_EXPORT: { label: "Exportação da avaliação", done: "Arquivo pronto" },
+  ASSESSMENT_GENERATION: { label: "Geração da avaliação", done: "Avaliação gerada" },
+  CHAT_REPLY: { label: "Resposta da IA", done: "Resposta pronta" },
+  DOCUMENT_PROCESS: { label: "Processamento do material", done: "Material processado" },
+  DOCUMENT_PURGE: { label: "Remoção do material", done: "Material removido" },
+  STUDY_ARTIFACT: { label: "Criação do material de estudo", done: "Material de estudo pronto" },
+};
+
+const aiFeatures = new Set(["CHAT_REPLY", "STUDY_ARTIFACT", "ASSESSMENT_GENERATION"]);
+
+/** After an AI job, says which key served it and how much of it is left. */
+function KeyUsageNote() {
+  const [note, setNote] = useState<{ text: string; low: boolean } | null>(null);
+  useEffect(() => {
+    let active = true;
+    api<{ items: OllamaConnectionView[] }>("/ai/connections").then(({ items }) => {
+      if (!active) return;
+      const used = items.map((key, index) => ({ key, index })).filter(({ key }) => key.lastUsedAt)
+        .sort((a, b) => b.key.lastUsedAt!.localeCompare(a.key.lastUsedAt!))[0];
+      if (!used) return;
+      const window = tightestWindow(used.key);
+      const low = Boolean(window && window.usedPercent >= NEAR_LIMIT_USED);
+      setNote({ text: usageSummary(used.key, used.index) + (low ? ` ${keyName(used.key, used.index)} está quase no limite (${formatPercent(window!.usedPercent)} usado).` : ""), low });
+    }).catch(() => undefined);
+    return () => { active = false; };
+  }, []);
+  if (!note) return null;
+  return <p className={`job-key-usage ${note.low ? "is-low" : ""}`}><Link href="/app/configuracoes/ia">{note.text}</Link></p>;
+}
 
 function resultPath(result?: unknown) {
   if (!result || typeof result !== "object") return null;
@@ -34,22 +67,24 @@ export function JobTracker({ job, onClose, onUpdate }: { job: JobView; onClose?:
     let active = true;
     const delay = Math.min(1400 * (2 ** Math.min(pollCount, 3)), 8000);
     const timer = window.setTimeout(() => {
-      api<JobView>(`/jobs/${job.id}`).then((next) => {
-        if (!active) return;
+      api<{ job: JobView }>(`/jobs/${job.id}`).then(({ job: next }) => {
+        if (!active || !next) return;
         setCurrent(next); setPollCount((count) => count + 1); setPollError(""); if (isTerminalJob(next)) onUpdate?.(next);
       }).catch((error) => { if (active) { setPollError(errorCopy(error)); setPollCount((count) => count + 1); } });
     }, delay);
     return () => { active = false; window.clearTimeout(timer); };
   }, [job.id, current.state, pollCount, terminal, onUpdate]);
 
-  const state = current.state.toUpperCase();
+  const state = (current.state || "").toUpperCase();
+  const feature = featureLabels[current.feature] || { label: "Processamento", done: "Processamento concluído" };
   const failed = ["FAILED", "ERROR"].includes(state);
   return <div className="job-card">
-    <div className="job-card-head"><span className={`job-symbol ${failed ? "failed" : terminal ? "done" : "working"}`}>{terminal ? "✓" : <LoaderCircle size={18} className="spin" />}</span><div className="job-heading"><strong>{failed ? "Não foi possível concluir" : terminal ? "Processamento concluído" : "Trabalhando no seu pedido"}</strong><span>{current.feature.replaceAll("_", " ")}</span></div>{onClose && <button type="button" className="icon-button small" onClick={onClose} aria-label="Fechar status do processamento"><X size={16} /></button>}</div>
-    <p className="job-stage">{failed ? current.errorCode || "O serviço não concluiu esta etapa." : current.stage || (terminal ? "Conteúdo pronto para abrir." : "Preparando conteúdo…")}</p>
+    <div className="job-card-head"><span className={`job-symbol ${failed ? "failed" : terminal ? "done" : "working"}`}>{terminal ? "✓" : <LoaderCircle size={18} className="spin" />}</span><div className="job-heading"><strong>{failed ? "Não foi possível concluir" : terminal ? feature.done : "Trabalhando no seu pedido"}</strong><span>{feature.label}</span></div>{onClose && <button type="button" className="icon-button small" onClick={onClose} aria-label="Fechar status do processamento"><X size={16} /></button>}</div>
+    <p className="job-stage">{failed ? errorCodeCopy(current.errorCode) : terminal ? "Tudo pronto." : "Isso pode levar alguns instantes. Você pode continuar usando o app."}</p>
     {typeof current.progress === "number" && !terminal && <div className="progress-track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={current.progress}><span style={{ width: `${Math.max(0, Math.min(100, current.progress))}%` }} /></div>}
     {pollError && <p className="job-poll-error" role="status">O status será consultado novamente. {pollError}</p>}
-    {failed && <Notice tone="error" title="A solicitação continua salva">Veja o código acima e tente novamente quando o serviço estiver disponível. Nenhuma troca de fornecedor foi feita automaticamente.</Notice>}
+    {failed && <Notice tone="error" title="A solicitação continua salva">Tente novamente quando o serviço estiver disponível. Nenhuma troca de fornecedor foi feita automaticamente.</Notice>}
+    {terminal && !failed && aiFeatures.has(current.feature) && <KeyUsageNote />}
     {resultLink && terminal && <Link className="button button-secondary" href={resultLink.href}>{resultLink.label}<ArrowRight size={14} /></Link>}
   </div>;
 }

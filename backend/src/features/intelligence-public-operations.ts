@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { PublicOperation } from '../contracts/openapi';
-import { aiConnectionViewSchema, aiModelsViewSchema, aiPreferenceInputSchema, apiKeyInputSchema } from './ai/ai.dto';
+import { aiConnectionViewSchema, aiModelsViewSchema, aiPreferenceInputSchema, apiKeyInputSchema, connectionPatchSchema, newApiKeyInputSchema } from './ai/ai.dto';
 import { exportPublicOperations } from './exports/export.dto';
 import {
   assessmentCopyInputSchema, assessmentGenerationInputSchema, assessmentInputSchema,
@@ -18,6 +18,12 @@ export const intelligencePublicOperations: PublicOperation[] = [
   { method: 'put', path: '/ai/connections/ollama', operationId: 'saveAIConnection', body: apiKeyInputSchema },
   { method: 'delete', path: '/ai/connections/ollama', operationId: 'removeAIConnection', success: 204 },
   { method: 'post', path: '/ai/connections/ollama/checks', operationId: 'checkAIConnection', response: jobEnvelope, success: 202, idempotent: true },
+  { method: 'get', path: '/ai/connections', operationId: 'listAIConnections', response: z.object({ items: z.array(aiConnectionViewSchema) }).strict() },
+  { method: 'post', path: '/ai/connections', operationId: 'addAIConnection', body: newApiKeyInputSchema, response: z.object({ connection: aiConnectionViewSchema }).strict(), success: 201 },
+  { method: 'patch', path: '/ai/connections/:id', operationId: 'updateAIConnection', body: connectionPatchSchema, response: z.object({ items: z.array(aiConnectionViewSchema) }).strict() },
+  { method: 'delete', path: '/ai/connections/:id', operationId: 'removeAIConnectionById', success: 204 },
+  { method: 'post', path: '/ai/connections/:id/checks', operationId: 'checkAIConnectionById', response: jobEnvelope, success: 202, idempotent: true },
+  { method: 'post', path: '/ai/connections/:id/usage', operationId: 'refreshAIConnectionUsage', response: z.object({ connection: aiConnectionViewSchema }).strict() },
   { method: 'get', path: '/ai/models', operationId: 'listAIModels', response: aiModelsViewSchema },
   { method: 'put', path: '/ai/preferences', operationId: 'setAIPreference', body: aiPreferenceInputSchema },
 

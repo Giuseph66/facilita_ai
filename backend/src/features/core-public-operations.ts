@@ -1,5 +1,5 @@
 import type { PublicOperation } from '../contracts/openapi';
-import { addPersonaSchema, loginSchema, passwordResetSchema, profilePatchSchema, recoverySchema, registerSchema } from './auth/auth.dto';
+import { loginSchema, passwordResetSchema, profilePatchSchema, recoverySchema, registerSchema } from './auth/auth.dto';
 import {
   classInputSchema,
   classPatchSchema,
@@ -20,7 +20,6 @@ export const corePublicOperations: PublicOperation[] = [
   { method: 'post', path: '/auth/password-recovery', operationId: 'requestPasswordRecovery', public: true, body: recoverySchema, success: 202 },
   { method: 'post', path: '/auth/password-reset', operationId: 'resetPassword', public: true, body: passwordResetSchema, success: 204 },
   { method: 'patch', path: '/me/profile', operationId: 'patchProfile', body: profilePatchSchema },
-  { method: 'post', path: '/me/personas', operationId: 'addPersona', body: addPersonaSchema },
   { method: 'get', path: '/workspaces', operationId: 'listWorkspaces' },
   { method: 'get', path: '/workspaces/:workspaceId/courses', operationId: 'listCourses' },
   { method: 'post', path: '/workspaces/:workspaceId/courses', operationId: 'createCourse', body: courseInputSchema },

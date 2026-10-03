@@ -23,6 +23,7 @@ Arquitetura continua Next.js + NestJS + PostgreSQL/pgvector + Redis/BullMQ. Sem 
 - Async: `{ job: JobView }`, status 202.
 - JobView: `{ id, feature, state, stage, result?: unknown, errorCode?: string }`.
 - SessionView: `{ user: { id, name, email, defaultPersona }, workspaces: [{ id, name, roles: string[] }], csrfToken }`.
+- Tipo de conta fixo no cadastro: Acadêmico (`STUDENT`) ou Docente (`TEACHER`). `defaultPersona` permanece no contrato de leitura; `PATCH /me/profile` aceita somente nome. Não existe `POST /me/personas` nem alternância no perfil ou na lateral. Permissões de workspace continuam independentes do tipo de conta.
 - Auth response usa SessionView; session cookie HttpOnly, CSRF token enviado em `X-CSRF-Token` nas mutações autenticadas. Token nunca localStorage.
 - Mutation concorrente envia revision. Não mass assignment.
 - Recursos secretos alheios retornam 404. Gates de autorização incluem worker/jobs/downloads.

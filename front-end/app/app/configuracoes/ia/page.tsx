@@ -1,2 +1,2 @@
-import { AiSettings } from "@/components/settings-screen";
+import { AiSettings } from "@/components/ai-settings";
 export default function AiSettingsPage() { return <AiSettings />; }

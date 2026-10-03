@@ -146,11 +146,19 @@ export type StudyArtifactView = {
   createdAt?: string;
 };
 
+export type KeyUsageWindow = { name: string; usedPercent: number; remainingPercent: number };
+
 export type OllamaConnectionView = {
+  id: string;
   provider: string;
+  label: string | null;
+  position: number;
   status: string;
   maskedKey?: string;
   checkedAt?: string | null;
+  usage: { windows: KeyUsageWindow[]; checkedAt: string } | null;
+  lastUsedAt: string | null;
+  exhausted: boolean;
 };
 
 export type EntitlementsView = {

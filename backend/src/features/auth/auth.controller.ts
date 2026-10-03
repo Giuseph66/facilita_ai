@@ -13,7 +13,6 @@ import {
 import { sessionCookieName, sessionCookieOptions } from '../../core/cookies';
 import { Public } from '../../core/public.decorator';
 import {
-  addPersonaSchema,
   loginSchema,
   parseDto,
   passwordResetSchema,
@@ -87,9 +86,4 @@ export class ProfileController {
     return this.auth.patchProfile(request.user.id, parseDto(profilePatchSchema, body));
   }
 
-  @Post('personas')
-  async addPersona(@Body() body: unknown, @Req() request: any) {
-    const input = parseDto(addPersonaSchema, body);
-    return this.auth.addPersona(request.user.id, input.persona);
-  }
 }

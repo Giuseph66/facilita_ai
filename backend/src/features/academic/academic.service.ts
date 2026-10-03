@@ -280,7 +280,7 @@ export class AcademicService {
          FROM enrollments e JOIN users u ON u.id = e.user_id
          WHERE e.workspace_id = $1 AND e.class_id = $2
            AND e.role = 'STUDENT'
-           AND ($3 = $4 OR e.user_id = $3)
+           AND ($3::uuid = $4::uuid OR e.user_id = $3::uuid)
          ORDER BY e.joined_at, e.user_id`,
         [rows[0].workspace_id, classId, userId, rows[0].teacher_user_id],
       );

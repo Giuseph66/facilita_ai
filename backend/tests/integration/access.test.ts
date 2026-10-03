@@ -3,9 +3,10 @@ import { Client } from 'pg';
 import { TestClient } from '../support/http';
 import { startRuntime, type IntegrationRuntime } from '../support/runtime.mts';
 
-type Session = { user: { id: string }; workspaces: { id: string; roles: string[] }[]; csrfToken: string };
+type Session = { user: { id: string; name: string; defaultPersona: string }; workspaces: { id: string; roles: string[] }[]; csrfToken: string };
 type Course = { id: string; workspaceId: string; title: string; revision: number };
 type ClassView = { id: string; workspaceId: string; courseId: string };
+type ClassDetail = ClassView & { studentCount: number | null; members: { userId: string; role: string; status: string }[] };
 const password = 'Teste-local-Seguro!42';
 
 describe('HTTP e RLS com runtime real', () => {
@@ -51,6 +52,7 @@ describe('HTTP e RLS com runtime real', () => {
     expect(result.body.openapi).toBe('3.1.0');
     expect(result.body.paths['/auth/register']).toBeDefined();
     expect(result.body.paths['/documents/{id}']).toBeDefined();
+    expect(result.body.paths['/me/personas']).toBeUndefined();
     expect(result.headers.getSetCookie()).toHaveLength(0);
     expect(JSON.stringify(result.body)).not.toContain('VAULT_KEYS_JSON');
   });
@@ -77,6 +79,13 @@ describe('HTTP e RLS com runtime real', () => {
     expect((await student.request(`/courses/${course.id}`)).status).toBe(404);
   });
 
+  it('abre turma vazia para o docente sem erro de tipos SQL', async () => {
+    const result = await teacher.request<ClassDetail>(`/classes/${classroom.id}`);
+    expect(result.status).toBe(200);
+    expect(result.body.studentCount).toBe(0);
+    expect(result.body.members).toEqual([]);
+  });
+
   it('convite dá matrícula, sem permitir editar a disciplina', async () => {
     const invitation = await teacher.json<{ inviteCode: string }>(`/classes/${classroom.id}/invitations`, 'POST', { maxUses: 1, expiresInHours: 1 });
     expect(invitation.status).toBe(201);
@@ -87,8 +96,50 @@ describe('HTTP e RLS com runtime real', () => {
     expect((await stranger.json('/enrollments', 'POST', { code: invitation.body.inviteCode })).status).toBeGreaterThanOrEqual(400);
   });
 
-  it('ativar persona professor não eleva privilégios na turma de outro usuário', async () => {
-    expect((await student.json('/me/personas', 'POST', { persona: 'TEACHER' })).status).toBeLessThan(300);
+  it('docente vê alunos da turma e estudante vê somente sua matrícula', async () => {
+    const otherStudent = new TestClient(runtime.baseUrl);
+    const registered = await otherStudent.json<Session>('/auth/register', 'POST', {
+      name: 'Outro aluno', email: 'outro-aluno@example.test', password, persona: 'STUDENT',
+    });
+    expect(registered.status).toBe(201);
+    const invitation = await teacher.json<{ inviteCode: string }>(`/classes/${classroom.id}/invitations`, 'POST', { maxUses: 1, expiresInHours: 1 });
+    expect(invitation.status).toBe(201);
+    expect((await otherStudent.json('/enrollments', 'POST', { code: invitation.body.inviteCode })).status).toBe(201);
+
+    const teacherView = await teacher.request<ClassDetail>(`/classes/${classroom.id}`);
+    expect(teacherView.status).toBe(200);
+    expect(teacherView.body.studentCount).toBe(2);
+    expect(teacherView.body.members.map(member => member.userId).sort()).toEqual([studentSession.user.id, registered.body.user.id].sort());
+    for (const [client, id] of [[student, studentSession.user.id], [otherStudent, registered.body.user.id]] as const) {
+      const studentView = await client.request<ClassDetail>(`/classes/${classroom.id}`);
+      expect(studentView.status).toBe(200);
+      expect(studentView.body.studentCount).toBeNull();
+      expect(studentView.body.members).toEqual([expect.objectContaining({ userId: id, role: 'STUDENT', status: 'ACTIVE' })]);
+    }
+    expect((await stranger.request(`/classes/${classroom.id}`)).status).toBe(404);
+  });
+
+  it('tipo de conta permanece fixo; nome continua editável', async () => {
+    for (const [client, persona, opposite] of [[teacher, 'TEACHER', 'STUDENT'], [student, 'STUDENT', 'TEACHER']] as const) {
+      expect((await client.json('/me/personas', 'POST', { persona: opposite })).status).toBe(404);
+      const rejected = await client.json('/me/profile', 'PATCH', { name: 'Nome indevido', defaultPersona: opposite });
+      expect(rejected.status).toBe(400);
+      expect(rejected.body.code).toBe('VALIDATION_FAILED');
+      const before = await client.request<Session>('/auth/session');
+      expect(before.status).toBe(200);
+      expect(before.body.user.defaultPersona).toBe(persona);
+      expect(before.body.user.name).not.toBe('Nome indevido');
+      const profile = await client.json<{ defaultPersona: string; name: string }>('/me/profile', 'PATCH', { name: `Nome ${persona}` });
+      expect(profile.status).toBe(200);
+      expect(profile.body).toMatchObject({ defaultPersona: persona, name: `Nome ${persona}` });
+      const after = await client.request<Session>('/auth/session');
+      expect(after.status).toBe(200);
+      expect(after.body.user.defaultPersona).toBe(persona);
+      expect(after.body.workspaces.find(space => space.id === (persona === 'TEACHER' ? teacherSession : studentSession).workspaces[0].id)?.roles).toEqual([persona]);
+    }
+  });
+
+  it('estudante não recebe privilégios de docente em outra turma', async () => {
     expect((await student.json(`/courses/${course.id}/classes`, 'POST', { name: 'Indevida', period: '2026' })).status).toBeGreaterThanOrEqual(400);
     expect((await student.request(`/courses/${course.id}/assessments`)).status).toBe(404);
   });

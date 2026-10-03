@@ -206,20 +206,12 @@ export class AuthService {
     });
   }
 
-  async patchProfile(userId: string, patch: { name?: string; defaultPersona?: Persona }): Promise<{ id: string; name: string; email: string; defaultPersona: Persona }> {
+  async patchProfile(userId: string, patch: { name?: string }): Promise<{ id: string; name: string; email: string; defaultPersona: Persona }> {
     const result = await this.db.asActor(userId, async (connection) => {
-      if (patch.defaultPersona) {
-        const enabled = await connection.query<{ role: string }>(
-          `SELECT r.role FROM workspace_roles r JOIN workspaces w ON w.id = r.workspace_id
-           WHERE w.type = 'PERSONAL' AND w.owner_user_id = $1 AND r.user_id = $1 AND r.role = $2`,
-          [userId, patch.defaultPersona],
-        );
-        if (!enabled[0]) fail(403, 'PERSONA_NOT_ENABLED', 'Ative esta persona antes de selecioná-la.');
-      }
       const rows = await connection.query<{ id: string; name: string; email_normalized: string; default_persona: Persona }>(
-        `UPDATE users SET name = COALESCE($2, name), default_persona = COALESCE($3, default_persona), updated_at = now()
+        `UPDATE users SET name = COALESCE($2, name), updated_at = now()
          WHERE id = $1 AND status = 'ACTIVE' RETURNING id, name, email_normalized, default_persona`,
-        [userId, patch.name ?? null, patch.defaultPersona ?? null],
+        [userId, patch.name ?? null],
       );
       if (!rows[0]) fail(404, 'RESOURCE_NOT_FOUND', 'Conta não encontrada.');
       await connection.query(
@@ -229,31 +221,6 @@ export class AuthService {
       return rows[0];
     });
     return { id: result.id, name: result.name, email: result.email_normalized, defaultPersona: result.default_persona };
-  }
-
-  async addPersona(userId: string, persona: Persona): Promise<{ personas: Persona[]; defaultPersona: Persona }> {
-    return this.db.asActor(userId, async (connection) => {
-      const workspaces = await connection.query<{ id: string }>(
-        `SELECT id FROM workspaces WHERE type = 'PERSONAL' AND owner_user_id = $1 FOR UPDATE`, [userId],
-      );
-      if (!workspaces[0]) fail(404, 'RESOURCE_NOT_FOUND', 'Espaço pessoal não encontrado.');
-      await connection.query(
-        `INSERT INTO workspace_roles (workspace_id, user_id, role) VALUES ($1, $2, $3) ON CONFLICT DO NOTHING`,
-        [workspaces[0].id, userId, persona],
-      );
-      await connection.query(`UPDATE workspaces SET acl_version = acl_version + 1, updated_at = now() WHERE id = $1`, [workspaces[0].id]);
-      const user = await connection.query<{ default_persona: Persona }>(`SELECT default_persona FROM users WHERE id = $1`, [userId]);
-      const roles = await connection.query<{ role: Persona }>(
-        `SELECT role FROM workspace_roles WHERE workspace_id = $1 AND user_id = $2 ORDER BY role`,
-        [workspaces[0].id, userId],
-      );
-      await connection.query(
-        `INSERT INTO audit_events (actor_id, action, resource_type, resource_id, workspace_id, metadata)
-         VALUES ($1, 'PERSONA_ENABLED', 'user', $1, $2, jsonb_build_object('persona', $3::text))`,
-        [userId, workspaces[0].id, persona],
-      );
-      return { personas: roles.map((row) => row.role), defaultPersona: user[0].default_persona };
-    });
   }
 
   private async loadWorkspaces(userId: string): Promise<SessionView['workspaces']> {

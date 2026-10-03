@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { appendFile, chmod } from 'node:fs/promises';
 import { fail } from '../../core/errors';
-import { AIProvider, GenerationInput, GenerationResult, ModelDescriptor, ProviderContext, ProviderHealth } from './ai.provider';
+import { AIProvider, GenerationInput, GenerationResult, KeyUsage, ModelDescriptor, ProviderContext, ProviderHealth } from './ai.provider';
 
 @Injectable()
 export class FakeAIProvider implements AIProvider {
@@ -29,6 +29,10 @@ export class FakeAIProvider implements AIProvider {
     this.assertEnabled();
     this.raisePendingFailure();
     return [{ id: 'fake-e5-chat', name: 'Deterministic test model', provider: 'ollama', capabilities: ['CHAT', 'TEXT'] }];
+  }
+
+  async getUsage(_context: ProviderContext): Promise<KeyUsage | null> {
+    return null;
   }
 
   async healthCheck(_context: ProviderContext): Promise<ProviderHealth> {

@@ -25,11 +25,8 @@ export const passwordResetSchema = z.object({ token: z.string().min(32).max(256)
 
 export const profilePatchSchema = z.object({
   name: z.string().trim().min(1).max(120).optional(),
-  defaultPersona: personaSchema.optional(),
 }).strict().refine((value) => Object.keys(value).length > 0, 'Informe ao menos um campo.');
 export type ProfilePatch = z.infer<typeof profilePatchSchema>;
-
-export const addPersonaSchema = z.object({ persona: personaSchema }).strict();
 
 export interface SessionView {
   user: { id: string; name: string; email: string; defaultPersona: Persona };

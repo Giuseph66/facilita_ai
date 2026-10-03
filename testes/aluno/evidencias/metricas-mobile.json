@@ -1,0 +1,35 @@
+{
+  "origem": "Transcrição factual dos valores lidos durante a sessão visual em 2026-10-03; não é captura de tela nem snapshot bruto recuperável.",
+  "viewport_emulado_px": {
+    "largura": 390,
+    "altura": 844
+  },
+  "tela": "/app/configuracoes/privacidade após solicitação de exportação QA",
+  "medicoes_documento_px": {
+    "window_inner_width": 390,
+    "document_element_scroll_width": 452,
+    "overflow_horizontal_documento": 62
+  },
+  "medicoes_elementos_px": [
+    {
+      "descricao": "Faixa rolável de abas Configurações (rolagem interna intencional)",
+      "client_width": 375,
+      "scroll_width": 558
+    },
+    {
+      "descricao": "Seção Solicitações recentes",
+      "client_width": 341,
+      "scroll_width": 435
+    },
+    {
+      "descricao": "Cartão interno da solicitação recente",
+      "client_width": 307,
+      "scroll_width": 418
+    }
+  ],
+  "interpretacao": "O documento excedia a viewport. O overflow da seção de solicitações recentes é distinto da rolagem interna esperada da faixa de abas; causa exata do conteúdo largo não foi confirmada.",
+  "limitacoes": [
+    "Os valores foram transcritos da saída de leitura de layout da sessão; nenhum arquivo bruto de DOM ou screenshot foi preservado.",
+    "A medição foi feita após criar uma solicitação recente e não representa todos os estados ou larguras da tela."
+  ]
+}

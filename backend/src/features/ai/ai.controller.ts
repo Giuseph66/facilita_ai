@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, Get, Headers, HttpCode, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Headers, HttpCode, Param, ParseUUIDPipe, Patch, Post, Put, Req, UseGuards } from '@nestjs/common';
 import { DatabaseService } from '../../core/database.service';
 import { SessionGuard } from '../../core/session.guard';
 import { fail } from '../../core/errors';
 import { AIService } from './ai.service';
-import { aiPreferenceInputSchema, apiKeyInputSchema } from './ai.dto';
+import { aiPreferenceInputSchema, apiKeyInputSchema, connectionPatchSchema, newApiKeyInputSchema } from './ai.dto';
 
 type AuthenticatedRequest = { user: { id: string } };
 
@@ -38,6 +38,49 @@ export class AIController {
   ) {
     const workspaceId = await this.personalWorkspace(request.user.id);
     return { job: await this.ai.queueConnectionCheck(request.user.id, workspaceId, idempotencyKey) };
+  }
+
+  @Get('connections')
+  listConnections(@Req() request: AuthenticatedRequest) {
+    return this.ai.listConnections(request.user.id);
+  }
+
+  @Post('connections')
+  @HttpCode(201)
+  addConnection(@Req() request: AuthenticatedRequest, @Body() body: unknown) {
+    const parsed = newApiKeyInputSchema.safeParse(body);
+    if (!parsed.success) fail(400, 'VALIDATION_FAILED', 'Informe uma chave válida.');
+    return this.ai.addConnection(request.user.id, parsed.data.apiKey, parsed.data.label);
+  }
+
+  @Patch('connections/:id')
+  updateConnection(@Req() request: AuthenticatedRequest, @Param('id', ParseUUIDPipe) id: string, @Body() body: unknown) {
+    const parsed = connectionPatchSchema.safeParse(body);
+    if (!parsed.success) fail(400, 'VALIDATION_FAILED', 'Os dados da chave são inválidos.');
+    return this.ai.updateConnection(request.user.id, id, parsed.data);
+  }
+
+  @Delete('connections/:id')
+  @HttpCode(204)
+  async removeConnectionById(@Req() request: AuthenticatedRequest, @Param('id', ParseUUIDPipe) id: string): Promise<void> {
+    await this.ai.removeConnection(request.user.id, id);
+  }
+
+  @Post('connections/:id/checks')
+  @HttpCode(202)
+  async checkConnectionById(
+    @Req() request: AuthenticatedRequest,
+    @Param('id', ParseUUIDPipe) id: string,
+    @Headers('idempotency-key') idempotencyKey?: string,
+  ) {
+    const workspaceId = await this.personalWorkspace(request.user.id);
+    return { job: await this.ai.queueConnectionCheck(request.user.id, workspaceId, idempotencyKey, id) };
+  }
+
+  @Post('connections/:id/usage')
+  @HttpCode(200)
+  refreshUsage(@Req() request: AuthenticatedRequest, @Param('id', ParseUUIDPipe) id: string) {
+    return this.ai.refreshUsage(request.user.id, id);
   }
 
   @Get('models')

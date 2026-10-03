@@ -6,7 +6,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import { api, errorCopy, jsonBody, newIdempotencyKey, isTerminalJob } from "@/lib/api";
+import { api, errorCodeCopy, errorCopy, isTerminalJob, jsonBody, newIdempotencyKey } from "@/lib/api";
 import type { ConversationMessage, ConversationView, CourseView, JobView, MaterialView, PageResult } from "@/lib/types";
 import { useSession } from "./session-context";
 import { Button, EmptyState, LoadingBlock, Notice, PageTitle, Panel } from "./ui";
@@ -153,7 +153,7 @@ export function ConversationScreen({ conversationId }: { conversationId: string 
 
   const onJobUpdate = useCallback((next: JobView) => {
     if (isTerminalJob(next)) {
-      if (["FAILED", "ERROR"].includes(next.state.toUpperCase())) setError(next.errorCode || "O serviço está indisponível. Você pode tentar novamente.");
+      if (["FAILED", "ERROR"].includes(next.state.toUpperCase())) setError(errorCodeCopy(next.errorCode));
       else { setRetryMessage(null); refresh(); }
     }
   }, [refresh]);
