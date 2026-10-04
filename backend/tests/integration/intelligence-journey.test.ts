@@ -191,6 +191,22 @@ describe('jornada integrada de documentos, RAG e avaliações', () => {
 
   afterAll(async () => { await runtime?.stop(); }, timeoutMs);
 
+  it('PDF permite prévia somente na mesma origem e mantém autorização e download PPTX', async () => {
+    const pdf = await student.request(`/documents/${pdfDocument.id}/content`);
+    expect(pdf.status).toBe(200);
+    expect(new TextDecoder().decode(pdf.bytes.slice(0, 5))).toBe('%PDF-');
+    expect(pdf.headers.get('content-disposition')).toMatch(/^inline;/);
+    expect(pdf.headers.get('x-frame-options')).toBe('SAMEORIGIN');
+    expect(pdf.headers.get('content-security-policy')).toBe("frame-ancestors 'self'");
+    expect(pdf.headers.get('cache-control')).toBe('private, no-store');
+    expect(pdf.headers.get('x-content-type-options')).toBe('nosniff');
+    const pptx = await teacher.request(`/documents/${pptxDocument.id}/content`);
+    expect(pptx.status).toBe(200);
+    expect(pptx.headers.get('content-disposition')).toMatch(/^attachment;/);
+    const anonymous = new TestClient(runtime.baseUrl);
+    expect((await anonymous.request(`/documents/${pdfDocument.id}/content`)).status).toBe(401);
+  });
+
   it('health observa o worker e a idade agregada da fila sem expor job ou ator', async () => {
     const admin = new Client({ connectionString: runtime.migrationUrl });
     await admin.connect();
@@ -258,6 +274,10 @@ describe('jornada integrada de documentos, RAG e avaliações', () => {
     const summary = await student.request<{ artifact: { payload: unknown; sources: Source[] } }>(`/study/artifacts/${artifactId}`);
     expect(summary.status).toBe(200);
     expect(summary.body.artifact.sources.map(source => source.documentId)).toEqual(expect.arrayContaining([pdfDocument.id, pptxDocument.id]));
+    expect(summary.body.artifact.payload).toHaveProperty('sections.0.sources.0.pageNumber', 1);
+    const sectionSource = (summary.body.artifact.payload as { sections: Array<{ sources: Source[] }> }).sections[0].sources[0];
+    expect([pdfDocument.id, pptxDocument.id]).toContain(sectionSource.documentId);
+    expect(summary.body.artifact.payload).not.toHaveProperty('sections.0.sourceIds');
     expect(JSON.stringify(summary.body)).not.toContain(privateSentinel);
 
     derivedArtifactIds = [];

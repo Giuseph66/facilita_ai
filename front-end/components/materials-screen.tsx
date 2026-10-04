@@ -18,7 +18,7 @@ function formatFileSize(size?: string) {
   return `${(bytes / 1_000_000).toFixed(1)} MB`;
 }
 
-export function DocumentScreen({ documentId }: { documentId: string }) {
+export function DocumentScreen({ documentId, page = 1 }: { documentId: string; page?: number }) {
   const { persona } = useSession();
   const [document, setDocument] = useState<DocumentView | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,6 +27,7 @@ export function DocumentScreen({ documentId }: { documentId: string }) {
   const [notice, setNotice] = useState("");
   const [job, setJob] = useState<JobView | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
+  const documentIsProcessing = document?.id === documentId && ["QUEUED", "PROCESSING"].includes(document.status.toUpperCase());
 
   const refresh = useCallback(() => setReloadKey((value) => value + 1), []);
   useEffect(() => {
@@ -34,6 +35,27 @@ export function DocumentScreen({ documentId }: { documentId: string }) {
     api<DocumentView | { document: DocumentView }>(`/documents/${documentId}`).then((value) => { if (live) setDocument("document" in value ? value.document : value); }).catch((caught) => { if (live) setError(errorCopy(caught)); }).finally(() => { if (live) setLoading(false); });
     return () => { live = false; };
   }, [documentId, reloadKey]);
+
+  useEffect(() => {
+    if (!documentIsProcessing) return;
+    let live = true;
+    let timer: number;
+    const poll = async () => {
+      let keepPolling = true;
+      try {
+        const value = await api<DocumentView | { document: DocumentView }>(`/documents/${documentId}`);
+        if (!live) return;
+        const next = "document" in value ? value.document : value;
+        setDocument(next); setError("");
+        keepPolling = ["QUEUED", "PROCESSING"].includes(next.status.toUpperCase());
+      } catch (caught) {
+        if (live) setError(errorCopy(caught));
+      }
+      if (live && keepPolling) timer = window.setTimeout(() => void poll(), 3000);
+    };
+    timer = window.setTimeout(() => void poll(), 3000);
+    return () => { live = false; window.clearTimeout(timer); };
+  }, [documentId, documentIsProcessing]);
 
   const retry = async () => {
     setBusy(true); setError(""); setNotice("");
@@ -66,7 +88,7 @@ export function DocumentScreen({ documentId }: { documentId: string }) {
       {failed && persona === "TEACHER" && <Button type="button" variant="secondary" disabled={busy} onClick={() => void retry()}><RotateCcw size={14} />{busy ? "Solicitando…" : "Tentar novamente"}</Button>}
       {ready && materialActions}
     </Panel>
-      <section className="document-preview" aria-label="Prévia do documento">{ready && pdf ? <iframe title={`Prévia de ${document.name}`} src={contentPath} /> : <div className="document-preview-empty"><FileText size={31} /><strong>{ready ? "Prévia não disponível para este formato" : failed ? "Prévia indisponível" : "Estamos preparando seu material"}</strong><p>{ready ? "Você pode abrir ou baixar o original. A busca e as respostas vão citar as páginas indexadas." : "O conteúdo original fica sob seu controle enquanto o processamento acontece."}</p>{ready && <a className="button button-primary" href={contentPath} target="_blank" rel="noreferrer"><Download size={15} />Abrir arquivo original<ArrowRight size={14} /></a>}</div>}</section>
+      <section className="document-preview" aria-label="Prévia do documento">{ready && pdf ? <iframe title={`Prévia de ${document.name}`} src={`${contentPath}#page=${page}`} /> : <div className="document-preview-empty"><FileText size={31} /><strong>{ready ? "Prévia não disponível para este formato" : failed ? "Prévia indisponível" : "Estamos preparando seu material"}</strong><p>{ready ? "Você pode abrir ou baixar o original. A busca e as respostas vão citar as páginas indexadas." : "O conteúdo original fica sob seu controle enquanto o processamento acontece."}</p>{ready && <a className="button button-primary" href={contentPath} target="_blank" rel="noreferrer"><Download size={15} />Abrir arquivo original<ArrowRight size={14} /></a>}</div>}</section>
     </div>
   </div>;
 }

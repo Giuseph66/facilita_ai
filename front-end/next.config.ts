@@ -15,6 +15,8 @@ const config: NextConfig = {
       { key: 'X-Content-Type-Options', value: 'nosniff' },
       { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
       { key: 'X-Frame-Options', value: 'DENY' }
+    ] }, { source: '/api/v1/documents/:id/content', headers: [
+      { key: 'X-Frame-Options', value: 'SAMEORIGIN' }
     ] }];
   }
 };

@@ -60,7 +60,7 @@ export class DocumentParserEngine {
         getDocument(options: Record<string, unknown>): { promise: Promise<{
           numPages: number;
           getPage(pageNumber: number): Promise<{
-            getTextContent(options: Record<string, unknown>): Promise<{ items: Array<{ str?: unknown }> }>;
+            getTextContent(options: Record<string, unknown>): Promise<{ items: Array<{ str?: unknown; hasEOL?: boolean }> }>;
             cleanup(): void;
           }>;
           destroy(): Promise<void>;
@@ -87,11 +87,12 @@ export class DocumentParserEngine {
           const page = await pdf.getPage(pageNumber);
           const content = await page.getTextContent({ includeMarkedContent: false });
           const text = content.items
-            .flatMap((item) => 'str' in item && typeof item.str === 'string' ? [item.str] : [])
-            .join(' ')
+            .flatMap((item) => 'str' in item && typeof item.str === 'string' ? [`${item.str}${item.hasEOL ? '\n' : ' '}`] : [])
+            .join('')
             // eslint-disable-next-line no-control-regex -- Strip extracted PDF control bytes before indexing.
             .replace(/[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g, ' ')
             .replace(/[ \t]+/g, ' ')
+            .replace(/ *\n */g, '\n')
             .trim();
           totalTextBytes += Buffer.byteLength(text);
           if (totalTextBytes > MAX_EXTRACTED_TEXT_BYTES) fail(413, 'DOCUMENT_TEXT_LIMIT', 'O texto extraído excede o limite de leitura.');

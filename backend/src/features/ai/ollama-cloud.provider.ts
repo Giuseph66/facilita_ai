@@ -72,6 +72,7 @@ export class OllamaCloudProvider implements AIProvider {
 
   async chat(input: GenerationInput, context: ProviderContext): Promise<GenerationResult> {
     this.validateInput(input);
+    const think = input.thinking === 'minimal' ? await this.minimalThinking(input.model, context) : undefined;
     const startedAt = Date.now();
     const response = await this.request('/api/chat', {
       method: 'POST',
@@ -79,6 +80,7 @@ export class OllamaCloudProvider implements AIProvider {
       body: JSON.stringify({
         model: input.model,
         stream: false,
+        ...(think === undefined ? {} : { think }),
         messages: [
           { role: 'system', content: input.system },
           { role: 'user', content: input.prompt },
@@ -104,6 +106,23 @@ export class OllamaCloudProvider implements AIProvider {
       ...(body.eval_count === undefined ? {} : { outputTokens: this.tokenCount(body.eval_count) }),
       latencyMs: Date.now() - startedAt,
     };
+  }
+
+  private async minimalThinking(model: string, context: ProviderContext): Promise<false | 'low' | undefined> {
+    try {
+      const response = await this.request('/api/show', {
+        method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ model }),
+      }, context);
+      if (!response.ok) return undefined;
+      const body = await this.readJson<{ thinking?: { values?: unknown } }>(response, 1_000_000);
+      const values = body.thinking?.values;
+      if (!Array.isArray(values)) return undefined;
+      if (values.includes(false)) return false;
+      return values.includes('low') ? 'low' : undefined;
+    } catch {
+      // Optional metadata must not prevent generation on models without these controls.
+      return undefined;
+    }
   }
 
   private async request(path: string, init: RequestInit, context: ProviderContext): Promise<Response> {

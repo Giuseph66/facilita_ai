@@ -1,5 +1,6 @@
 import { DocumentScreen } from "@/components/materials-screen";
-export default async function MaterialPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function MaterialPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ page?: string | string[] }> }) {
   const { id } = await params;
-  return <DocumentScreen documentId={id} />;
+  const page = Number((await searchParams).page);
+  return <DocumentScreen documentId={id} page={Number.isSafeInteger(page) && page > 0 ? page : 1} />;
 }

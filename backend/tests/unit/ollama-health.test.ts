@@ -69,3 +69,43 @@ describe('verificação da conexão Ollama Cloud', () => {
     expect(await new OllamaCloudProvider().getUsage(context)).toBeNull();
   });
 });
+
+
+describe('controle de raciocínio na geração de resumos', () => {
+  afterEach(() => { vi.unstubAllGlobals(); });
+  for (const [values, expected] of [[[false, true], false], [['low', 'medium', 'high'], 'low'], [[true], undefined], [undefined, undefined]] as const) {
+    it(`usa apenas controle anunciado pelo modelo: ${JSON.stringify(values)}`, async () => {
+      let request: Record<string, unknown> = {};
+      vi.stubGlobal('fetch', vi.fn(async (url: string | URL, init: RequestInit) => {
+        if (String(url).endsWith('/api/show')) return new Response(JSON.stringify({ thinking: { values } }));
+        request = JSON.parse(String(init.body));
+        return new Response(JSON.stringify({ message: { content: 'Resumo.' } }));
+      }));
+      await new OllamaCloudProvider().chat({ model: 'modelo', system: 'Resumo', prompt: 'Material', thinking: 'minimal' }, context);
+      expect(request.think).toBe(expected);
+      if (expected === undefined) expect(request).not.toHaveProperty('think');
+    });
+  }
+
+  it('preserva o comportamento padrão de outras gerações sem consultar metadados', async () => {
+    const fetchMock = vi.fn(async (url: string | URL, _init: RequestInit) => {
+      expect(String(url)).toContain('/api/chat');
+      return new Response(JSON.stringify({ message: { content: 'Resposta.' } }));
+    });
+    vi.stubGlobal('fetch', fetchMock);
+    await new OllamaCloudProvider().chat({ model: 'modelo', system: 'Tutor', prompt: 'Pergunta' }, context);
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(JSON.parse(String(fetchMock.mock.calls[0]?.[1]?.body))).not.toHaveProperty('think');
+  });
+
+  it('continua a geração com o padrão do modelo se a consulta opcional falhar', async () => {
+    let request: Record<string, unknown> = {};
+    vi.stubGlobal('fetch', vi.fn(async (url: string | URL, init: RequestInit) => {
+      if (String(url).endsWith('/api/show')) return new Response('{}', { status: 503 });
+      request = JSON.parse(String(init.body));
+      return new Response(JSON.stringify({ message: { content: 'Resumo.' } }));
+    }));
+    await new OllamaCloudProvider().chat({ model: 'modelo', system: 'Resumo', prompt: 'Material', thinking: 'minimal' }, context);
+    expect(request).not.toHaveProperty('think');
+  });
+});

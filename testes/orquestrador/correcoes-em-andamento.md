@@ -102,6 +102,16 @@ Objetivo: corrigir os problemas válidos de `testes/**` e `claude_reclama.md`, c
 
 ## Pendências externas
 
+### Material com leitura aparentemente travada —04/10/2026
+
+- Caso real informado pelo usuário: documento `62729980-7a71-4e33-a548-810d1c598add`, PDF de4,2MB. O banco registrou READY cerca de9s após o envio; o job terminou SUCCEEDED em12s, com outbox DONE e sem erro. Computer Use no Chrome do usuário confirmou a tela ainda em “Processando · Lendo o arquivo”. A tela de detalhe fazia apenas uma consulta inicial, sem acompanhar o processamento.
+- `DocumentScreen` agora consulta o status a cada3s enquanto QUEUED/PROCESSING, mantém a tela visível, tenta novamente após falhas temporárias e encerra consultas ao receber um estado final ou sair da tela.
+- A conferência também encontrou a prévia PDF bloqueada pelo Chrome: resposta attachment e X-Frame-Options DENY. PDFs agora usam inline, SAMEORIGIN e frame-ancestors self; a exceção no Next limita-se à rota do conteúdo do documento. PPTX mantém attachment; demais páginas mantêm DENY e a autorização dos documentos permanece.
+- Regressão reproduziu o status parado antes da correção. Após o ajuste,4/4 casos de navegador passaram (READY/FAILED, desktop/mobile, recuperação de503 e interrupção das consultas após estado final). Integração focada do conteúdo passou1/1, validando PDF, cabeçalhos, autorização e PPTX. Typecheck e lint focado passaram nos dois projetos; diff check limpo.
+- Computer Use confirmou o documento real pronto, a prévia exibindo o PDF de39 páginas e o download iniciado por “Baixar original”. Evidência: `evidencias/material-pronto-preview-cua.png`. Não houve reprocessamento nem alteração do arquivo original.
+
+### Cofre
+
 Verificação real das duas chaves fornecidas em04/10/2026: ambas CONNECTED, com consulta de consumo válida (janela mensal;100% restante arredondado). As identidades retornadas por `/api/me` são diferentes; isso é permitido pela regra revisada pelo usuário, sem necessidade de outra chave da mesma conta. Nenhuma chave foi adicionada à conta QA nessa verificação e nenhum segredo foi incluído neste registro.
 
 - A reclamação sobre rotação de `VAULT_KEYS_JSON` é condicional ao uso fora do ambiente local. A pergunta sobre compartilhamento dessa chave permanece sem resposta. Não foi feita rotação que pudesse invalidar credenciais em um ambiente externo desconhecido.
@@ -112,3 +122,9 @@ Verificação real das duas chaves fornecidas em04/10/2026: ambas CONNECTED, com
 - Removidos os bloqueios `AI_KEY_ACCOUNT_MISMATCH` e `AI_KEY_IDENTITY_UNVERIFIED` da seleção/rotação. As chaves seguem a ordem escolhida, ignorando recusadas e temporariamente esgotadas; recusa ou limite permite tentar a próxima mesmo de outra conta Ollama. A seleção continua restrita às conexões do usuário do aplicativo.
 - Regressões focadas:18/18 testes passaram (rotação, verificação de conexão e health do fornecedor), incluindo contas distintas, identidade ausente e ordem invertida. Typecheck e lint dos arquivos alterados passaram.
 - Prova com fornecedor real: duas credenciais QA de contas Ollama distintas foram descriptografadas e recriptografadas apenas em memória para um solicitante de teste. A primeira tentativa recebeu um limite simulado; a segunda fez uma chamada real a `gpt-oss:20b` e retornou texto válido. Resultado:2 tentativas,1 resposta real,1 commit de cota simulado e0 escritas no banco. O teste demonstra fallback após falha induzida, não esgotamento real de quota; não adicionou nem copiou conexões entre usuários no banco.
+
+## Comparação da Aula 02 — 04/10/2026
+
+Conferidos o PDF de43 páginas e os resumos reais. A UI escondia os pontos principais e abria as referências na página1; agora mostra pontos e seções, agrupa fontes por documento e navega para a página citada. Corrigidos também título e mensagem sobre fontes na biblioteca, controles de raciocínio suportados para resumos e o timeout mascarado pelo retry do worker. Validação final:28 unitários,3 de integração e6 de navegador, mais typecheck/lint focados.
+
+O modelo ainda produziu imprecisões conceituais. O novo resumo da validação foi revisado manualmente, identificado na tela e salvo com backup; o PDF e o resumo original foram preservados. Comparação, limites e evidências estão em `docs/VALIDACAO_RESUMO_BDI.md`. Nenhuma preferência de modelo ou chave foi alterada, e o limite local original de90s foi restaurado.

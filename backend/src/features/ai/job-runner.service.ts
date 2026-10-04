@@ -162,7 +162,8 @@ export class JobRunnerService implements OnModuleDestroy {
     } catch (error) {
       const code = this.safeErrorCode(error);
       const terminalAttempt = queueJob.attemptsMade + 1 >= Number(queueJob.opts.attempts ?? 1);
-      if (terminalAttempt || code !== 'PROVIDER_TIMEOUT' && code !== 'PROVIDER_RATE_LIMITED') {
+      // AIService already retries transport timeouts; repeating the job would reuse its released concurrency reservation.
+      if (terminalAttempt || code !== 'PROVIDER_RATE_LIMITED') {
         await this.finishFailure(job, code);
         await this.markOutbox(queueJob.id, 'FAILED');
         return;

@@ -1,0 +1,224 @@
+{
+  "title": "Arquiteturas de Agentes e Modelos BDI",
+  "payload": {
+    "title": "Arquiteturas de Agentes e Modelos BDI",
+    "summary": "A aula apresenta três arquiteturas de agentes (reativa, deliberativa e híbrida) e o modelo BDI, que organiza decisões por meio de crença, desejo e intenção, além de discutir organização de sistemas multiagente.",
+    "sections": [
+      {
+        "title": "Arquiteturas de Agentes",
+        "content": "As arquiteturas de agentes são classificadas segundo o tempo de resposta e a capacidade de raciocínio: reativa (responde em milissegundos sem planejamento), deliberativa (planeja antes de agir, mas pode ficar obsoleta) e híbrida (combina camadas reativas e deliberativas). A reativa é robusta e simples, mas não tem objetivo declarado nem aprende; a deliberativa persegue objetivos explícitos e raciocina sobre o futuro, mas o planejamento pode ser custoso e depender de um modelo fiel do mundo. A híbrida organiza camadas sociais, de planejamento e reativas, permitindo que a percepção interrompa planos e que planos sejam refeitos sem travar a ação. Essa divisão reflete diferentes apostas no equilíbrio entre rapidez e planejamento.",
+        "sources": [
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 1,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 2,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 3,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 4,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 5,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 6,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 7,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 8,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 9,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 10,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 11,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 12,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 13,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 14,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 15,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          }
+        ]
+      },
+      {
+        "title": "Modelo BDI: Crença, Desejo e Intenção",
+        "content": "O modelo BDI, inspirado na filosofia da ação de Bratman (1987) e adaptado por Rao e Georgeff na década de 1990, estrutura decisões em três atitudes: crença (modelo interno do mundo, que pode estar errado), desejo (estados desejados, que podem ser inconsistentes) e intenção (desejo escolhido e comprometido). A intenção persiste até ser alcançada, tornar-se impossível ou perder sentido, e restringe a adoção de novas intenções conflitantes. Desejos não obrigam ação; apenas candidatos a intenção. A escolha da intenção exclui outras possibilidades, orientando o planejamento. O ciclo BDI envolve deliberar sobre o que perseguir, planejar como fazer e agir, com revisão de crenças após a percepção. Essa separação evita confusão entre o que se quer e como se executa, mas exige que o projetista defina como deliberar entre desejos.",
+        "sources": [
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 16,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 17,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 18,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 19,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 20,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 21,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 22,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 23,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 24,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 25,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 26,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 27,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 28,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          }
+        ]
+      },
+      {
+        "title": "Organização de Papéis em Sistemas Multiagente",
+        "content": "A organização define papéis e relações entre agentes, que podem ser fixos, variáveis ou emergentes. Papéis fixos e hierárquicos são fáceis de projetar, mas falham se o líder cair; papéis emergentes são adaptáveis, mas difíceis de coordenar. A combinação mais usada é papéis variáveis e predefinidos, com possibilidade de troca de papéis em execução e especialistas que podem ser substituídos. Agentes podem atuar como organizações de nível superior, sendo vistos como indivíduos externos. A redundância (vários agentes sabendo a mesma tarefa) protege contra falhas, mas pode causar conflito se todos tentarem executar simultaneamente. A especialização (repertório restrito de tarefas) aumenta eficiência, mas reduz flexibilidade. A escolha entre redundância e especialização afeta a resiliência e a capacidade de coordenação do sistema.",
+        "sources": [
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 29,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 30,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 31,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 32,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 33,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 34,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 35,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 36,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 37,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          },
+          {
+            "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+            "pageNumber": 38,
+            "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf"
+          }
+        ]
+      }
+    ],
+    "keyPoints": [
+      "Arquiteturas de agentes variam no tempo de resposta e capacidade de raciocínio.",
+      "Modelo BDI separa crença (estado do mundo), desejo (o que se quer) e intenção (compromisso com um desejo).",
+      "Organização de papéis em sistemas multiagente pode ser fixa, emergente ou variável.",
+      "Deliberar e planejar são etapas distintas no ciclo BDI.",
+      "Reconsiderar intenções tem custo e exige equilíbrio entre adaptação e estabilidade."
+    ]
+  }
+}

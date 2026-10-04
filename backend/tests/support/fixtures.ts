@@ -3,7 +3,8 @@ import { strToU8, zipSync } from 'fflate';
 /** Small genuine documents; no external parser or cloud is used to construct them. */
 export function pdfFixture(text = 'Bioquimica: a glicolise converte glicose em piruvato.'): Buffer {
   const escaped = text.replaceAll('\\', '\\\\').replaceAll('(', '\\(').replaceAll(')', '\\)');
-  const content = `BT /F1 12 Tf 50 750 Td (${escaped}) Tj ET`;
+  const lines = escaped.split('\n').map((line) => `(${line}) Tj`).join(' 0 -18 Td ');
+  const content = `BT /F1 12 Tf 50 750 Td ${lines} ET`;
   const objects = [
     '<< /Type /Catalog /Pages 2 0 R >>',
     '<< /Type /Pages /Kids [3 0 R] /Count 1 >>',

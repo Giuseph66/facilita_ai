@@ -174,6 +174,24 @@ textarea.input { min-height: 98px; resize: vertical; }.file-input { padding: 8px
 .artifact-sources { display: flex; align-items: flex-start; gap: 8px; flex-wrap: wrap; }
 .artifact-sources .eyebrow { width: 100%; margin: 0 0 2px; }
 .artifact-sources .source-chip { color: var(--sage); }
+.artifact-source-group { width: 100%; min-width: 0; border: 1px solid var(--line); border-radius: 14px; }
+.artifact-source-group summary { display: flex; align-items: center; gap: 10px; padding: 14px; cursor: pointer; list-style: none; }
+.artifact-source-group summary::-webkit-details-marker { display: none; }
+.artifact-source-group summary > span { flex: 1; min-width: 0; overflow-wrap: anywhere; font-size: 14px; }
+.artifact-source-group summary > small { color: var(--ink-muted); font-size: 12px; }
+.artifact-source-group summary > svg { flex: none; color: var(--sage); }
+.artifact-source-group[open] summary > svg:last-child { transform: rotate(180deg); }
+.artifact-source-pages { display: flex; flex-wrap: wrap; gap: 8px; max-height: 280px; overflow: auto; padding: 0 14px 14px; }
+.summary-content { display: grid; gap: 24px; min-width: 0; }
+.summary-overview .reader-copy { max-width: 100ch; }
+.summary-sections { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 28px; }
+.summary-section { min-width: 0; padding-top: 18px; border-top: 1px solid var(--line); }
+.summary-section h3, .summary-points h3 { margin: 0 0 12px; font-size: 17px; }
+.summary-section .reader-copy { max-width: none; font-size: 16px; line-height: 1.7; overflow-wrap: anywhere; }
+.summary-citations { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.summary-citations .source-chip { max-width: 100%; overflow-wrap: anywhere; }
+.summary-points ul { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 360px), 1fr)); gap: 12px 32px; margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.65; overflow-wrap: anywhere; }
+.summary-points li > p { margin: 0; }
 .reader-copy { padding: 3px 2px; }
 .reader-copy > :first-child { margin-top: 0; }
 .artifact-sources .source-chip:hover { background: var(--sage-soft); }

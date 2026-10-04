@@ -1,0 +1,29 @@
+{
+  "pagesRead": 43,
+  "pagesWithSameText": 43,
+  "pagesWithNativeLineBreaks": 43,
+  "limitation": "Quebras nativas preservadas; setas e relações espaciais dos diagramas não são extraídas.",
+  "pages": [
+    {
+      "pageNumber": 22,
+      "text": "02 · MODELO BDI\nO ciclo de raciocínio prático\nCrenças\nDesejos\nDeliberar\no que perseguir\nIntenções\no compromisso\nPlano\ncomo fazer\nagir muda o mundo, e a percepção revisa as crenças\nDeliberar escolhe\no que fazer; planejar escolhe\ncomo . São dois\npassos distintos, e confundi-los é a origem de metade dos bugs em\nagentes BDI.\nTópicos Avançados em Inteligência Artificial · Aula 02",
+      "chunks": [
+        "02 · MODELO BDI\nO ciclo de raciocínio prático\nCrenças\nDesejos\nDeliberar\no que perseguir\nIntenções\no compromisso\nPlano\ncomo fazer\nagir muda o mundo, e a percepção revisa as crenças\nDeliberar escolhe\no que fazer; planejar escolhe\ncomo . São dois\npassos distintos, e confundi-los é a origem de metade dos bugs em\nagentes BDI.\nTópicos Avançados em Inteligência Artificial · Aula 02"
+      ]
+    },
+    {
+      "pageNumber": 23,
+      "text": "02 · MODELO BDI\nQuando abandonar uma intenção?\nCego\nInsiste até alcançar.\nNunca desiste.\nblind commitment\nObstinado\nDesiste só quando\nacredita ser\nimpossível.\nsingle-minded\nAberto\nReconsidera sempre\nque o desejo muda.\nopen-minded\nReconsiderar sempre é caro. Nunca reconsiderar é teimosia. O ajuste\ndesse equilíbrio é decisão de projeto, não de teoria.\nTópicos Avançados em Inteligência Artificial · Aula 02",
+      "chunks": [
+        "02 · MODELO BDI\nQuando abandonar uma intenção?\nCego\nInsiste até alcançar.\nNunca desiste.\nblind commitment\nObstinado\nDesiste só quando\nacredita ser\nimpossível.\nsingle-minded\nAberto\nReconsidera sempre\nque o desejo muda.\nopen-minded\nReconsiderar sempre é caro. Nunca reconsiderar é teimosia. O ajuste\ndesse equilíbrio é decisão de projeto, não de teoria.\nTópicos Avançados em Inteligência Artificial · Aula 02"
+      ]
+    },
+    {
+      "pageNumber": 32,
+      "text": "03 · ORGANIZAÇÃO\nTrês eixos para descrever qualquer organização\nPapéis fixos variáveis\nDefinição predefinida emergente\nPoder hierárquica igualitária\nCada combinação existe na prática. A escolha determina o que o\nsistema consegue fazer quando algo dá errado.\nTópicos Avançados em Inteligência Artificial · Aula 02",
+      "chunks": [
+        "03 · ORGANIZAÇÃO\nTrês eixos para descrever qualquer organização\nPapéis fixos variáveis\nDefinição predefinida emergente\nPoder hierárquica igualitária\nCada combinação existe na prática. A escolha determina o que o\nsistema consegue fazer quando algo dá errado.\nTópicos Avançados em Inteligência Artificial · Aula 02"
+      ]
+    }
+  ]
+}

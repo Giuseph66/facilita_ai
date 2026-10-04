@@ -19,6 +19,8 @@ export interface GenerationInput {
   prompt: string;
   temperature?: number;
   maxTokens?: number;
+  /** Prefer the least reasoning supported by the model for source-based summarization. */
+  thinking?: 'minimal';
   /** Only FakeAIProvider reads this in development/test; cloud adapters must ignore it. */
   developmentFakeResponse?: unknown;
 }

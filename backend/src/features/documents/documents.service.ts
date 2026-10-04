@@ -530,16 +530,17 @@ export class DocumentsService implements OnModuleInit {
 
   private async chunkPage(text: string): Promise<string[]> {
     if (!text.trim()) return [];
-    const sentences = text.split(/(?<=[.!?])\s+|\n+/).map((part) => part.trim()).filter(Boolean);
+    const sentences = text.split(/(?<=[.!?])(?=\s)|(?=\n)/).filter((part) => part.trim());
     const coarse: string[] = [];
     let current = '';
     for (const sentence of sentences) {
       const pieces = sentence.match(/.{1,1100}(?:\s+|$)/gs) ?? [sentence];
       for (const piece of pieces) {
-        const candidate = current ? `${current} ${piece.trim()}` : piece.trim();
+        const separator = /^\s*\n/.test(piece) ? '\n' : ' ';
+        const candidate = current ? `${current}${separator}${piece.trim()}` : piece.trim();
         if (current && candidate.length > 1_200) {
           coarse.push(current);
-          current = `${current.slice(-160)} ${piece.trim()}`;
+          current = `${current.slice(-160)}${separator}${piece.trim()}`;
         } else current = candidate;
       }
     }

@@ -49,7 +49,12 @@ export class DocumentsController {
     const encodedName = encodeURIComponent(file.name).replace(/['()]/g, (value) => `%${value.charCodeAt(0).toString(16).toUpperCase()}`);
     response.status(200);
     response.setHeader('Content-Type', file.mimeType);
-    response.setHeader('Content-Disposition', `attachment; filename="documento"; filename*=UTF-8''${encodedName}`);
+    const disposition = file.mimeType === 'application/pdf' ? 'inline' : 'attachment';
+    response.setHeader('Content-Disposition', `${disposition}; filename="documento"; filename*=UTF-8''${encodedName}`);
+    if (file.mimeType === 'application/pdf') {
+      response.setHeader('X-Frame-Options', 'SAMEORIGIN');
+      response.setHeader('Content-Security-Policy', "frame-ancestors 'self'");
+    }
     response.setHeader('Cache-Control', 'private, no-store');
     response.setHeader('X-Content-Type-Options', 'nosniff');
     response.send(file.buffer);

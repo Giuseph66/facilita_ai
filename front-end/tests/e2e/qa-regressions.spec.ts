@@ -1,6 +1,7 @@
 import { test, expect, type Cookie } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 import { qaAccounts } from '../support/qa-accounts';
+import { pdfFixture } from '../../../backend/tests/support/fixtures';
 
 let accountName = 'Docente QA Regressões';
 const accountPassword = 'Teste-local-Seguro!42';
@@ -144,4 +145,99 @@ test('exportação pessoal mostra um resultado, limpa senha e cabe no mobile', a
   await page.setViewportSize({ width: 390, height: 844 });
   expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)).toBe(false);
   await page.screenshot({ path: testInfo.outputPath('privacy-export-mobile.png'), fullPage: true });
+});
+
+for (const finalStatus of ['READY', 'FAILED'] as const) {
+  test(`material em processamento atualiza automaticamente para ${finalStatus}`, async ({ page }, testInfo) => {
+    const documentId = '6b9b936b-80ed-4458-b8c4-fced94c9a170';
+    let requests = 0;
+    let transition = false;
+    let temporaryError = false;
+    const document = {
+      id: documentId, materialId: '0243e331-292f-4e27-9bf5-348be4936d4e', courseId: null,
+      name: 'Material QA.pptx', sizeBytes: '1024', format: 'PPTX', status: 'PROCESSING',
+      stage: 'EXTRACTING', errorCode: null, activeVersionId: null, createdAt: new Date().toISOString(),
+    };
+    await page.route(`**/api/v1/documents/${documentId}`, async route => {
+      requests++;
+      if (transition && !temporaryError) {
+        temporaryError = true;
+        await route.fulfill({ status: 503, json: { code: 'REQUEST_FAILED', message: 'Indisponibilidade temporária.' } });
+        return;
+      }
+      const terminal = transition && temporaryError;
+      await route.fulfill({ json: {
+        document: { ...document, status: terminal ? finalStatus : 'PROCESSING',
+          stage: terminal ? finalStatus : 'EXTRACTING', errorCode: terminal && finalStatus === 'FAILED' ? 'DOCUMENT_PARSE_FAILED' : null },
+      } });
+    });
+    await page.goto(`/app/materiais/${documentId}`);
+    await expect(page.getByText('Lendo o arquivo', { exact: true })).toBeVisible();
+    transition = true;
+    await expect(page.getByText('Pronto para estudar', { exact: true }).or(page.getByText('Falha no processamento', { exact: true }))).toBeVisible({ timeout: 12000 });
+    const expected = finalStatus === 'READY' ? 'Pronto para estudar' : 'Falha no processamento';
+    await expect(page.getByText(expected, { exact: true })).toBeVisible();
+    await expect(page.getByText('Lendo o arquivo', { exact: true })).toHaveCount(0);
+    await expect(page.locator('.notice-error').filter({ hasText: 'Ação não concluída' })).toHaveCount(0);
+    const terminalRequests = requests;
+    await page.waitForTimeout(3500);
+    expect(requests).toBe(terminalRequests);
+    expect(requests).toBeGreaterThanOrEqual(3);
+    await page.screenshot({ path: testInfo.outputPath(`document-status-${finalStatus.toLowerCase()}.png`), fullPage: true });
+  });
+}
+
+for (const structured of [false, true]) {
+  test(`resumo ${structured ? 'com seções' : 'anterior'} exibe pontos e referências agrupadas com página correta`, async ({ page }, testInfo) => {
+    const documentId = '6b9b936b-80ed-4458-b8c4-fced94c9a170';
+    const artifactId = '93c2da94-e834-4d15-a073-ed79c6a0c97c';
+    const source = { documentId, documentName: 'Aula 02.pdf', pageNumber: 22 };
+    await page.route(`**/api/v1/study/artifacts/${artifactId}`, route => route.fulfill({ json: { artifact: {
+      id: artifactId, kind: 'SUMMARY', payload: {
+        title: 'Resumo de BDI', summary: 'Visão geral da aula.',
+        keyPoints: ['Crenças são representações falíveis do mundo.', 'Deliberar escolhe o que fazer; planejar escolhe como.'],
+        ...(structured ? { reviewMethod: "SOURCE_COMPARISON", sections: [{ title: 'Ciclo de raciocínio', content: 'Crenças e desejos alimentam a deliberação.', sources: [source] }] } : {}),
+      },
+      sources: [...Array.from({ length: 43 }, (_, index) => ({ ...source, pageNumber: index + 1 })), source],
+    } } }));
+    await page.route(`**/api/v1/documents/${documentId}`, route => route.fulfill({ json: { document: {
+      id: documentId, materialId: '0243e331-292f-4e27-9bf5-348be4936d4e', courseId: null,
+      name: 'Aula 02.pdf', sizeBytes: '1024', format: 'PDF', status: 'READY', stage: 'READY',
+      errorCode: null, activeVersionId: 'version-qa', createdAt: new Date().toISOString(),
+    } } }));
+    await page.route(`**/api/v1/documents/${documentId}/content`, route => route.fulfill({
+      contentType: 'application/pdf', body: pdfFixture('Prévia de teste.'),
+    }));
+    await page.goto(`/app/estudo/${artifactId}`);
+    await expect(page.getByText('Crenças são representações falíveis do mundo.', { exact: true })).toBeVisible();
+    await expect(page.getByText('43 referências', { exact: true })).toBeVisible();
+    const group = page.locator('.artifact-source-group');
+    await expect(group).not.toHaveAttribute('open');
+    const pages = group.getByRole('link');
+    await expect(pages.first()).toBeHidden();
+    if (structured) {
+      await expect(page.getByText("Resumo revisado contra o PDF original. Abra as páginas citadas para conferir.", { exact: true })).toBeVisible();
+      await expect(page.getByRole('heading', { name: 'Ciclo de raciocínio', exact: true })).toBeVisible();
+      await expect(page.getByRole('navigation', { name: 'Referências de Ciclo de raciocínio' }).getByRole('link')).toHaveAttribute('href', `/app/materiais/${documentId}?page=22`);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(page.viewportSize()!.width);
+    await group.locator('summary').click();
+    await expect(pages).toHaveCount(43);
+    await page.screenshot({ path: testInfo.outputPath(`summary-${structured ? 'sections' : 'legacy'}.png`), fullPage: true });
+    await group.getByRole('link', { name: 'Aula 02.pdf, página 22', exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`/app/materiais/${documentId}\\?page=22$`));
+    await expect(page.locator('iframe')).toHaveAttribute('src', `/api/v1/documents/${documentId}/content#page=22`);
+  });
+}
+
+
+test('biblioteca identifica o resumo sem afirmar ausência de fontes não carregadas', async ({ page }) => {
+  await page.route('**/api/v1/study/artifacts?cursor=', route => route.fulfill({ json: {
+    items: [{ id: '93c2da94-e834-4d15-a073-ed79c6a0c97c', kind: 'SUMMARY', payload: { title: 'Arquiteturas e BDI' }, createdAt: new Date().toISOString() }], nextCursor: null,
+  } }));
+  await page.goto('/app/estudo');
+  const artifact = page.locator('.artifact-row');
+  await expect(artifact).toContainText('Arquiteturas e BDI');
+  await expect(artifact).toContainText('Resumo');
+  await expect(page.getByText('Sem fontes associadas', { exact: true })).toHaveCount(0);
 });

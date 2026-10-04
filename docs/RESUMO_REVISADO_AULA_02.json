@@ -1,0 +1,233 @@
+{
+  "title": "Arquiteturas de Agentes e Modelo BDI — resumo revisado",
+  "summary": "A aula compara arquiteturas reativas, deliberativas e híbridas pelo equilíbrio entre rapidez de resposta e planejamento. Apresenta o modelo BDI, suas atitudes e estratégias de compromisso, e distingue os eixos de organização, redundância e especialização em sistemas multiagente. Os exemplos e exercícios mostram como aplicar essas escolhas ao projetar um agente.",
+  "sections": [
+    {
+      "title": "Arquiteturas reativa e deliberativa",
+      "content": "A **reativa** liga percepção à ação sem um modelo explícito do mundo nem planejamento. Na subsunção, comportamentos funcionam simultaneamente, com prioridade para os mais básicos, como evitar obstáculos. O aspirador que muda de direção ao bater exemplifica essa resposta rápida. A aula destaca simplicidade e robustez, mas ausência de objetivo declarado e limitações de aprendizado e planejamento.\n\nA **deliberativa** constrói um modelo do mundo e planeja antes de agir. Permite perseguir objetivos explícitos e considerar ações futuras; exige processamento e um modelo suficientemente fiel. O plano pode envelhecer enquanto é calculado, como ilustra a lentidão do robô Shakey.",
+      "sources": [
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 6
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 7
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 8
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 9
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 10
+        }
+      ]
+    },
+    {
+      "title": "Arquitetura híbrida e escolha do projeto",
+      "content": "A **híbrida** combina camadas social, de planejamento e reativa. Todas recebem percepções; a camada reativa pode interromper o planejamento para responder ao ambiente. Assim, é possível refazer planos enquanto a ação continua.\n\nA aula não apresenta uma arquitetura vencedora: a escolha depende de quanto o mundo muda enquanto o agente pensa. O carro que freia diante de um obstáculo ilustra a resposta reativa; escolher uma rota exige planejamento. O desafio é combinar resposta imediata e decisão sobre o futuro conforme o ambiente.",
+      "sources": [
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 12
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 13
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 14
+        }
+      ]
+    },
+    {
+      "title": "Crenças, desejos, objetivos e intenções",
+      "content": "O BDI parte da filosofia da ação de Bratman e de sua adaptação computacional por Rao e Georgeff.\n\n- **Crença:** representação interna do mundo, possivelmente falsa, incompleta e revisável; não equivale à verdade.\n- **Desejos:** situações que o agente gostaria de alcançar, inclusive desejos incompatíveis.\n- **Objetivos:** desejos filtrados pelas crenças, possíveis e consistentes entre si.\n- **Intenção:** desejo escolhido com compromisso de persegui-lo. Orienta ações, restringe novas intenções conflitantes e persiste até ser alcançada, considerada impossível ou perder sentido.\n\nDesejar algo, por si só, não exige agir; assumir uma intenção implica compromisso.",
+      "sources": [
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 16
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 17
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 18
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 19
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 20
+        }
+      ]
+    },
+    {
+      "title": "Ciclo BDI e estratégias de compromisso",
+      "content": "**Crenças e desejos alimentam juntos a deliberação**, que escolhe o que perseguir. A intenção resultante orienta o planejamento, que decide como executar. A ação muda o mundo; novas percepções revisam as crenças. Deliberar e planejar têm funções distintas.\n\nA estratégia determina quando abandonar uma intenção:\n- **Cego:** mantém o compromisso até alcançar o objetivo.\n- **Obstinado:** também abandona se acreditar que o objetivo se tornou impossível.\n- **Aberto:** reconsidera quando os desejos mudam.\n\nReconsiderar tem custo. No resgate, reavaliar a cada passo pode impedir a chegada à vítima; persistir cegamente pode manter o agente indo a um prédio que desabou.",
+      "sources": [
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 22
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 23
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 24
+        }
+      ]
+    },
+    {
+      "title": "Exemplos, implementações e limites do BDI",
+      "content": "Querer aprender inglês é um desejo; comprometer-se a estudar às 19h é uma intenção. No exemplo de resgate, a crença de que o corredor está livre, o desejo de encontrar uma vítima e a intenção de varrer o corredor direito orientam um plano.\n\nA aula cita **Jason/AgentSpeak**, com crenças, objetivos e planos, e **JADE**, voltado a agentes distribuídos em Java e padrões FIPA. Isso não torna JADE, por si só, uma arquitetura BDI.\n\nO BDI não determina como escolher entre desejos, tratar incerteza numérica, aprender novos planos ou negociar entre agentes; esses pontos exigem outras decisões e mecanismos.",
+      "sources": [
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 21
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 25
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 26
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 27
+        }
+      ]
+    },
+    {
+      "title": "Organização: papéis e três eixos",
+      "content": "A organização descreve papéis e relações; os agentes concretos ocupam esses papéis. Um mesmo papel pode ter vários agentes.\n\nOs três eixos são independentes:\n- **Papéis:** fixos ou variáveis.\n- **Definição:** predefinida ou emergente.\n- **Poder:** hierárquico ou igualitário.\n\nA aula contrasta a previsibilidade de uma organização fixa e hierárquica, vulnerável à queda do líder, com a adaptação e dificuldade de coordenação de uma organização variável, igualitária e emergente. A combinação citada como comum usa papéis variáveis, definição predefinida e poder igualitário: os papéis são projetados antes, mas podem mudar durante a execução.",
+      "sources": [
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 30
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 31
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 32
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 33
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 34
+        }
+      ]
+    },
+    {
+      "title": "Redundância, especialização e coordenação",
+      "content": "**Redundância** descreve quantos agentes sabem executar a mesma tarefa. **Especialização** descreve um repertório restrito de tarefas por agente. São características independentes: especialistas podem compartilhar a mesma habilidade, oferecendo redundância.\n\nTer substitutos pode proteger contra falhas, mas vários agentes tentando a mesma tarefa ao mesmo tempo podem entrar em conflito. A coordenação precisa definir quem executa. A fonte não afirma que especialização necessariamente aumenta eficiência ou reduz flexibilidade.\n\nUma organização também pode ser tratada como um agente em um nível superior, interagindo com outras organizações.",
+      "sources": [
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 31
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 35
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 36
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 37
+        }
+      ]
+    },
+    {
+      "title": "Como revisar e aplicar a aula",
+      "content": "O exercício pede escolher um cenário, definir três crenças e considerar possíveis erros, formular dois desejos incompatíveis, escolher uma intenção e indicar o que ela exclui. A estratégia de compromisso deve ser justificada pelo cenário.\n\nO seminário propõe relacionar arquiteturas e BDI a uma implementação real, mostrando domínio e clareza. A leitura indicada retoma agentes deliberativos no capítulo 2 de Russell. O fechamento aponta comunicação entre agentes, FIPA-ACL e ontologias como próximos assuntos do material, sem transformar a agenda original em um compromisso atual.",
+      "sources": [
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 39
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 40
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 41
+        },
+        {
+          "documentId": "ce3de3f1-02dc-4669-ac1b-92d6f98f940e",
+          "documentName": "Aula 02 Arquiteturas de Agentes e Modelos BDI.pdf",
+          "pageNumber": 42
+        }
+      ]
+    }
+  ],
+  "keyPoints": [
+    "A arquitetura adequada depende da dinâmica do ambiente e do tempo disponível para decidir.",
+    "Reatividade prioriza resposta direta; deliberação usa modelo e planejamento; a híbrida combina camadas.",
+    "Crença é uma representação falível do mundo; desejos podem ser incompatíveis.",
+    "Objetivos são desejos possíveis e consistentes; intenção acrescenta compromisso com a ação.",
+    "Crenças e desejos são entradas da deliberação; planejar define como executar a intenção.",
+    "Compromisso cego, obstinado e aberto diferem na condição de abandono da intenção.",
+    "Papéis, definição e poder são três eixos distintos de organização.",
+    "Redundância e especialização podem coexistir; tarefas simultâneas exigem coordenação.",
+    "Jason/AgentSpeak e JADE têm enfoques diferentes; BDI não resolve sozinho incerteza, aprendizagem e negociação."
+  ],
+  "reviewMethod": "SOURCE_COMPARISON",
+  "reviewedBy": "Codex",
+  "reviewedAt": "2026-10-04T21:25:07.158797+00:00"
+}
