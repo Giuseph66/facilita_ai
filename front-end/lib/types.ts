@@ -36,6 +36,7 @@ export type JobView = {
   feature: string;
   state: string;
   stage: string;
+  createdAt?: string;
   progress?: number;
   result?: unknown;
   errorCode?: string;
@@ -89,6 +90,8 @@ export type MaterialView = {
 
 export type DocumentView = {
   id: string;
+  courseId?: string | null;
+  materialId?: string | null;
   name: string;
   sizeBytes?: string;
   format?: string;
@@ -106,6 +109,7 @@ export type AssessmentView = {
   type?: string;
   state: string;
   revision: number;
+  questionCount?: number;
   questions?: AssessmentQuestionView[];
   courseId?: string;
 };
@@ -127,6 +131,7 @@ export type ConversationMessage = {
   content: string;
   createdAt?: string;
   citations?: CitationView[];
+  sources?: StudyArtifactView["sources"];
 };
 
 export type ConversationView = {
@@ -154,6 +159,8 @@ export type OllamaConnectionView = {
   label: string | null;
   position: number;
   status: string;
+  errorCode?: string | null;
+  message?: string | null;
   maskedKey?: string;
   checkedAt?: string | null;
   usage: { windows: KeyUsageWindow[]; checkedAt: string } | null;

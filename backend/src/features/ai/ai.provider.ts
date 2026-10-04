@@ -35,6 +35,8 @@ export interface ProviderHealth {
   status: 'CONNECTED' | 'AUTH_FAILED' | 'UNAVAILABLE';
   models: ModelDescriptor[];
   checkedAt: string;
+  accountIdentityHash?: string | null;
+  errorCode?: string;
 }
 
 /** Share of a usage window already consumed, as reported by the provider (0 = untouched, 1 = exhausted). */

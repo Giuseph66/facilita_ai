@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { qaAccounts } from '../support/qa-accounts';
 
 test('cadastro e sessão persistente sem rolagem horizontal', async ({ page }, testInfo) => {
   const identity = `${testInfo.project.name}-${Date.now()}`;
@@ -37,7 +38,7 @@ test('cadastro e sessão persistente sem rolagem horizontal', async ({ page }, t
     const scrollBefore = await page.evaluate(() => window.scrollY);
     await opener.click();
     await expect(drawer).toBeVisible();
-    await expect(drawer.getByLabel('Selecionar contexto')).toBeVisible();
+    await expect(drawer.getByLabel('Selecionar contexto')).toHaveCount(0);
     await expect(drawer.getByText('Docente', { exact: true })).toBeVisible();
     await expect(drawer.getByRole('button', { name: 'Docente' })).toHaveCount(0);
     await expect(drawer.locator('.profile-link')).toBeVisible();
@@ -46,6 +47,8 @@ test('cadastro e sessão persistente sem rolagem horizontal', async ({ page }, t
     await page.mouse.move(380, 400);
     await page.mouse.wheel(0, 500);
     await expect.poll(() => page.locator('.content-column').evaluate(element => element.getBoundingClientRect().top)).toBe(contentTop);
+    await drawer.getByRole('button', { name: 'Configurações da conta' }).click();
+    await expect(drawer.getByRole('link', { name: 'Meu perfil' })).toBeVisible();
     await drawer.getByRole('button', { name: 'Sair da conta' }).focus();
     await page.keyboard.press('Tab');
     await expect(drawer.locator('.brand-lockup')).toBeFocused();
@@ -70,6 +73,8 @@ test('cadastro e sessão persistente sem rolagem horizontal', async ({ page }, t
 
     await page.setViewportSize({ width: 320, height: 480 });
     await opener.click();
+    const account = drawer.getByRole('button', { name: 'Configurações da conta' });
+    if (await account.getAttribute('aria-expanded') !== 'true') await account.click();
     await drawer.getByRole('button', { name: 'Sair da conta' }).scrollIntoViewIfNeeded();
     await expect(drawer.getByRole('button', { name: 'Sair da conta' })).toBeInViewport();
     expect(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1)).toBe(false);
@@ -84,6 +89,7 @@ test('cadastro e sessão persistente sem rolagem horizontal', async ({ page }, t
     await expect(page.locator('.content-column')).not.toHaveAttribute('inert');
     expect(await page.evaluate(() => document.body.style.position)).not.toBe('fixed');
   }
+  qaAccounts.set(testInfo.project.name, { name: 'Docente atualizado', cookies: await page.context().cookies() });
 });
 
 test('cadastro acadêmico mantém tipo fixo no perfil', async ({ page }, testInfo) => {

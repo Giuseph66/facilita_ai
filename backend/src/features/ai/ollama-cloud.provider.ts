@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { createHash } from 'node:crypto';
 import { fail } from '../../core/errors';
 import {
   AIProvider,
@@ -11,6 +12,7 @@ import {
 } from './ai.provider';
 
 type OllamaModel = { name?: string; model?: string };
+const OLLAMA_USER_ID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 @Injectable()
 export class OllamaCloudProvider implements AIProvider {
@@ -47,14 +49,20 @@ export class OllamaCloudProvider implements AIProvider {
     try {
       // /api/tags is public on ollama.com and accepts any key, so it cannot prove the credential.
       // /api/me (used by `ollama signin`) rejects invalid keys with 401 and consumes no tokens.
-      const identity = await this.request('/api/me', { method: 'POST' }, context);
-      if (!identity.ok) this.raiseProviderError(identity.status);
+      const identityResponse = await this.request('/api/me', { method: 'POST' }, context);
+      if (!identityResponse.ok) this.raiseProviderError(identityResponse.status);
+      const identity = await this.readJson<{ id?: unknown; ID?: unknown }>(identityResponse, 50_000);
+      const hasConflictingIds = identity.id !== undefined && identity.ID !== undefined && identity.id !== identity.ID;
+      const accountId = identity.id ?? identity.ID;
+      const accountIdentityHash = !hasConflictingIds && typeof accountId === 'string' && OLLAMA_USER_ID.test(accountId)
+        ? createHash('sha256').update(`ollama:${accountId.toLowerCase()}`).digest('hex')
+        : null;
       const models = await this.getModels(context);
-      return { status: 'CONNECTED', models, checkedAt };
+      return { status: 'CONNECTED', models, checkedAt, accountIdentityHash };
     } catch (error) {
       const code = this.errorCode(error);
       if (code === 'PROVIDER_AUTH_FAILED') return { status: 'AUTH_FAILED', models: [], checkedAt };
-      return { status: 'UNAVAILABLE', models: [], checkedAt };
+      return { status: 'UNAVAILABLE', models: [], checkedAt, errorCode: this.safeHealthError(code) };
     }
   }
 
@@ -170,5 +178,11 @@ export class OllamaCloudProvider implements AIProvider {
     return error && typeof error === 'object' && 'code' in error && typeof (error as { code?: unknown }).code === 'string'
       ? (error as { code: string }).code
       : undefined;
+  }
+
+  private safeHealthError(code?: string): string {
+    return code && /^PROVIDER_(TIMEOUT|UNAVAILABLE|RATE_LIMITED|REQUEST_FAILED)$/.test(code)
+      ? code
+      : 'PROVIDER_UNAVAILABLE';
   }
 }

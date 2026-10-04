@@ -22,6 +22,7 @@ interface DocumentRow {
   id: string;
   workspace_id: string;
   material_id: string;
+  course_id?: string | null;
   owner_user_id: string;
   original_storage_key: string;
   original_name: string;
@@ -38,6 +39,8 @@ interface DocumentRow {
 
 export interface DocumentView {
   id: string;
+  materialId: string;
+  courseId: string | null;
   name: string;
   sizeBytes: string;
   format: 'PDF' | 'PPTX';
@@ -172,7 +175,7 @@ export class DocumentsService implements OnModuleInit {
     const offset = this.offsetFromCursor(cursor);
     const rows = await this.db.asActor(actorId, (connection) =>
       connection.query<DocumentRow>(
-        `SELECT d.id, d.workspace_id, d.material_id, d.owner_user_id, d.original_storage_key, d.original_name,
+        `SELECT d.id, d.workspace_id, d.material_id, m.course_id, d.owner_user_id, d.original_storage_key, d.original_name,
                 d.mime_type, d.size_bytes, d.sha256, d.status, d.stage, d.error_code, d.active_version_id, d.deleted_at, d.created_at
          FROM documents d JOIN materials m ON m.workspace_id = d.workspace_id AND m.id = d.material_id
          WHERE d.material_id = $1 AND d.deleted_at IS NULL AND m.workspace_id = d.workspace_id
@@ -188,9 +191,10 @@ export class DocumentsService implements OnModuleInit {
     this.assertUuid(documentId);
     const rows = await this.db.asActor(actorId, (connection) =>
       connection.query<DocumentRow>(
-        `SELECT id, workspace_id, material_id, owner_user_id, original_storage_key, original_name, mime_type,
-                size_bytes, sha256, status, stage, error_code, active_version_id, deleted_at, created_at
-         FROM documents WHERE id = $1 AND deleted_at IS NULL`, [documentId],
+        `SELECT d.id, d.workspace_id, d.material_id, m.course_id, d.owner_user_id, d.original_storage_key, d.original_name,
+                d.mime_type, d.size_bytes, d.sha256, d.status, d.stage, d.error_code, d.active_version_id, d.deleted_at, d.created_at
+         FROM documents d LEFT JOIN materials m ON m.workspace_id = d.workspace_id AND m.id = d.material_id
+         WHERE d.id = $1 AND d.deleted_at IS NULL`, [documentId],
       ),
     );
     if (!rows[0]) fail(404, 'RESOURCE_NOT_FOUND', 'O documento solicitado não está disponível.');
@@ -497,7 +501,7 @@ export class DocumentsService implements OnModuleInit {
 
   private async jobForDocument(connection: { query<T>(sql: string, params?: unknown[]): Promise<T[]> }, actorId: string, documentId: string, feature: string): Promise<JobView | undefined> {
     const rows = await connection.query<IntelligenceJob>(
-      `SELECT id, workspace_id, actor_id, feature, state, stage, progress, resource_type, resource_id, payload, result, error_code
+      `SELECT id, workspace_id, actor_id, feature, state, stage, progress, resource_type, resource_id, payload, result, error_code, created_at
        FROM jobs WHERE actor_id = $1 AND feature = $2 AND resource_id = $3 ORDER BY created_at DESC LIMIT 1`,
       [actorId, feature, documentId],
     );
@@ -615,6 +619,8 @@ export class DocumentsService implements OnModuleInit {
   private view(row: DocumentRow): DocumentView {
     return {
       id: row.id,
+      materialId: row.material_id,
+      courseId: row.course_id ?? null,
       name: row.original_name,
       sizeBytes: String(row.size_bytes),
       format: row.mime_type === 'application/pdf' ? 'PDF' : 'PPTX',

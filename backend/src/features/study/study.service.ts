@@ -93,8 +93,8 @@ export class StudyService implements OnModuleInit {
     try {
       const conversation = await this.db.asActor(actorId, async (connection) => {
         await connection.query(
-          `INSERT INTO conversations (id, workspace_id, owner_user_id, kind, title) VALUES ($1,$2,$3,$4,'Nova conversa')`,
-          [id, workspaceId, actorId, input.kind],
+          `INSERT INTO conversations (id, workspace_id, owner_user_id, kind, title) VALUES ($1,$2,$3,$4,$5)`,
+          [id, workspaceId, actorId, input.kind, input.title ?? 'Nova conversa'],
         );
         if (input.courseId) {
           await connection.query(
@@ -108,7 +108,7 @@ export class StudyService implements OnModuleInit {
             [workspaceId, id, documentId],
           );
         }
-        return { id, workspaceId, kind: input.kind, title: 'Nova conversa', createdAt: new Date().toISOString() };
+        return { id, workspaceId, kind: input.kind, title: input.title ?? 'Nova conversa', createdAt: new Date().toISOString() };
       });
       await this.quota.commit(actorId, 'DAILY_STUDY_SESSIONS', id).catch(() => undefined);
       return { conversation };
@@ -187,13 +187,17 @@ export class StudyService implements OnModuleInit {
       if (existing[0]) {
         if (existing[0].content !== input.content) fail(409, 'IDEMPOTENCY_CONFLICT', 'O identificador da mensagem já foi usado com outro conteúdo.');
         const jobs = await connection.query<IntelligenceJob>(
-          `SELECT id, workspace_id, actor_id, feature, state, stage, progress, resource_type, resource_id, payload, result, error_code
+          `SELECT id, workspace_id, actor_id, feature, state, stage, progress, resource_type, resource_id, payload, result, error_code, created_at
            FROM jobs WHERE actor_id = $1 AND feature = 'CHAT_REPLY' AND payload->>'messageId' = $2 ORDER BY created_at DESC LIMIT 1`,
           [actorId, existing[0].id],
         );
         if (!jobs[0]) fail(409, 'JOB_NOT_AVAILABLE', 'A mensagem foi recebida; consulte a conversa novamente.');
         return toJobView(jobs[0]);
       }
+      const userMessages = await connection.query<{ has_messages: boolean }>(
+        `SELECT EXISTS (SELECT 1 FROM messages WHERE conversation_id = $1 AND role = 'USER') AS has_messages`,
+        [conversationId],
+      );
       const userMessageId = randomUUID();
       const assistantMessageId = randomUUID();
       await connection.query(
@@ -201,7 +205,11 @@ export class StudyService implements OnModuleInit {
          VALUES ($1,$2,$3,'USER',$4,'SUCCEEDED',$5), ($6,$2,$3,'ASSISTANT','','PENDING',NULL)`,
         [userMessageId, conversation.workspace_id, conversationId, input.content, input.clientMessageId, assistantMessageId],
       );
-      await connection.query(`UPDATE conversations SET updated_at = now() WHERE id = $1 AND owner_user_id = $2`, [conversationId, actorId]);
+      await connection.query(
+        `UPDATE conversations SET title = CASE WHEN title = 'Nova conversa' AND $3::boolean THEN $4 ELSE title END,
+           updated_at = now() WHERE id = $1 AND owner_user_id = $2`,
+        [conversationId, actorId, !userMessages[0]?.has_messages, this.conversationTitle(input.content)],
+      );
       return this.jobs.createInConnection(actorId, conversation.workspace_id, 'CHAT_REPLY', {
         resourceType: 'MESSAGE', resourceId: assistantMessageId, messageId: userMessageId, replyMessageId: assistantMessageId,
       }, idempotencyKey, connection);
@@ -727,6 +735,10 @@ export class StudyService implements OnModuleInit {
 
   private conversationView(row: ConversationRow): Record<string, unknown> {
     return { id: row.id, workspaceId: row.workspace_id, kind: row.kind, title: row.title, contextRevision: Number(row.context_revision), createdAt: new Date(row.created_at).toISOString(), updatedAt: new Date(row.updated_at).toISOString() };
+  }
+
+  private conversationTitle(content: string): string {
+    return Array.from(content.trim().replace(/\s+/g, ' ')).slice(0, 80).join('') || 'Nova conversa';
   }
 
   private messageView(row: StoredMessage): Record<string, unknown> {

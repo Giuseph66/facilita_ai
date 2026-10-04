@@ -6,9 +6,9 @@ import { pdfFixture, pptxFixture } from '../support/fixtures';
 import { startRuntime, type IntegrationRuntime } from '../support/runtime.mts';
 
 type Session = { user: { id: string }; workspaces: { id: string }[] };
-type Job = { id: string; state: string; result?: Record<string, unknown>; errorCode?: string };
+type Job = { id: string; state: string; createdAt?: string; result?: Record<string, unknown>; errorCode?: string };
 type Material = { id: string; revision: number; title: string };
-type Document = { id: string; status: string; activeVersionId: string | null };
+type Document = { id: string; materialId: string; courseId: string | null; status: string; activeVersionId: string | null };
 type Source = { documentId: string; documentName: string; pageNumber: number };
 type Assessment = {
   id: string; state: string; revision: number;
@@ -32,6 +32,8 @@ describe('jornada integrada de documentos, RAG e avaliações', () => {
   let student: TestClient;
   let studentPeer: TestClient;
   let studentId: string;
+  let teacherId: string;
+  let teacherWorkspaceId: string;
   let courseId: string;
   let classId: string;
   let pdfMaterial: Material;
@@ -102,6 +104,11 @@ describe('jornada integrada de documentos, RAG e avaliações', () => {
     const studentSession = await register(student, 'STUDENT');
     const studentPeerSession = await register(studentPeer, 'STUDENT');
     studentId = studentSession.user.id;
+    teacherId = teacherSession.user.id;
+    teacherWorkspaceId = teacherSession.workspaces[0].id;
+    expect((await teacher.request('/ai/preferences')).body).toEqual({ mode: 'BYOK', preferredModel: null });
+    expect((await teacher.json('/ai/preferences', 'PUT', { mode: 'BYOK', preferredModel: 'fake-e5-chat-alt' })).status).toBe(200);
+    expect((await teacher.request('/ai/preferences')).body).toMatchObject({ mode: 'BYOK', preferredModel: 'fake-e5-chat-alt' });
     const admin = new Client({ connectionString: runtime.migrationUrl });
     await admin.connect();
     try {
@@ -133,7 +140,7 @@ describe('jornada integrada de documentos, RAG e avaliações', () => {
     const blueprintPath = `/classes/${classId}/study-blueprint`;
     const blueprintDraft = await teacher.json<{ blueprint: Blueprint }>(blueprintPath, 'PUT', {
       difficulty: 'MIXED',
-      topics: course.body.topicItems.map(topic => ({ courseTopicId: topic.id, competencyCode: 'BIOLOGY_FOUNDATIONS' })),
+      topics: course.body.topicItems.map(topic => ({ courseTopicId: topic.id, competencyCode: null })),
     });
     expect(blueprintDraft.status).toBe(200);
     expect(blueprintDraft.body.blueprint.state).toBe('DRAFT');
@@ -173,12 +180,45 @@ describe('jornada integrada de documentos, RAG e avaliações', () => {
 
     expect((await teacher.json(`/materials/${pdfMaterial.id}/classes/${classId}`, 'PUT', { revision: pdfMaterial.revision })).status).toBe(200);
     expect((await teacher.json(`/materials/${pptxMaterial.id}/classes/${classId}`, 'PUT', { revision: pptxMaterial.revision })).status).toBe(200);
-    expect((await student.request(`/documents/${pdfDocument.id}`)).status).toBe(200);
-    expect((await student.request(`/documents/${pptxDocument.id}`)).status).toBe(200);
+    const studentPdf = await student.request<{ document: Document }>(`/documents/${pdfDocument.id}`);
+    expect(studentPdf.status).toBe(200);
+    expect(studentPdf.body.document).toMatchObject({ materialId: pdfMaterial.id, courseId });
+    const studentPptx = await student.request<{ document: Document }>(`/documents/${pptxDocument.id}`);
+    expect(studentPptx.status).toBe(200);
+    expect(studentPptx.body.document).toMatchObject({ materialId: pptxMaterial.id, courseId });
     expect((await student.request(`/documents/${secret.body.id}`)).status).toBe(404);
   }, timeoutMs);
 
   afterAll(async () => { await runtime?.stop(); }, timeoutMs);
+
+  it('health observa o worker e a idade agregada da fila sem expor job ou ator', async () => {
+    const admin = new Client({ connectionString: runtime.migrationUrl });
+    await admin.connect();
+    let jobId = '';
+    try {
+      const inserted = await admin.query<{ id: string }>(
+        `INSERT INTO jobs (workspace_id, actor_id, feature, resource_type, payload, payload_hash, created_at)
+         VALUES ($1, $2, 'HEALTH_PROBE', 'HEALTH', '{}'::jsonb, $3, now() - interval '30 seconds') RETURNING id`,
+        [teacherWorkspaceId, teacherId, 'd'.repeat(64)],
+      );
+      jobId = inserted.rows[0].id;
+    } finally { await admin.end(); }
+    const healthResponse = await fetch(`${runtime.baseUrl}/health`);
+    const health = {
+      status: healthResponse.status,
+      body: await healthResponse.json() as {
+      status: string; worker: { status: string; activeCount: number | null };
+      queue: { queuedCount: number; oldestQueuedAgeSeconds: number | null };
+      },
+    };
+    expect(health.status).toBe(200);
+    expect(health.body.status).toBe('ready');
+    expect(health.body.worker).toMatchObject({ status: 'active', activeCount: 1 });
+    expect(health.body.queue.queuedCount).toBe(1);
+    expect(health.body.queue.oldestQueuedAgeSeconds).toBeGreaterThanOrEqual(29);
+    expect(JSON.stringify(health.body)).not.toContain(jobId);
+    expect(JSON.stringify(health.body)).not.toContain('HEALTH_PROBE');
+  });
 
   it('processa originais, responde com citações, gera materiais e avalia sem expor gabaritos antes do envio', async () => {
     const conversation = await student.json<{ conversation: { id: string } }>('/conversations', 'POST', {
@@ -190,7 +230,16 @@ describe('jornada integrada de documentos, RAG e avaliações', () => {
       content: 'Explique como a glicólise produz piruvato e ATP.', clientMessageId: randomUUID(),
     });
     expect(message.status).toBe(202);
+    expect(message.body.job.createdAt).toBeTypeOf('string');
     await waitForJob(student, message.body.job.id);
+    const conversations = await student.request<{ items: Array<{ id: string; title: string }> }>('/conversations');
+    expect(conversations.body.items.find(item => item.id === conversationId)?.title)
+      .toBe('Explique como a glicólise produz piruvato e ATP.');
+    const titledConversation = await student.json<{ conversation: { title: string } }>('/conversations', 'POST', {
+      kind: 'STUDENT_TUTOR', title: 'Revisão de metabolismo', courseId, documentIds: [],
+    });
+    expect(titledConversation.status).toBe(201);
+    expect(titledConversation.body.conversation.title).toBe('Revisão de metabolismo');
     const history = await student.request<{ items: Array<{ role: string; content: string; sources?: Source[] }> }>(`/conversations/${conversationId}/messages`);
     expect(history.status).toBe(200);
     const assistantMessage = history.body.items.find(item => item.role === 'ASSISTANT');

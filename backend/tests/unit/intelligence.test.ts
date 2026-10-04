@@ -110,6 +110,16 @@ describe('credenciais e provedor de IA', () => {
     await expect(fake.getModels(context)).rejects.toMatchObject({ code: 'PROVIDER_NOT_CONFIGURED' });
   });
 
+  it('expõe dois modelos de teste estáveis para validar salvar e restaurar uma escolha diferente', async () => {
+    setEnvironment({ NODE_ENV: 'test', AI_PROVIDER: 'fake' });
+    const fake = new FakeAIProvider();
+    const context = { actorId: 'actor', payerScope: 'BYOK' as const, provider: 'ollama' as const, apiKey: '', credentialRevision: 0 };
+    const models = await fake.getModels(context);
+    const health = await fake.healthCheck(context);
+    expect(models.map(model => model.id)).toEqual(['fake-e5-chat', 'fake-e5-chat-alt']);
+    expect(health.models).toEqual(models);
+  });
+
   it('escolhe modelo de teste estável em jobs fake sem credencial ou preferência', async () => {
     setEnvironment({ NODE_ENV: 'test', AI_PROVIDER: 'fake' });
     const fake = new FakeAIProvider();

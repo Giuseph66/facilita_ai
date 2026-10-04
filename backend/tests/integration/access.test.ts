@@ -8,6 +8,20 @@ type Course = { id: string; workspaceId: string; title: string; revision: number
 type ClassView = { id: string; workspaceId: string; courseId: string };
 type ClassDetail = ClassView & { studentCount: number | null; members: { userId: string; role: string; status: string }[] };
 const password = 'Teste-local-Seguro!42';
+type Job = { id: string; state: string; stage?: string; errorCode?: string };
+
+async function waitForJob(client: TestClient, id: string): Promise<Job> {
+  const deadline = Date.now() + 15_000;
+  let latest: Job | undefined;
+  while (Date.now() < deadline) {
+    const response = await client.request<{ job: Job }>(`/jobs/${id}`);
+    expect(response.status).toBe(200);
+    latest = response.body.job;
+    if (['SUCCEEDED', 'FAILED', 'CANCELLED'].includes(latest.state)) return latest;
+    await new Promise(resolve => setTimeout(resolve, 75));
+  }
+  throw new Error(`AI job did not reach a terminal state (${latest?.state ?? 'missing'} / ${latest?.stage ?? 'no-stage'} / ${latest?.errorCode ?? 'no-error'}).`);
+}
 
 describe('HTTP e RLS com runtime real', () => {
   let runtime: IntegrationRuntime;
@@ -52,10 +66,78 @@ describe('HTTP e RLS com runtime real', () => {
     expect(result.body.openapi).toBe('3.1.0');
     expect(result.body.paths['/auth/register']).toBeDefined();
     expect(result.body.paths['/documents/{id}']).toBeDefined();
+    expect(result.body.paths['/me/courses']).toBeDefined();
+    expect(result.body.paths['/ai/preferences']).toBeDefined();
     expect(result.body.paths['/me/personas']).toBeUndefined();
     expect(result.headers.getSetCookie()).toHaveLength(0);
     expect(JSON.stringify(result.body)).not.toContain('VAULT_KEYS_JSON');
   });
+
+  it('API-only fica pronta sem trabalhador e informa a fila agregada', async () => {
+    const healthResponse = await fetch(`${runtime.baseUrl}/health`);
+    const health = {
+      status: healthResponse.status,
+      body: await healthResponse.json() as {
+      status: string; worker: { status: string; activeCount: number | null };
+      queue: { queuedCount: number; oldestQueuedAgeSeconds: number | null };
+      },
+    };
+    expect(health.status).toBe(200);
+    expect(health.body).toEqual({
+      status: 'ready',
+      worker: { status: 'stale', activeCount: 0, oldestHeartbeatAgeSeconds: null },
+      queue: { queuedCount: 0, oldestQueuedAgeSeconds: null },
+    });
+    expect(await (await fetch(`${runtime.baseUrl}/health/live`)).json()).toEqual({ status: 'ok' });
+  });
+
+  it('plano Livre preserva BYOK e concede cinco gerações diárias', async () => {
+    const admin = new Client({ connectionString: runtime.migrationUrl });
+    await admin.connect();
+    try {
+      const result = await admin.query<{ capability: string; value: unknown }>(
+        `SELECT pe.capability, pe.value FROM plan_entitlements pe JOIN plans p ON p.id = pe.plan_id
+         WHERE p.code = 'FREE' AND pe.capability = ANY($1::text[]) ORDER BY pe.capability`,
+        [['AI_BYOK_ACCESS', 'AI_PLATFORM_ACCESS', 'DAILY_GENERATIONS', 'MAX_CONCURRENT_AI_JOBS']],
+      );
+      const entitlements = new Map(result.rows.map(row => [row.capability, row.value]));
+      expect(entitlements.get('AI_BYOK_ACCESS')).toBe(true);
+      expect(entitlements.get('AI_PLATFORM_ACCESS')).toBe(false);
+      expect(entitlements.get('DAILY_GENERATIONS')).toEqual({ limit: 5, period: 'day' });
+      expect(entitlements.get('MAX_CONCURRENT_AI_JOBS')).toEqual({ limit: 1, period: 'concurrent' });
+    } finally { await admin.end(); }
+  });
+
+  it('completa cinco gerações BYOK de fixture no Livre e bloqueia a sexta pela cota', async () => {
+    await runtime.startWorker();
+    try {
+      const created = await teacher.json<{ conversation: { id: string } }>('/conversations', 'POST', { kind: 'TEACHER_ASSISTANT' });
+      expect(created.status).toBe(201);
+      const conversationId = created.body.conversation.id;
+
+      for (let index = 0; index < 5; index += 1) {
+        const sent = await teacher.json<{ job: Job }>(`/conversations/${conversationId}/messages`, 'POST', {
+          content: `Pergunta sintética ${index + 1}.`, clientMessageId: `free-generation-${index + 1}`,
+        });
+        expect(sent.status).toBe(202);
+        expect((await waitForJob(teacher, sent.body.job.id)).state).toBe('SUCCEEDED');
+      }
+
+      const usageAfterFive = await teacher.request<{ items: Array<{ metric: string; used: number | string; reserved: number | string; limit: number | string | null }> }>('/me/usage');
+      expect(usageAfterFive.status).toBe(200);
+      expect(usageAfterFive.body.items.find(item => item.metric === 'DAILY_GENERATIONS')).toMatchObject({ used: 5, reserved: 0, limit: 5 });
+
+      const sixth = await teacher.json<{ job: Job }>(`/conversations/${conversationId}/messages`, 'POST', {
+        content: 'Sexta pergunta sintética.', clientMessageId: 'free-generation-6',
+      });
+      expect(sixth.status).toBe(202);
+      expect(await waitForJob(teacher, sixth.body.job.id)).toMatchObject({ state: 'FAILED', errorCode: 'QUOTA_EXCEEDED' });
+      const usageAfterBlocked = await teacher.request<{ items: Array<{ metric: string; used: number | string; reserved: number | string }> }>('/me/usage');
+      expect(usageAfterBlocked.body.items.find(item => item.metric === 'DAILY_GENERATIONS')).toMatchObject({ used: 5, reserved: 0 });
+    } finally {
+      await runtime.stopWorker();
+    }
+  }, 30_000);
 
   it('rejeita cookie ausente e CSRF ausente ou com origem diferente', async () => {
     const anonymous = new TestClient(runtime.baseUrl);
@@ -71,6 +153,14 @@ describe('HTTP e RLS com runtime real', () => {
       body: JSON.stringify({ email: 'professor@example.test', password }),
     });
     expect(wrongOrigin.status).toBe(403);
+    const localAlias = await fetch(`${runtime.baseUrl}/api/v1/auth/login`, {
+      method: 'OPTIONS', headers: {
+        origin: 'http://127.0.0.1:3000',
+        'access-control-request-method': 'POST',
+        'access-control-request-headers': 'content-type',
+      },
+    });
+    expect(localAlias.headers.get('access-control-allow-origin')).toBe('http://127.0.0.1:3000');
   });
 
   it('não revela recursos privados a usuários externos', async () => {
@@ -92,6 +182,11 @@ describe('HTTP e RLS com runtime real', () => {
     const enrollment = await student.json('/enrollments', 'POST', { code: invitation.body.inviteCode });
     expect(enrollment.status).toBe(201);
     expect((await student.request(`/courses/${course.id}`)).status).toBe(200);
+    const discovered = await student.request<{ items: Array<{ id: string }>; nextCursor: string | null }>('/me/courses');
+    expect(discovered.status).toBe(200);
+    expect(discovered.body.items.map(item => item.id)).toContain(course.id);
+    const strangerCourses = await stranger.request<{ items: Array<{ id: string }> }>('/me/courses');
+    expect(strangerCourses.body.items.map(item => item.id)).not.toContain(course.id);
     expect((await student.json(`/courses/${course.id}`, 'PATCH', { title: 'Alteração indevida', revision: course.revision })).status).toBe(404);
     expect((await stranger.json('/enrollments', 'POST', { code: invitation.body.inviteCode })).status).toBeGreaterThanOrEqual(400);
   });
@@ -172,6 +267,7 @@ describe('HTTP e RLS com runtime real', () => {
     expect((await teacher.request(`/classes/${classroom.id}/enrollments/${studentSession.user.id}`, { method: 'DELETE' })).status).toBe(204);
     expect((await student.request(`/courses/${course.id}`)).status).toBe(404);
     expect((await student.request(`/classes/${classroom.id}`)).status).toBe(404);
+    expect((await student.request<{ items: Array<{ id: string }> }>('/me/courses')).body.items.map(item => item.id)).not.toContain(course.id);
   });
 
   it('logout revoga sessão no servidor', async () => {

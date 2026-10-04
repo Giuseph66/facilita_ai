@@ -75,7 +75,7 @@ Seleção/revisão/publicação explícitas, auditadas. Todos os elegíveis rece
 
 AES-256-GCM, nonce aleatório, AAD com connection/user/provider, master key fora do banco/Git, key_version para rotação. Full key só dentro do adapter. API retorna máscara/status. Logs/body/tracing não capturam segredo. Revogar/remover impede novos jobs; pending jobs revalidam credential_revision. Apagar ciphertext imediatamente; auditoria guarda só evento.
 
-Health check distingue conectividade/auth/capacidade e indica possível consumo pago. URL do provider controlada; sem SSRF por endpoint enviado pelo usuário. BYOK exclusivamente individual; sem pooling ou fallback para terceiros.
+Health check distingue conectividade/auth/capacidade e indica possível consumo pago. URL do provider controlada; sem SSRF por endpoint enviado pelo usuário. BYOK permanece isolado por usuário do aplicativo: ele pode cadastrar chaves de contas Ollama diferentes e definir sua ordem de uso; nenhuma geração usa conexões de outro usuário do aplicativo.
 
 ## Upload/processamento/export
 

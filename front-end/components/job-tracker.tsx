@@ -46,10 +46,10 @@ function KeyUsageNote() {
 function resultPath(result?: unknown) {
   if (!result || typeof result !== "object") return null;
   const data = result as JobResult;
+  if (data.practiceTestId) return { href: `/app/simulados/${data.practiceTestId}`, label: "Abrir simulado" };
   if (data.artifactId) return { href: `/app/estudo/${data.artifactId}`, label: "Abrir material de estudo" };
   if (data.assessmentId) return { href: `/app/avaliacoes/${data.assessmentId}`, label: "Abrir avaliação" };
   if (data.exportId) return { href: `/app/exports/${data.exportId}`, label: "Abrir arquivo exportado" };
-  if (data.practiceTestId) return { href: `/app/simulados/${data.practiceTestId}`, label: "Abrir simulado" };
   if (data.documentId) return { href: `/app/materiais/${data.documentId}`, label: "Abrir material" };
   return null;
 }
@@ -58,10 +58,17 @@ export function JobTracker({ job, onClose, onUpdate }: { job: JobView; onClose?:
   const [current, setCurrent] = useState(job);
   const [pollCount, setPollCount] = useState(0);
   const [pollError, setPollError] = useState("");
+  const [observedAt, setObservedAt] = useState(() => Date.now());
+  const [now, setNow] = useState(() => Date.now());
   const resultLink = useMemo(() => resultPath(current.result), [current.result]);
   const terminal = isTerminalJob(current);
 
-  useEffect(() => { setCurrent(job); setPollCount(0); setPollError(""); }, [job]);
+  useEffect(() => { setCurrent(job); setPollCount(0); setPollError(""); setObservedAt(Date.now()); setNow(Date.now()); }, [job]);
+  useEffect(() => {
+    if (current.state.toUpperCase() !== "QUEUED" || terminal) return;
+    const timer = window.setInterval(() => setNow(Date.now()), 5000);
+    return () => window.clearInterval(timer);
+  }, [current.state, terminal]);
   useEffect(() => {
     if (terminal) return;
     let active = true;
@@ -78,9 +85,12 @@ export function JobTracker({ job, onClose, onUpdate }: { job: JobView; onClose?:
   const state = (current.state || "").toUpperCase();
   const feature = featureLabels[current.feature] || { label: "Processamento", done: "Processamento concluído" };
   const failed = ["FAILED", "ERROR"].includes(state);
+  const queuedAt = current.createdAt ? Date.parse(current.createdAt) : observedAt;
+  const queueIsSlow = state === "QUEUED" && Number.isFinite(queuedAt) && now - queuedAt >= 60_000;
   return <div className="job-card">
     <div className="job-card-head"><span className={`job-symbol ${failed ? "failed" : terminal ? "done" : "working"}`}>{terminal ? "✓" : <LoaderCircle size={18} className="spin" />}</span><div className="job-heading"><strong>{failed ? "Não foi possível concluir" : terminal ? feature.done : "Trabalhando no seu pedido"}</strong><span>{feature.label}</span></div>{onClose && <button type="button" className="icon-button small" onClick={onClose} aria-label="Fechar status do processamento"><X size={16} /></button>}</div>
     <p className="job-stage">{failed ? errorCodeCopy(current.errorCode) : terminal ? "Tudo pronto." : "Isso pode levar alguns instantes. Você pode continuar usando o app."}</p>
+    {queueIsSlow && <Notice tone="warning" title="A fila está demorando">Esta solicitação permanece na fila há mais de um minuto. O status continua sendo consultado automaticamente.</Notice>}
     {typeof current.progress === "number" && !terminal && <div className="progress-track" role="progressbar" aria-valuemin={0} aria-valuemax={100} aria-valuenow={current.progress}><span style={{ width: `${Math.max(0, Math.min(100, current.progress))}%` }} /></div>}
     {pollError && <p className="job-poll-error" role="status">O status será consultado novamente. {pollError}</p>}
     {failed && <Notice tone="error" title="A solicitação continua salva">Tente novamente quando o serviço estiver disponível. Nenhuma troca de fornecedor foi feita automaticamente.</Notice>}

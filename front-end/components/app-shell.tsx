@@ -128,7 +128,7 @@ function ShellFrame({ children }: { children: React.ReactNode }) {
       <header className="mobile-topbar"><button ref={menuButtonRef} className="icon-button" type="button" aria-label="Abrir navegação" aria-expanded={menuOpen} aria-controls="app-navigation" onClick={() => setMenuPath(path)}><Menu aria-hidden="true" /></button><Link href="/app" className="brand-lockup"><span className="brand-symbol">f</span><span>facilita<span className="brand-light"> estudo</span></span></Link><Link className="icon-button" href="/app/configuracoes/perfil" aria-label="Configurações"><CircleUserRound /></Link></header>
       <main id="main-content" className="main-content">{sessionError && <Notice tone="warning" title="Conexão de sessão instável">{sessionError}<Button type="button" variant="secondary" onClick={() => void refreshSession()}>Tentar novamente</Button></Notice>}{children}</main>
       <footer className="mobile-tabbar" aria-label="Atalhos">{[
-        { href: "/app", label: "Início", icon: Home }, { href: "/app/disciplinas", label: "Disciplinas", icon: BookOpen }, { href: "/app/conversas", label: "Tutor", icon: MessageCircle }, { href: "/app/configuracoes/perfil", label: "Conta", icon: CircleUserRound },
+        { href: "/app", label: "Início", icon: Home }, { href: "/app/disciplinas", label: "Disciplinas", icon: BookOpen }, { href: "/app/conversas", label: "Estudar com IA", icon: MessageCircle }, { href: "/app/configuracoes/perfil", label: "Conta", icon: CircleUserRound },
       ].map(({ href, label, icon: Icon }) => <Link key={href} href={href} className={path === href || (href !== "/app" && path.startsWith(`${href}/`)) ? "active" : ""}><Icon size={20} aria-hidden="true"/><span>{label}</span></Link>)}</footer>
     </div>
   </div>;

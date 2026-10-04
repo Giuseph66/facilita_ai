@@ -4,6 +4,7 @@ const uuid = z.string().uuid();
 
 export const conversationInputSchema = z.object({
   kind: z.enum(['STUDENT_TUTOR', 'TEACHER_ASSISTANT']),
+  title: z.string().trim().min(1).max(160).optional(),
   courseId: uuid.optional(),
   documentIds: z.array(uuid).max(20).default([]),
 }).strict();

@@ -17,6 +17,11 @@ export const aiPreferenceInputSchema = z.object({
   preferredModel: z.string().min(1).max(160).optional(),
 }).strict();
 
+export const aiPreferenceViewSchema = z.object({
+  mode: z.enum(['BYOK', 'PLATFORM']),
+  preferredModel: z.string().nullable(),
+}).strict();
+
 export const aiConnectionViewSchema = z.object({
   id: z.string().uuid(),
   provider: z.literal('ollama'),

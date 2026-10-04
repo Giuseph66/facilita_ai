@@ -1,4 +1,5 @@
 import { Injectable, Logger, OnModuleDestroy } from '@nestjs/common';
+import { randomUUID } from 'node:crypto';
 import { Job, Queue, Worker } from 'bullmq';
 import Redis from 'ioredis';
 import { DatabaseService } from '../../core/database.service';
@@ -7,6 +8,8 @@ import { JobEnvelope, IntelligenceJob } from './job.types';
 import { JobHandlerRegistry } from './job-handler.registry';
 
 const QUEUE_NAME = 'intelligence-jobs';
+const HEARTBEAT_INTERVAL_MS = 10_000;
+const HEARTBEAT_TTL_MS = 45_000;
 
 @Injectable()
 export class JobRunnerService implements OnModuleDestroy {
@@ -15,6 +18,8 @@ export class JobRunnerService implements OnModuleDestroy {
   private queue?: Queue<JobEnvelope>;
   private worker?: Worker<JobEnvelope>;
   private timer?: NodeJS.Timeout;
+  private heartbeatTimer?: NodeJS.Timeout;
+  private heartbeatKey?: string;
   private pumping = false;
 
   constructor(private readonly db: DatabaseService, private readonly handlers: JobHandlerRegistry, private readonly quota: QuotaService) {}
@@ -35,6 +40,11 @@ export class JobRunnerService implements OnModuleDestroy {
     this.worker.on('failed', (job, error) => {
       this.logger.error(`Intelligence job ${job?.id ?? 'unknown'} failed: ${error.name}`);
     });
+    await this.worker.waitUntilReady();
+    this.heartbeatKey = `${prefix}:health:worker:${randomUUID()}`;
+    await this.writeHeartbeat();
+    this.heartbeatTimer = setInterval(() => void this.writeHeartbeat(), HEARTBEAT_INTERVAL_MS);
+    this.heartbeatTimer.unref();
     await this.dispatchOutbox();
     this.timer = setInterval(() => void this.dispatchOutbox(), 1_000);
     this.timer.unref();
@@ -43,8 +53,12 @@ export class JobRunnerService implements OnModuleDestroy {
   async stop(): Promise<void> {
     if (this.timer) clearInterval(this.timer);
     this.timer = undefined;
+    if (this.heartbeatTimer) clearInterval(this.heartbeatTimer);
+    this.heartbeatTimer = undefined;
     await this.worker?.close();
     await this.queue?.close();
+    if (this.heartbeatKey) await this.redis?.del(this.heartbeatKey).catch(() => undefined);
+    this.heartbeatKey = undefined;
     await this.redis?.quit();
     this.worker = undefined;
     this.queue = undefined;
@@ -92,6 +106,15 @@ export class JobRunnerService implements OnModuleDestroy {
       this.logger.warn(`Outbox dispatch deferred: ${error instanceof Error ? error.name : 'unknown error'}`);
     } finally {
       this.pumping = false;
+    }
+  }
+
+  private async writeHeartbeat(): Promise<void> {
+    if (!this.redis || !this.heartbeatKey) return;
+    try {
+      await this.redis.set(this.heartbeatKey, String(Date.now()), 'PX', HEARTBEAT_TTL_MS);
+    } catch (error) {
+      this.logger.warn(`Worker heartbeat deferred: ${error instanceof Error ? error.name : 'unknown error'}`);
     }
   }
 

@@ -96,7 +96,7 @@ export default function LandingPage() {
 
     <section className="lp-section" id="recursos">
       <div className="lp-container">
-        <div className="lp-section-head"><p className="lp-label">Recursos</p><h2>Um só lugar para quem ensina e para quem aprende.</h2><p>A mesma conta pode ser usada nos dois papéis. Cada um vê as ferramentas que fazem sentido para o que precisa fazer.</p></div>
+        <div className="lp-section-head"><p className="lp-label">Recursos</p><h2>Um só lugar para quem ensina e para quem aprende.</h2><p>Escolha entre uma conta de docente ou de acadêmico no cadastro. Cada tipo de conta tem as ferramentas para suas atividades.</p></div>
         <div className="lp-audiences">
           <article className="lp-audience">
             <header><span className="lp-tag">Para docentes</span><h3>Prepare aulas e avaliações a partir do que você já tem.</h3></header>

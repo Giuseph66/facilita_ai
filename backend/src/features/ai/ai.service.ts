@@ -15,7 +15,7 @@ const MAX_KEYS = 25;
 /** A key the provider refused for quota is skipped for this long before it is tried again. */
 const EXHAUSTED_RETRY_MS = 15 * 60_000;
 const USAGE_REFRESH_TIMEOUT_MS = 4_000;
-const CONNECTION_COLUMNS = `id, user_id, provider, ciphertext, nonce, auth_tag, key_version, masked_suffix, status, checked_at,
+const CONNECTION_COLUMNS = `id, user_id, provider, ciphertext, nonce, auth_tag, key_version, masked_suffix, status, checked_at, account_identity_hash,
   credential_revision, label, position, usage_snapshot, usage_checked_at, last_used_at, exhausted_at, created_at`;
 
 type ConnectionStatus = 'UNVERIFIED' | 'CONNECTED' | 'INVALID';
@@ -31,6 +31,7 @@ interface ConnectionRow {
   masked_suffix: string;
   status: ConnectionStatus;
   checked_at: Date | null;
+  account_identity_hash: string | null;
   credential_revision: number;
   label: string | null;
   position: number;
@@ -112,7 +113,8 @@ export class AIService implements OnModuleInit {
       const encrypted = this.vault.encrypt(actorId, first.id, 'ollama', apiKey);
       const rows = await connection.query<ConnectionRow>(
         `UPDATE ai_connections SET ciphertext = $3, nonce = $4, auth_tag = $5, key_version = $6, masked_suffix = $7,
-           status = 'UNVERIFIED', checked_at = NULL, usage_snapshot = NULL, usage_checked_at = NULL, exhausted_at = NULL,
+           status = 'UNVERIFIED', checked_at = NULL, account_identity_hash = NULL,
+           usage_snapshot = NULL, usage_checked_at = NULL, exhausted_at = NULL,
            credential_revision = credential_revision + 1, updated_at = now()
          WHERE id = $1 AND user_id = $2 RETURNING ${CONNECTION_COLUMNS}`,
         [first.id, actorId, encrypted.ciphertext, encrypted.nonce, encrypted.authTag, encrypted.keyVersion, encrypted.maskedSuffix],
@@ -184,8 +186,24 @@ export class AIService implements OnModuleInit {
   }
 
   async listModels(actorId: string): Promise<{ items: ModelDescriptor[] }> {
-    const resolved = await this.resolve(actorId);
-    return { items: await resolved.provider.getModels(resolved.context) };
+    const provider = this.selectProvider();
+    if (provider === this.fake) {
+      return { items: await provider.getModels({ actorId, payerScope: 'BYOK', provider: 'ollama', apiKey: '', credentialRevision: 0 }) };
+    }
+    const row = (await this.connectionRows(actorId)).find((candidate) => candidate.status === 'CONNECTED');
+    if (!row) fail(403, 'AI_CONNECTION_UNVERIFIED', 'Verifique uma conexão de IA antes de carregar os modelos.');
+    return { items: await provider.getModels(this.contextFor(row, provider)) };
+  }
+
+  async getPreference(actorId: string): Promise<{ mode: 'BYOK' | 'PLATFORM'; preferredModel: string | null }> {
+    const rows = await this.db.asActor(actorId, (connection) =>
+      connection.query<{ mode: 'BYOK' | 'PLATFORM'; preferred_model: string | null }>(
+        `SELECT mode, preferred_model FROM ai_preferences WHERE user_id = $1`, [actorId],
+      ),
+    );
+    return rows[0]
+      ? { mode: rows[0].mode, preferredModel: rows[0].preferred_model }
+      : { mode: 'BYOK', preferredModel: null };
   }
 
   async setPreference(actorId: string, mode: 'BYOK' | 'PLATFORM', preferredModel?: string): Promise<{ mode: 'BYOK' | 'PLATFORM'; preferredModel: string | null }> {
@@ -266,7 +284,7 @@ export class AIService implements OnModuleInit {
               await this.recordUsage(actorId, operationId, feature, model, null, false, this.publicErrorCode(error), Date.now() - started).catch(() => undefined);
               throw error;
             }
-          }, isLast ? undefined : ['PROVIDER_TIMEOUT', 'PROVIDER_UNAVAILABLE']);
+          }, ['PROVIDER_TIMEOUT', 'PROVIDER_UNAVAILABLE']);
           if (row) await this.afterUse(row, provider);
           try {
             await this.quota.commit(actorId, generationMetric, operationId);
@@ -278,8 +296,9 @@ export class AIService implements OnModuleInit {
           lastError = error;
           const code = this.publicErrorCode(error);
           // Rotation: a refused or exhausted key hands over to the next one in the person's order.
-          if (row && code === 'PROVIDER_AUTH_FAILED') { await this.markInvalid(row); continue; }
-          if (row && code === 'PROVIDER_RATE_LIMITED') { await this.markExhausted(row, provider); continue; }
+          if (row && code === 'PROVIDER_AUTH_FAILED') await this.markInvalid(row);
+          if (row && code === 'PROVIDER_RATE_LIMITED') await this.markExhausted(row, provider);
+          if (row && !isLast && (code === 'PROVIDER_AUTH_FAILED' || code === 'PROVIDER_RATE_LIMITED')) continue;
           throw error;
         }
       }
@@ -303,16 +322,34 @@ export class AIService implements OnModuleInit {
     const provider = this.selectProvider();
     const context = this.contextFor(row, provider);
     const health = await provider.healthCheck(context);
-    const status = health.status === 'CONNECTED' ? 'CONNECTED' : 'INVALID';
+    const status: ConnectionStatus = health.status === 'CONNECTED'
+      ? 'CONNECTED'
+      : health.status === 'AUTH_FAILED' ? 'INVALID' : 'UNVERIFIED';
     await this.db.asActor(job.actor_id, async (connection) => {
       const changed = await connection.query<{ id: string }>(
-        `UPDATE ai_connections SET status = $3, checked_at = $4, updated_at = now()
+        `UPDATE ai_connections SET status = $3, checked_at = $4,
+           account_identity_hash = $6, updated_at = now()
          WHERE id = $1 AND user_id = $2 AND credential_revision = $5 RETURNING id`,
-        [row.id, job.actor_id, status, health.checkedAt, expectedRevision],
+        [row.id, job.actor_id, status, health.checkedAt, expectedRevision,
+          health.status === 'CONNECTED' ? health.accountIdentityHash ?? null : null],
       );
       if (!changed[0]) fail(409, 'CREDENTIAL_CHANGED', 'A conexão de IA foi alterada durante a verificação.');
     });
     if (status === 'CONNECTED') await this.storeUsage(row, await this.readUsage(provider, context));
+    if (health.status === 'UNAVAILABLE') {
+      const errorCode = ['PROVIDER_TIMEOUT', 'PROVIDER_UNAVAILABLE', 'PROVIDER_RATE_LIMITED', 'PROVIDER_REQUEST_FAILED']
+        .includes(health.errorCode ?? '') ? health.errorCode : 'PROVIDER_UNAVAILABLE';
+      return {
+        connection: {
+          id: row.id,
+          provider: 'ollama',
+          status,
+          checkedAt: health.checkedAt,
+          errorCode,
+          message: 'Não foi possível verificar a chave agora. Tente novamente quando o serviço estiver disponível.',
+        },
+      };
+    }
     return { connection: { id: row.id, provider: 'ollama', status, checkedAt: health.checkedAt } };
   }
 
@@ -326,7 +363,9 @@ export class AIService implements OnModuleInit {
   }
 
   /** Keys to try, in order, skipping refused keys and keys recently out of quota. */
-  private async candidates(actorId: string): Promise<{ provider: AIProvider; model: string; candidates: ProviderContext[]; rows: ConnectionRow[] }> {
+  private async candidates(actorId: string): Promise<{
+    provider: AIProvider; model: string; candidates: ProviderContext[]; rows: ConnectionRow[];
+  }> {
     const modeRows = await this.db.asActor(actorId, (connection) =>
       connection.query<{ mode: 'BYOK' | 'PLATFORM'; preferred_model: string | null }>(
         `SELECT mode, preferred_model FROM ai_preferences WHERE user_id = $1`, [actorId],
@@ -390,7 +429,8 @@ export class AIService implements OnModuleInit {
 
   private async markInvalid(row: ConnectionRow): Promise<void> {
     await this.db.asActor(row.user_id, (connection) => connection.query(
-      `UPDATE ai_connections SET status = 'INVALID', checked_at = now(), updated_at = now() WHERE id = $1 AND user_id = $2`, [row.id, row.user_id],
+      `UPDATE ai_connections SET status = 'INVALID', checked_at = now(), account_identity_hash = NULL,
+         updated_at = now() WHERE id = $1 AND user_id = $2`, [row.id, row.user_id],
     )).catch(() => undefined);
   }
 

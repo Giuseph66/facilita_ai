@@ -5,8 +5,10 @@ import { AppModule } from './app.module';
 import { JobRunnerService } from './features/ai/job-runner.service';
 import { ExportsService } from './features/exports/exports.service';
 import { PrivacyService } from './features/privacy/privacy.service';
+import { validateStartupConfig } from './core/startup-config';
 
 async function bootstrapWorker(): Promise<void> {
+  validateStartupConfig('worker');
   const app = await NestFactory.createApplicationContext(AppModule);
   const runner = app.get(JobRunnerService);
   const privacy = app.get(PrivacyService);

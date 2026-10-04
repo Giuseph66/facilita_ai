@@ -1,14 +1,16 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { createHash } from 'node:crypto';
 import { OllamaCloudProvider } from '../../src/features/ai/ollama-cloud.provider';
 import type { ProviderContext } from '../../src/features/ai/ai.provider';
 
 const context: ProviderContext = { actorId: 'actor', payerScope: 'BYOK', provider: 'ollama', apiKey: 'chave-de-teste-123456', credentialRevision: 1 };
+const ollamaUserId = '76c1d258-6d78-42b1-b85d-51caad324ca3';
 
 function respond(routes: Record<string, number>) {
   return vi.fn(async (url: string | URL) => {
     const path = new URL(String(url)).pathname;
     const status = routes[path] ?? 404;
-    const body = path === '/api/tags' ? { models: [{ name: 'gpt-oss:20b' }] } : status === 200 ? { name: 'pessoa' } : { error: 'invalid credentials' };
+    const body = path === '/api/tags' ? { models: [{ name: 'gpt-oss:20b' }] } : status === 200 ? { id: ollamaUserId, email: 'private@example.test', name: 'pessoa' } : { error: 'invalid credentials' };
     return new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json' } });
   });
 }
@@ -28,9 +30,24 @@ describe('verificação da conexão Ollama Cloud', () => {
     vi.stubGlobal('fetch', fetchMock);
     const health = await new OllamaCloudProvider().healthCheck(context);
     expect(health.status).toBe('CONNECTED');
+    expect(health.accountIdentityHash).toBe(createHash('sha256').update(`ollama:${ollamaUserId}`).digest('hex'));
+    expect(JSON.stringify(health)).not.toContain(ollamaUserId);
     expect(health.models.map((model) => model.id)).toEqual(['gpt-oss:20b']);
     const meCall = fetchMock.mock.calls.find(([url]) => String(url).endsWith('/api/me'));
     expect((meCall?.[1] as RequestInit).headers).toMatchObject({ Authorization: 'Bearer chave-de-teste-123456' });
+  });
+
+  it('usa somente o campo de identidade estável também na forma PascalCase do /api/me', async () => {
+    vi.stubGlobal('fetch', vi.fn(async (url: string | URL) => {
+      const path = new URL(String(url)).pathname;
+      const body = path === '/api/me' ? { ID: ollamaUserId, Email: 'private@example.test', Name: 'pessoa' } : { models: [] };
+      return new Response(JSON.stringify(body), { status: 200, headers: { 'content-type': 'application/json' } });
+    }));
+    const health = await new OllamaCloudProvider().healthCheck(context);
+    expect(health.status).toBe('CONNECTED');
+    expect(health.accountIdentityHash).toBe(createHash('sha256').update(`ollama:${ollamaUserId}`).digest('hex'));
+    expect(JSON.stringify(health)).not.toContain(ollamaUserId);
+    expect(JSON.stringify(health)).not.toContain('private@example.test');
   });
 
   it('trata falha do serviço como indisponível, não como chave válida', async () => {

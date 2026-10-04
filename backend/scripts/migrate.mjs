@@ -74,6 +74,7 @@ try {
     'public.expired_export_actors()',
     'public.submit_practice_attempt(uuid,jsonb)',
     'public.invalidate_document_intelligence(uuid)',
+    'public.health_queue_metrics()',
   ]) {
     await client.query(`GRANT EXECUTE ON FUNCTION ${signature} TO ${identifier(role)}`);
   }

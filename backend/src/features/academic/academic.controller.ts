@@ -35,6 +35,16 @@ export class WorkspaceController {
   }
 }
 
+@Controller('me')
+export class MyCoursesController {
+  constructor(private readonly academic: AcademicService) {}
+
+  @Get('courses')
+  listCourses(@Req() request: RequestWithUser, @Query('cursor') cursor?: string) {
+    return this.academic.listAccessibleCourses(request.user.id, cursor);
+  }
+}
+
 @Controller('courses')
 export class CourseController {
   constructor(private readonly academic: AcademicService) {}

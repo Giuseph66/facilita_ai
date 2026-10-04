@@ -31,12 +31,23 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
     headers.set("X-CSRF-Token", csrfToken);
   }
 
-  const response = await fetch(`${apiRoot}${path.startsWith("/") ? path : `/${path}`}`, {
+  const url = `${apiRoot}${path.startsWith("/") ? path : `/${path}`}`;
+  const options: RequestInit = {
     ...init,
     headers,
     credentials: "include",
     cache: "no-store",
-  });
+  };
+  let response = await fetch(url, options);
+  // The local proxy can lose a reused upstream socket and return a plain 500.
+  // Only replay reads; structured API errors and writes retain their behavior.
+  if ((init.method || "GET").toUpperCase() === "GET"
+    && response.status === 500
+    && !(response.headers.get("content-type") || "").includes("application/json")
+    && !init.signal?.aborted) {
+    await response.body?.cancel();
+    response = await fetch(url, options);
+  }
 
   if (response.status === 204) return undefined as T;
   const contentType = response.headers.get("content-type") || "";
@@ -68,12 +79,15 @@ const errorMessages: Record<string, string> = {
   RESOURCE_NOT_FOUND: "Este conteúdo não está disponível para sua conta.",
   REVISION_CONFLICT: "Este conteúdo foi alterado em outra sessão. Recarregue antes de salvar.",
   CAPABILITY_REQUIRED: "Este recurso não está incluído no plano atual.",
-  QUOTA_EXCEEDED: "O limite deste período foi atingido. Você ainda pode ler e editar seus materiais.",
+  QUOTA_EXCEEDED: "O limite do seu plano foi atingido. Consulte seu consumo em Configurações › Plano.",
   INVALID_STATE: "Esta ação não está disponível para o estado atual.",
   RATE_LIMITED: "Muitas tentativas em pouco tempo. Aguarde um momento e tente de novo.",
   PROVIDER_UNAVAILABLE: "O serviço de IA está indisponível. Sua solicitação pode ser tentada novamente.",
   PROVIDER_NOT_CONFIGURED: "Conecte uma IA em Configurações para gerar este conteúdo.",
   PROVIDER_AUTH_FAILED: "Nenhuma das suas chaves de IA foi aceita. Confira as chaves em Configurações › IA.",
+  AI_CONNECTION_UNVERIFIED: "Verifique novamente sua chave Ollama antes de consultar os modelos.",
+  AI_KEY_IDENTITY_UNVERIFIED: "Não foi possível confirmar que suas chaves pertencem à mesma conta Ollama. Verifique novamente suas chaves.",
+  AI_KEY_ACCOUNT_MISMATCH: "Use chaves da mesma conta Ollama para ativar a rotação automática.",
   DOCUMENT_NOT_READY: "Este material ainda está sendo processado.",
   CONTEXT_REVOKED: "O acesso a este contexto foi revogado. A resposta dependente não está disponível.",
   SECRET_MATERIAL_CANNOT_BE_SHARED: "Este material está marcado como secreto e não pode ser liberado.",
@@ -83,7 +97,7 @@ const errorMessages: Record<string, string> = {
   PROVIDER_RATE_LIMITED: "Sua conta de IA atingiu o limite de uso do fornecedor. Aguarde um pouco e tente de novo.",
   PROVIDER_TIMEOUT: "A IA demorou demais para responder. Tente novamente em instantes.",
   PROVIDER_REQUEST_FAILED: "O fornecedor de IA recusou a solicitação. Tente novamente em instantes.",
-  MODEL_UNSUPPORTED: "O modelo escolhido não está disponível nesta conexão. Escolha outro em Configurações › IA.",
+  MODEL_UNSUPPORTED: "Escolha e salve um modelo disponível em Configurações › IA.",
   AI_OUTPUT_INVALID: "A IA respondeu em um formato inesperado. Tente gerar novamente.",
   CREDENTIAL_CHANGED: "A chave de IA foi trocada durante o processamento. Tente novamente.",
   CREDENTIAL_UNAVAILABLE: "Não foi possível usar sua chave de IA. Confira a conexão em Configurações › IA.",
@@ -94,13 +108,13 @@ const errorMessages: Record<string, string> = {
 
 export function errorCopy(error: unknown) {
   if (!(error instanceof ApiError)) return "Não foi possível conectar ao serviço. Confira sua conexão e tente novamente.";
-  return errorMessages[error.code] || `Não foi possível concluir. Código: ${error.code}${error.requestId ? ` · solicitação ${error.requestId}` : ""}`;
+  return errorMessages[error.code] || `Não foi possível concluir esta ação.${error.requestId ? ` Solicitação ${error.requestId}.` : ""}`;
 }
 
 /** Friendly copy for an error code reported outside an HTTP error, such as a failed job. */
 export function errorCodeCopy(code?: string) {
   if (!code) return "O serviço não concluiu esta etapa.";
-  return errorMessages[code] || `O serviço não concluiu esta etapa (código ${code}).`;
+  return errorMessages[code] || "O serviço não concluiu esta etapa. Tente novamente em instantes.";
 }
 
 export function isTerminalJob(job: JobView) {

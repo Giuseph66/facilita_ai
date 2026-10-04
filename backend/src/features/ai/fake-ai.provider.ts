@@ -28,7 +28,10 @@ export class FakeAIProvider implements AIProvider {
   async getModels(_context: ProviderContext): Promise<ModelDescriptor[]> {
     this.assertEnabled();
     this.raisePendingFailure();
-    return [{ id: 'fake-e5-chat', name: 'Deterministic test model', provider: 'ollama', capabilities: ['CHAT', 'TEXT'] }];
+    return [
+      { id: 'fake-e5-chat', name: 'Deterministic test model', provider: 'ollama', capabilities: ['CHAT', 'TEXT'] },
+      { id: 'fake-e5-chat-alt', name: 'Deterministic test model 2', provider: 'ollama', capabilities: ['CHAT', 'TEXT'] },
+    ];
   }
 
   async getUsage(_context: ProviderContext): Promise<KeyUsage | null> {

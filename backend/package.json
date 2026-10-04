@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "node scripts/dev.mjs",
-    "dev:api": "node --watch -r ts-node/register src/main.ts",
-    "dev:worker": "node --watch -r ts-node/register src/worker.ts",
+    "dev:api": "node scripts/dev.mjs main",
+    "dev:worker": "node scripts/dev.mjs worker",
     "build": "tsc -p tsconfig.json",
     "start": "node dist/main.js",
     "start:worker": "node dist/worker.js",
@@ -13,6 +13,7 @@
     "lint": "eslint src scripts tests",
     "test": "vitest run --config vitest.config.ts",
     "test:integration": "vitest run --config vitest.integration.config.ts",
+    "test:supervisor": "node --test scripts/dev-supervisor.test.mjs",
     "db:migrate": "node scripts/migrate.mjs",
     "model:install": "node scripts/install-embedding.mjs"
   },

@@ -2,11 +2,12 @@
 /* eslint-disable react-hooks/set-state-in-effect -- Reload initializes local status before requesting the remote configuration. */
 
 import { useCallback, useEffect, useState } from "react";
-import { ArrowUp, Check, LockKeyhole, Pencil, Plus, RefreshCw, Trash2, X } from "lucide-react";
+import { ArrowUp, LockKeyhole, Pencil, Plus, RefreshCw, Trash2 } from "lucide-react";
 import { api, errorCodeCopy, errorCopy, isTerminalJob, jsonBody } from "@/lib/api";
 import { formatPercent, keyName, NEAR_LIMIT_USED, relativeTime, tightestWindow, windowLabel } from "@/lib/ai-keys";
 import type { JobView, OllamaConnectionView } from "@/lib/types";
 import { JobTracker } from "./job-tracker";
+import { ConfirmModal, Modal } from "./modal";
 import { SettingsLayout } from "./settings-screen";
 import { Button, LoadingBlock, Notice, Panel } from "./ui";
 
@@ -44,6 +45,7 @@ export function AiSettings() {
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState("");
   const [modelsError, setModelsError] = useState("");
+  const [preferenceError, setPreferenceError] = useState("");
   const [notice, setNotice] = useState("");
   const [job, setJob] = useState<JobView | null>(null);
   const [jobKeyId, setJobKeyId] = useState<string | null>(null);
@@ -51,20 +53,32 @@ export function AiSettings() {
   const [newKey, setNewKey] = useState("");
   const [newLabel, setNewLabel] = useState("");
   const [editing, setEditing] = useState<{ id: string; label: string } | null>(null);
+  const [removing, setRemoving] = useState<{ key: OllamaConnectionView; index: number } | null>(null);
 
   const reload = useCallback(async () => {
     setModelsError("");
-    const [keysResult, modelsResult] = await Promise.allSettled([
+    setPreferenceError("");
+    const [keysResult, preferenceResult] = await Promise.allSettled([
       api<{ items: OllamaConnectionView[] }>("/ai/connections"),
-      api<{ items: Model[] }>("/ai/models"),
+      api<{ mode: string; preferredModel: string | null }>("/ai/preferences"),
     ]);
     let next: OllamaConnectionView[] = [];
     if (keysResult.status === "fulfilled") { next = keysResult.value.items; setKeys(next); }
     else setError(errorCopy(keysResult.reason));
-    if (modelsResult.status === "fulfilled") {
-      setModels(modelsResult.value.items || []);
-      setSelectedModel((current) => current || modelsResult.value.items?.[0]?.id || "");
-    } else { setModels([]); if (next.some((key) => key.status !== "INVALID")) setModelsError(errorCopy(modelsResult.reason)); }
+    if (preferenceResult.status === "fulfilled") setSelectedModel(preferenceResult.value.preferredModel || "");
+    const hasVerifiedKey = next.some((key) => key.status === "CONNECTED");
+    if (hasVerifiedKey) {
+      const modelsResult = await Promise.allSettled([api<{ items: Model[] }>("/ai/models")]);
+      if (modelsResult[0].status === "fulfilled") {
+        const available = modelsResult[0].value.items || [];
+        setModels(available);
+        setSelectedModel((current) => {
+          if (preferenceResult.status !== "fulfilled") return current;
+          return preferenceResult.value.preferredModel || "";
+        });
+      } else { setModels([]); setModelsError(errorCopy(modelsResult[0].reason)); }
+    } else setModels([]);
+    if (preferenceResult.status === "rejected") setPreferenceError(errorCopy(preferenceResult.reason));
     setLoading(false);
     return next;
   }, []);
@@ -72,8 +86,8 @@ export function AiSettings() {
 
   const run = async (id: string, action: () => Promise<void>) => {
     setBusy(id); setError(""); setNotice("");
-    try { await action(); }
-    catch (caught) { setError(errorCopy(caught)); }
+    try { await action(); return true; }
+    catch (caught) { setError(errorCopy(caught)); return false; }
     finally { setBusy(null); }
   };
 
@@ -104,13 +118,16 @@ export function AiSettings() {
     setKeys(response.items); setEditing(null);
   });
 
-  const remove = (key: OllamaConnectionView, index: number) => {
-    if (!window.confirm(`Remover ${keyName(key, index)}? As outras chaves continuam sendo usadas na ordem da lista.`)) return;
-    void run(key.id, async () => {
+  const remove = (key: OllamaConnectionView, index: number) => setRemoving({ key, index });
+  const confirmRemove = async () => {
+    if (!removing) return;
+    const { key } = removing;
+    const removed = await run(key.id, async () => {
       await api(`/ai/connections/${key.id}`, { method: "DELETE" });
       await reload();
       setNotice("Chave removida.");
     });
+    if (removed) setRemoving(null);
   };
 
   // A finished check only means the test ran; the key status says whether it was accepted.
@@ -122,7 +139,14 @@ export function AiSettings() {
     const key = updated[index];
     if ((next.state || "").toUpperCase() === "FAILED") setError(errorCodeCopy(next.errorCode));
     else if (key?.status === "CONNECTED") { setError(""); setNotice(`${keyName(key, index)} está funcionando.`); }
-    else if (key) { setNotice(""); setError(`${keyName(key, index)} foi recusada pela Ollama Cloud. Confira a chave na sua conta e adicione de novo.`); }
+    else if (key?.status === "INVALID") { setNotice(""); setError(`${keyName(key, index)} foi recusada pela Ollama Cloud. Confira a chave na sua conta e adicione de novo.`); }
+    else if (key) {
+      const checkResult = next.result as { connection?: { errorCode?: string; message?: string } } | undefined;
+      const reason = checkResult?.connection?.errorCode
+        ? errorCodeCopy(checkResult.connection.errorCode)
+        : checkResult?.connection?.message || "O serviço está indisponível. Tente verificar novamente.";
+      setNotice(""); setError(`${keyName(key, index)} não pôde ser verificada. ${reason}`);
+    }
   };
 
   const savePreference = (event: React.FormEvent<HTMLFormElement>) => {
@@ -133,11 +157,11 @@ export function AiSettings() {
     });
   };
 
-  const activeIndex = keys.findIndex((key) => key.status !== "INVALID" && !key.exhausted);
+  const activeIndex = keys.findIndex((key) => key.status === "CONNECTED" && !key.exhausted);
   const nearLimit = keys.map((key, index) => ({ key, index, window: tightestWindow(key) })).filter(({ key, window }) => key.status !== "INVALID" && window && window.usedPercent >= NEAR_LIMIT_USED);
-  const usable = keys.filter((key) => key.status !== "INVALID");
+  const usable = keys.filter((key) => key.status === "CONNECTED");
   const allExhausted = usable.length > 0 && usable.every((key) => key.exhausted);
-  const showForm = adding || (!loading && keys.length === 0);
+  const selectedModelAvailable = models.some((model) => model.id === selectedModel);
 
   return <SettingsLayout active="/app/configuracoes/ia" eyebrow="IA COM CONTROLE" title="Inteligência artificial" description="Conecte suas chaves da Ollama Cloud e escolha o modelo usado nas gerações.">
     {error && <Notice tone="error" title="Ação não concluída">{error}</Notice>}
@@ -149,19 +173,13 @@ export function AiSettings() {
     {loading ? <Panel><LoadingBlock label="Consultando suas chaves…" /></Panel> : <>
       <Panel title="Chaves Ollama Cloud" detail={keys.length > 1 ? "Usadas na ordem abaixo. Se uma chave for recusada ou atingir o limite, a próxima assume automaticamente." : "Use sua própria chave para conectar a Ollama Cloud. Você pode adicionar mais de uma."}>
         {keys.length > 0 && <ol className="ai-keys">{keys.map((key, index) => {
-          const status = key.exhausted ? { pill: "No limite", tone: "bad" as const } : statusCopy[key.status] || { pill: key.status, tone: "pending" as const };
+          const status = key.exhausted ? { pill: "No limite", tone: "bad" as const } : statusCopy[key.status] || { pill: "Status indisponível", tone: "pending" as const };
           const isBusy = busy === key.id || (job !== null && jobKeyId === key.id);
           return <li className={`ai-key ${index === activeIndex ? "is-active" : ""}`} key={key.id}>
             <div className="ai-key-head">
               <span className="ai-key-order" aria-label={`Posição ${index + 1}`}>{index + 1}</span>
               <div className="ai-key-title">
-                {editing?.id === key.id
-                  ? <form className="ai-key-rename" onSubmit={(event) => { event.preventDefault(); void update(key.id, { label: editing.label.trim() || null }); }}>
-                      <input className="input" value={editing.label} maxLength={60} autoFocus aria-label="Nome da chave" placeholder={keyName(key, index)} onChange={(event) => setEditing({ id: key.id, label: event.target.value })} onKeyDown={(event) => { if (event.key === "Escape") setEditing(null); }} />
-                      <button type="submit" className="icon-button small" aria-label="Salvar nome"><Check size={15} /></button>
-                      <button type="button" className="icon-button small" aria-label="Cancelar" onClick={() => setEditing(null)}><X size={15} /></button>
-                    </form>
-                  : <strong>{keyName(key, index)}{index === activeIndex && <span className="ai-key-active">Em uso</span>}</strong>}
+                <strong>{keyName(key, index)}{index === activeIndex && <span className="ai-key-active">Em uso</span>}</strong>
                 <small><code>{key.maskedKey || "••••"}</code> · {key.lastUsedAt ? `usada ${relativeTime(key.lastUsedAt)}` : "ainda não usada"}</small>
               </div>
               <span className={`connection-state ${status.tone}`}>{status.pill}</span>
@@ -177,23 +195,32 @@ export function AiSettings() {
           </li>;
         })}</ol>}
 
-        {showForm ? <form className="ai-key-form" onSubmit={addKey}>
-          <div className="ai-key-form-head"><strong>{keys.length ? "Adicionar nova chave" : "Conectar sua primeira chave"}</strong>{keys.length > 0 && <button type="button" className="icon-button small" aria-label="Cancelar" onClick={() => { setAdding(false); setNewKey(""); setNewLabel(""); }}><X size={15} /></button>}</div>
-          <label className="field"><span>Nome <small>opcional</small></span><input className="input" value={newLabel} maxLength={60} onChange={(event) => setNewLabel(event.target.value)} placeholder="Ex.: Conta pessoal" /></label>
-          <label className="field"><span>Chave da API</span><input className="input" type="password" autoComplete="off" value={newKey} onChange={(event) => setNewKey(event.target.value)} placeholder="Cole a chave criada em ollama.com/settings/keys" aria-describedby="key-note" /></label>
-          <p className="secret-note" id="key-note"><LockKeyhole size={14} />Guardamos a chave criptografada; ela não aparece de novo. Use apenas chaves da sua própria conta Ollama.</p>
-          <div className="form-actions"><Button type="submit" disabled={busy === "add" || newKey.trim().length < 16}>{busy === "add" ? "Adicionando…" : "Adicionar chave"}</Button></div>
-        </form> : <button type="button" className="ai-key-add" onClick={() => setAdding(true)}><Plus size={16} />Adicionar nova chave</button>}
+        <button type="button" className="ai-key-add" onClick={() => setAdding(true)}><Plus size={16} />{keys.length ? "Adicionar nova chave" : "Conectar sua primeira chave"}</button>
       </Panel>
 
       <Panel title="Modelo" detail="Usado em todas as chaves para as próximas gerações.">
         {modelsError && <Notice tone="error" title="Modelos indisponíveis">{modelsError}</Notice>}
+        {preferenceError && <Notice tone="error" title="Não foi possível carregar o modelo salvo">{preferenceError}</Notice>}
+        {!usable.length && <Notice tone="info" title="Verifique uma chave para consultar modelos">A lista de modelos só aparece depois que a Ollama Cloud aceita uma chave.</Notice>}
+        {selectedModel && models.length > 0 && !selectedModelAvailable && <Notice tone="warning" title="O modelo salvo não está disponível">Escolha um modelo listado para atualizar a preferência.</Notice>}
         <form className="form-grid" onSubmit={savePreference}>
-          <label className="field full-span"><span>Modelo</span><select className="input" value={selectedModel} onChange={(event) => setSelectedModel(event.target.value)} disabled={!usable.length || models.length === 0}><option value="">{models.length ? "Escolha um modelo" : "Conecte uma chave para ver os modelos"}</option>{models.filter((model) => model.provider.toLowerCase() === "ollama").map((model) => <option key={model.id} value={model.id}>{model.name}</option>)}</select></label>
+          <label className="field full-span"><span>Modelo</span><select className="input" value={selectedModel} onChange={(event) => setSelectedModel(event.target.value)} disabled={!usable.length || models.length === 0}><option value="">{models.length ? "Escolha um modelo" : "Conecte e verifique uma chave para ver os modelos"}</option>{models.filter((model) => model.provider.toLowerCase() === "ollama").map((model) => <option key={model.id} value={model.id}>{model.name}</option>)}</select></label>
           <div className="ai-safety-copy"><strong>Seu limite continua valendo</strong><p>As chaves não desativam as cotas do seu plano no Facilita Estudo. Se uma chave falhar, as próximas da sua lista são tentadas; nunca há troca para um serviço pago.</p></div>
-          <div className="form-actions"><Button type="submit" disabled={busy === "preference" || !usable.length || !selectedModel}>Salvar modelo</Button></div>
+          <div className="form-actions"><Button type="submit" disabled={busy === "preference" || !usable.length || !selectedModelAvailable}>Salvar modelo</Button></div>
         </form>
       </Panel>
     </>}
+    <Modal open={adding} onClose={() => { setAdding(false); setNewKey(""); setNewLabel(""); }} title={keys.length ? "Adicionar chave Ollama Cloud" : "Conectar sua chave Ollama Cloud"} description="A chave será armazenada de forma criptografada e verificada antes de ser usada." busy={busy === "add"}>
+      <form className="ai-key-form" onSubmit={addKey}>
+        <label className="field"><span>Nome <small>opcional</small></span><input className="input" value={newLabel} maxLength={60} onChange={(event) => setNewLabel(event.target.value)} placeholder="Ex.: Conta pessoal" /></label>
+        <label className="field"><span>Chave da API</span><input className="input" type="password" autoComplete="off" value={newKey} onChange={(event) => setNewKey(event.target.value)} placeholder="Cole a chave criada em ollama.com/settings/keys" aria-describedby="key-note" /></label>
+        <p className="secret-note" id="key-note"><LockKeyhole size={14} />Guardamos a chave criptografada; ela não aparece de novo. Use apenas chaves da sua própria conta Ollama.</p>
+        <div className="form-actions"><Button type="submit" disabled={busy === "add" || newKey.trim().length < 16}>{busy === "add" ? "Adicionando…" : "Adicionar chave"}</Button></div>
+      </form>
+    </Modal>
+    <Modal open={editing !== null} onClose={() => setEditing(null)} title="Renomear chave" description="O nome ajuda a identificar a chave nesta lista." busy={Boolean(editing && busy === editing.id)}>
+      {editing && <form className="conversation-create" onSubmit={(event) => { event.preventDefault(); void update(editing.id, { label: editing.label.trim() || null }); }}><label className="field"><span>Nome da chave</span><input className="input" value={editing.label} maxLength={60} autoFocus onChange={(event) => setEditing({ ...editing, label: event.target.value })} /></label><div className="form-actions"><Button type="submit" disabled={busy === editing.id}>{busy === editing.id ? "Salvando…" : "Salvar nome"}</Button></div></form>}
+    </Modal>
+    <ConfirmModal open={removing !== null} onClose={() => setRemoving(null)} title="Remover chave?" description={removing ? `Remover ${keyName(removing.key, removing.index)}? As outras chaves continuam sendo usadas na ordem da lista.` : undefined} confirmLabel="Remover chave" variant="danger" busy={Boolean(removing && busy === removing.key.id)} onConfirm={confirmRemove} />
   </SettingsLayout>;
 }

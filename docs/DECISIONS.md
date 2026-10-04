@@ -67,8 +67,10 @@ FATO VERIFICADO: termos Ollama consultados exigem idade mínima de 18 anos. A do
 
 ## Regras de mudança
 
+Em 04/10/2026, por instrução expressa do usuário, a seleção e a troca automática de chaves BYOK passaram a permitir contas Ollama diferentes. A identidade retornada pelo fornecedor não bloqueia o uso; a ordem definida pelo usuário e o isolamento das conexões por usuário do aplicativo permanecem.
+
 1. Registrar problema, opções, decisão, justificativa e consequências.
 2. Atualizar contrato e entregas afetadas antes da implementação.
 3. Não alterar requisito silenciosamente.
-4. Não permitir pooling, empréstimo ou uso cruzado de chaves sem autorização formal aplicável; planejamento atual implementa somente BYOK individual.
+4. BYOK individual permite ao usuário cadastrar e ordenar suas chaves, inclusive de contas Ollama diferentes, com troca automática em caso de recusa ou limite. As conexões permanecem isoladas por usuário do aplicativo.
 5. Não adicionar microserviços, GraphQL, Kafka, Kubernetes, service mesh, event sourcing ou CQRS completo sem necessidade concreta.

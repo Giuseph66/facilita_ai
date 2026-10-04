@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ArrowRight, Eye, LockKeyhole, Sparkles } from "lucide-react";
+import { ArrowRight, BookOpen, Eye, LockKeyhole, Sparkles } from "lucide-react";
 
 export function Button({ children, variant = "primary", className = "", ...props }: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: "primary" | "secondary" | "ghost" | "danger" }) {
   return <button className={`button button-${variant} ${className}`} {...props}>{children}</button>;
@@ -14,8 +14,8 @@ export function Panel({ title, detail, children, className = "" }: { title?: str
   return <section className={`panel ${className}`}>{(title || detail) && <div className="panel-heading">{title && <h2>{title}</h2>}{detail && <p>{detail}</p>}</div>}{children}</section>;
 }
 
-export function EmptyState({ title, detail, action, href }: { title: string; detail: string; action?: string; href?: string }) {
-  return <div className="empty-state"><span className="empty-mark" aria-hidden="true">✳</span><h3>{title}</h3><p>{detail}</p>{action && href && <Link className="button button-secondary" href={href}>{action}<ArrowRight size={16} aria-hidden="true" /></Link>}</div>;
+export function EmptyState({ title, detail, action, href, onAction }: { title: string; detail: string; action?: string; href?: string; onAction?: () => void }) {
+  return <div className="empty-state"><span className="empty-mark" aria-hidden="true"><BookOpen size={22} /></span><h3>{title}</h3><p>{detail}</p>{action && onAction ? <Button type="button" variant="secondary" onClick={onAction}>{action}<ArrowRight size={16} aria-hidden="true" /></Button> : action && href ? <Link className="button button-secondary" href={href}>{action}<ArrowRight size={16} aria-hidden="true" /></Link> : null}</div>;
 }
 
 export function VisibilityTag({ released = false, children }: { released?: boolean; children?: ReactNode }) {

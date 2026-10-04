@@ -8,10 +8,10 @@ import { RequestMethod } from '@nestjs/common';
 import { AppModule } from './app.module';
 import { HttpExceptionFilter } from './core/http-exception.filter';
 import { requestIdMiddleware } from './core/request-id.middleware';
+import { validateStartupConfig } from './core/startup-config';
 
 export async function bootstrap(): Promise<void> {
-  if (process.env.NODE_ENV === 'production' && !process.env.APP_ORIGIN) throw new Error('APP_ORIGIN is required in production');
-  const appOrigin = process.env.APP_ORIGIN ? new URL(process.env.APP_ORIGIN).origin : undefined;
+  const config = validateStartupConfig('api');
   const app = await NestFactory.create(AppModule, { bodyParser: false });
   app.use(requestIdMiddleware);
   app.use((_request: unknown, response: { setHeader(name: string, value: string): void }, next: () => void) => {
@@ -23,7 +23,7 @@ export async function bootstrap(): Promise<void> {
   app.use(json({ limit: '1mb' }));
   app.use(urlencoded({ extended: false, limit: '16kb' }));
   app.enableCors({
-    origin: appOrigin ? [appOrigin] : [],
+    origin: config.corsOrigins,
     credentials: true,
     methods: ['GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'X-CSRF-Token', 'Idempotency-Key', 'X-Request-Id'],
@@ -38,9 +38,7 @@ export async function bootstrap(): Promise<void> {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.enableShutdownHooks();
 
-  const port = Number(process.env.API_PORT ?? 3001);
-  if (!Number.isSafeInteger(port) || port < 1 || port > 65_535) throw new Error('API_PORT must be a valid TCP port');
-  await app.listen(port, '0.0.0.0');
+  await app.listen(config.apiPort, '0.0.0.0');
 }
 
 void bootstrap().catch((error: unknown) => {

@@ -95,6 +95,11 @@ export class AIController {
     return this.ai.setPreference(request.user.id, parsed.data.mode, parsed.data.preferredModel);
   }
 
+  @Get('preferences')
+  getPreference(@Req() request: AuthenticatedRequest) {
+    return this.ai.getPreference(request.user.id);
+  }
+
   private async personalWorkspace(actorId: string): Promise<string> {
     const rows = await this.db.asActor(actorId, (connection) =>
       connection.query<{ id: string }>(

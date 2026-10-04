@@ -13,6 +13,7 @@ export interface IntelligenceJob {
   payload: Record<string, unknown>;
   result: Record<string, unknown> | null;
   error_code: string | null;
+  created_at?: Date | string | null;
 }
 
 export interface JobView {
@@ -23,6 +24,7 @@ export interface JobView {
   progress?: number;
   result?: Record<string, unknown>;
   errorCode?: string;
+  createdAt?: string;
 }
 
 export interface JobEnvelope {
@@ -42,5 +44,6 @@ export function toJobView(job: IntelligenceJob): JobView {
     ...(job.progress === null ? {} : { progress: job.progress }),
     ...(job.result ? { result: job.result } : {}),
     ...(job.error_code ? { errorCode: job.error_code } : {}),
+    ...(job.created_at ? { createdAt: new Date(job.created_at).toISOString() } : {}),
   };
 }

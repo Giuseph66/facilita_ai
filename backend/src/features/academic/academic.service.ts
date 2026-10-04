@@ -91,6 +91,34 @@ export class AcademicService {
     });
   }
 
+  async listAccessibleCourses(userId: string, cursorValue?: string) {
+    const cursor = this.decodeCursor(cursorValue);
+    return this.db.asActor(userId, async (connection) => {
+      const rows = await connection.query<CourseRow>(
+        `SELECT c.id, c.workspace_id, c.owner_user_id, c.title, c.description, c.objectives,
+                c.revision, c.archived_at, c.created_at, c.updated_at
+         FROM courses c
+         WHERE c.archived_at IS NULL AND (
+           c.owner_user_id = $1 OR EXISTS (
+             SELECT 1 FROM classes cl WHERE cl.workspace_id = c.workspace_id AND cl.course_id = c.id
+               AND cl.archived_at IS NULL AND cl.teacher_user_id = $1
+           ) OR EXISTS (
+             SELECT 1 FROM classes cl JOIN enrollments e ON e.workspace_id = cl.workspace_id AND e.class_id = cl.id
+             WHERE cl.workspace_id = c.workspace_id AND cl.course_id = c.id AND cl.archived_at IS NULL
+               AND e.user_id = $1 AND e.role = 'STUDENT' AND e.status = 'ACTIVE'
+           )
+         ) AND ($2::timestamptz IS NULL OR (c.created_at, c.id) > ($2::timestamptz, $3::uuid))
+         ORDER BY c.created_at, c.id LIMIT 21`,
+        [userId, cursor?.createdAt ?? null, cursor?.id ?? null],
+      );
+      const hasMore = rows.length > 20;
+      const page = rows.slice(0, 20);
+      const views = await this.courseViews(connection, page);
+      const last = page[page.length - 1];
+      return { items: views, nextCursor: hasMore && last ? this.encodeCursor(last) : null };
+    });
+  }
+
   async createCourse(userId: string, workspaceId: string, input: CourseInput, requestId?: string) {
     const id = randomUUID();
     const view = await this.db.asActor(userId, async (connection) => {

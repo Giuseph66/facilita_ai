@@ -62,9 +62,10 @@ user + contexto + feature
 ```
 
 - BYOK usa somente key do solicitante.
+- O solicitante pode cadastrar chaves de contas Ollama diferentes e escolher sua ordem de uso. Em caso de recusa ou limite de uso, a geração tenta a próxima chave disponível nessa ordem; a identidade da conta Ollama não restringe a seleção.
 - PLATFORM usa somente key própria da plataforma.
 - Nenhum fallback para usuário diferente.
-- Nenhuma troca automática de pagador.
+- A troca entre chaves cadastradas pelo solicitante não usa credenciais da plataforma nem de outro usuário do aplicativo.
 - Nenhuma transferência de dados a outro fornecedor sem preferência/política explícita.
 - Modelo efetivo registrado por mensagem/operação.
 - Indisponibilidade produz erro útil, sem fallback invisível.

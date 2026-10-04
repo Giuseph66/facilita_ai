@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import type { PublicOperation } from '../contracts/openapi';
-import { aiConnectionViewSchema, aiModelsViewSchema, aiPreferenceInputSchema, apiKeyInputSchema, connectionPatchSchema, newApiKeyInputSchema } from './ai/ai.dto';
+import { aiConnectionViewSchema, aiModelsViewSchema, aiPreferenceInputSchema, aiPreferenceViewSchema, apiKeyInputSchema, connectionPatchSchema, newApiKeyInputSchema } from './ai/ai.dto';
 import { exportPublicOperations } from './exports/export.dto';
 import {
   assessmentCopyInputSchema, assessmentGenerationInputSchema, assessmentInputSchema,
@@ -10,7 +10,7 @@ import { conversationInputSchema, messageInputSchema, practiceSubmissionSchema, 
 
 const uuid = z.string().uuid();
 const looseObject = z.object({}).passthrough();
-const job = z.object({ id: uuid, feature: z.string(), state: z.enum(['QUEUED', 'RUNNING', 'SUCCEEDED', 'FAILED', 'CANCELLED']), stage: z.string() }).passthrough();
+const job = z.object({ id: uuid, feature: z.string(), state: z.enum(['QUEUED', 'RUNNING', 'SUCCEEDED', 'FAILED', 'CANCELLED']), stage: z.string(), createdAt: z.string().datetime().optional() }).passthrough();
 const jobEnvelope = z.object({ job });
 
 export const intelligencePublicOperations: PublicOperation[] = [
@@ -25,11 +25,16 @@ export const intelligencePublicOperations: PublicOperation[] = [
   { method: 'post', path: '/ai/connections/:id/checks', operationId: 'checkAIConnectionById', response: jobEnvelope, success: 202, idempotent: true },
   { method: 'post', path: '/ai/connections/:id/usage', operationId: 'refreshAIConnectionUsage', response: z.object({ connection: aiConnectionViewSchema }).strict() },
   { method: 'get', path: '/ai/models', operationId: 'listAIModels', response: aiModelsViewSchema },
+  { method: 'get', path: '/ai/preferences', operationId: 'getAIPreference', response: aiPreferenceViewSchema },
   { method: 'put', path: '/ai/preferences', operationId: 'setAIPreference', body: aiPreferenceInputSchema },
 
   { method: 'post', path: '/materials/:id/documents', operationId: 'uploadDocument', success: 202, multipart: true, idempotent: true },
   { method: 'get', path: '/materials/:id/documents', operationId: 'listMaterialDocuments' },
-  { method: 'get', path: '/documents/:id', operationId: 'getDocument' },
+  { method: 'get', path: '/documents/:id', operationId: 'getDocument', response: z.object({ document: z.object({
+    id: uuid, materialId: uuid, courseId: uuid.nullable(), name: z.string(), sizeBytes: z.string(),
+    format: z.enum(['PDF', 'PPTX']), status: z.string(), stage: z.string(), errorCode: z.string().nullable(),
+    activeVersionId: uuid.nullable(), createdAt: z.string().datetime(),
+  }).strict() }).strict() },
   { method: 'get', path: '/documents/:id/content', operationId: 'downloadDocument', binary: true },
   { method: 'delete', path: '/documents/:id', operationId: 'deleteDocument', response: jobEnvelope, success: 202, idempotent: true },
   { method: 'post', path: '/documents/:id/reprocessing', operationId: 'reprocessDocument', response: jobEnvelope, success: 202, idempotent: true },

@@ -9,6 +9,7 @@ import { DatabaseService } from './database.service';
 import { fail } from './errors';
 import { IS_PUBLIC_ROUTE } from './public.decorator';
 import { sessionCookieName, sessionCookieOptions } from './cookies';
+import { sameOrigin } from './startup-config';
 
 type SessionRequest = {
   method: string;
@@ -91,23 +92,9 @@ export class SessionGuard implements CanActivate {
   private assertSameOrigin(request: SessionRequest): void {
     const origin = request.headers.origin;
     if (typeof origin !== 'string') fail(403, 'CSRF_INVALID', 'Origem da solicitação inválida.');
-    const configured = process.env.APP_ORIGIN;
-    let expected = configured;
-    if (!expected && process.env.NODE_ENV !== 'production') {
-      const host = request.get?.('host') ?? request.headers.host;
-      if (typeof host === 'string') expected = (request.protocol ?? 'http') + '://' + host;
-    }
-    if (!expected || this.normalizeOrigin(origin) !== this.normalizeOrigin(expected)) {
+    const expected = process.env.APP_ORIGIN ?? (process.env.NODE_ENV === 'production' ? undefined : 'http://localhost:3000');
+    if (!sameOrigin(origin, expected, process.env.NODE_ENV !== 'production')) {
       fail(403, 'CSRF_INVALID', 'Origem da solicitação inválida.');
-    }
-  }
-
-  private normalizeOrigin(value: string): string | undefined {
-    try {
-      const parsed = new URL(value);
-      return parsed.origin;
-    } catch {
-      return undefined;
     }
   }
 

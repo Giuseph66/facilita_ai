@@ -73,7 +73,10 @@ export const assessmentCopyInputSchema = z.object({
 export const blueprintInputSchema = z.object({
   revision: z.number().int().positive().optional(),
   difficulty: z.enum(['EASY', 'MEDIUM', 'HARD', 'MIXED']),
-  topics: z.array(z.object({ courseTopicId: uuid, competencyCode: z.string().trim().max(100).default('') }).strict()).min(1).max(100),
+  topics: z.array(z.object({
+    courseTopicId: uuid,
+    competencyCode: z.preprocess(value => value === null || value === undefined ? '' : value, z.string().trim().max(100)),
+  }).strict()).min(1).max(100),
 }).strict().superRefine((input, context) => {
   const topicIds = input.topics.map(topic => topic.courseTopicId);
   if (new Set(topicIds).size !== topicIds.length) context.addIssue({ code: 'custom', path: ['topics'], message: 'Selecione cada assunto uma única vez.' });

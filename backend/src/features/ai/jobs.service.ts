@@ -61,14 +61,14 @@ export class JobsService {
         `INSERT INTO jobs (workspace_id, actor_id, feature, resource_type, resource_id, payload, payload_hash, idempotency_key)
          VALUES ($1, $2, $3, $4, $5, $6::jsonb, $7, $8)
          ON CONFLICT (actor_id, feature, idempotency_key) DO NOTHING
-         RETURNING id, workspace_id, actor_id, feature, state, stage, progress, resource_type, resource_id, payload, result, error_code`,
+         RETURNING id, workspace_id, actor_id, feature, state, stage, progress, resource_type, resource_id, payload, result, error_code, created_at`,
         [workspaceId, actorId, feature, resourceType, resourceId, serialized, payloadHash, idempotencyKey ?? null],
     );
 
     let job = inserted[0];
     if (!job && idempotencyKey) {
       const existing = await connection.query<IntelligenceJob & { payload_hash: string }>(
-          `SELECT id, workspace_id, actor_id, feature, state, stage, progress, resource_type, resource_id, payload, result, error_code, payload_hash
+          `SELECT id, workspace_id, actor_id, feature, state, stage, progress, resource_type, resource_id, payload, result, error_code, created_at, payload_hash
            FROM jobs WHERE actor_id = $1 AND feature = $2 AND idempotency_key = $3`,
           [actorId, feature, idempotencyKey],
       );
@@ -95,7 +95,7 @@ export class JobsService {
     this.assertUuid(jobId, 'jobId');
     return this.db.asActor(actorId, async (connection) => {
       const rows = await connection.query<IntelligenceJob>(
-        `SELECT id, workspace_id, actor_id, feature, state, stage, progress, resource_type, resource_id, payload, result, error_code
+        `SELECT id, workspace_id, actor_id, feature, state, stage, progress, resource_type, resource_id, payload, result, error_code, created_at
          FROM jobs WHERE id = $1 AND actor_id = $2`,
         [jobId, actorId],
       );
